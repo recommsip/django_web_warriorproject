@@ -1,0 +1,173 @@
+{% extends 'game/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+
+  {% if warrior.is_alive %}
+
+  <h1 class="text-center mb-5">
+    {{ warrior.name }} encounters {{ goblin.name }}!
+  </h1>
+
+  <div class="row align-items-center text-center">
+
+    <!-- WARRIOR SIDE -->
+    <div class="col-md-5">
+
+      <div class="card shadow-lg p-4">
+
+        <!-- future warrior image -->
+        <div class="mb-3">
+          <div class="bg-secondary text-white d-flex align-items-center justify-content-center"
+               style="height:450px;">
+            {% if warrior.image %}
+              <img src="{{ warrior.set_image }}" alt="Warrior Image" class="card img-fluid rounded center-block" style="max-height: 450px;">
+            {% endif %}
+          </div>
+        </div>
+        <h2>{{ warrior.name }}</h2>
+
+        <p>
+          HP: {{ warrior.health }} / {{ warrior.max_health }}
+        </p>
+
+        <div class="progress mb-3 progress-bar-height">
+          <div
+            class="progress-bar bg-success progress-fill"
+            style="width: {{ warrior.health_pct }}%">
+          </div>
+        </div>
+        {% if warrior.miss_chance > 0 %}
+          <p class="text-warning fw-bold">
+            Warning: Your attacks may miss!
+          </p>
+        {% endif %}
+
+        {% if warrior.last_attack_missed %}
+          <p class="text-danger fw-bold fs-4">
+          MISS!
+          </p>
+          {% endif %}
+        <p>
+          Attack Power: {{ warrior.attack_power }}
+        </p>
+
+        {% if warrior.health < 30 %}
+          <p class="text-danger fw-bold">
+            Your health is low! Consider fleeing.
+          </p>
+
+          <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-warning" name="flee" value="flee">
+              Flee!
+            </button>
+          </form>
+
+        {% else %}
+          <p class="text-success fw-bold">
+            Ready for battle!
+          </p>
+        {% endif %}
+
+          {% if goblin.is_alive %}
+
+          <form method="post">
+            {% csrf_token %}
+
+          <button class="btn btn-danger btn-lg" name="attack" value="attack">    Attack {{ goblin.name }}!</button>
+            
+          </form>
+
+        {% else %}
+
+          <p class="text-success fw-bold">
+            {{ goblin.name }} has fallen!
+          </p>
+
+          <a
+            href="{% url 'encounter' %}"
+            class="btn btn-primary">
+            Find Next Goblin
+          </a>
+
+        {% endif %}
+
+      </div>
+
+    </div>
+
+    <!-- CENTER SECTION -->
+    <div class="col-md-2">
+
+      <h1 class="display-3 fw-bold">
+        VS
+      </h1>
+
+      <p>
+        Goblins Remaining:
+        <strong>{{ living_count }}</strong>
+      </p>
+
+    </div>
+
+    <!-- GOBLIN SIDE -->
+    <div class="col-md-5">
+
+      <div class="card shadow-lg p-4">
+
+        <!-- future goblin image -->
+        <div class="mb-12">
+          <div class="bg-dark text-white d-flex align-items-center justify-content-center goblin-image-container">
+            {% if goblin.image %}
+              <img src="{{ goblin.set_image }}" class="card img-fluid rounded center-block" style="max-height: 250px;">
+            {% endif %}
+          </div>
+        </div>
+
+        <h2>{{ goblin.name }}</h2>
+
+        <p>
+          HP: {{ goblin.health }} / {{ goblin.max_health }}
+        </p>
+         <p> Miss chance: {{ goblin.miss_chance }}%</p>
+        <div class="progress mb-3" style="height: 25px;">
+          <div
+            class="progress-bar bg-danger"
+            style="width: {{ goblin.health_pct }}%">
+          </div>
+        </div>
+
+      
+
+      </div>
+
+    </div>
+
+  </div>
+
+  {% else %}
+
+    <div class="text-center mt-5">
+
+      <h1>
+        {{ warrior.name }} has been defeated...
+      </h1>
+
+      <p class="lead">
+        Game Over. Better luck next time!
+      </p>
+
+      <a
+        href="{% url 'reset' %}"
+        class="btn btn-primary">
+        Start a New Journey
+      </a>
+
+    </div>
+
+  {% endif %}
+
+</div>
+
+{% endblock %}

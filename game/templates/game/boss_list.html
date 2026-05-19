@@ -1,0 +1,9 @@
+{% extends 'game/base.html' %}
+{% block content %}
+    <h1>Boss List</h1>
+    <ul>
+        {% for boss in bosses %}
+            <li>{{ boss.name }} - Type: {{ boss.get_boss_type_display }} - Victories: {{ boss.victories }}</li>
+        {% endfor %}
+{% endblock %}
+

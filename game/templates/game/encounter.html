@@ -1,0 +1,18 @@
+{% extends 'game/base.html' %}
+{% block content %}
+    <h1>Encounter</h1>
+    <p>You continue on your journey and encounter a mysterious figure...</p>
+    <p>To be continued...</p>
+    {% if not goblin.is_alive %}
+        <p>The goblin is still alive. You can choose to attack or flee.</p>
+        <form method='post'>{% csrf_token %}
+            <button name='encounter' value='attack_next'>Attack!</button>
+            <button name='action' value='flee'>Flee</button>
+        </form>
+    {% else %}
+        <p>The goblin has been defeated! You can continue on your journey.</p>
+        <a href='{% url "journey" %}'>Continue Journey</a>
+    {% endif %}
+    <p><a href="{% url 'journey' %}">Go back to Journey</a></p>
+
+{% endblock %}
