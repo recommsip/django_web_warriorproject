@@ -20,7 +20,7 @@ from django.conf import settings  # type: ignore[import]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('game.urls')),
+    path("", include(("game.urls", "game"), namespace="game")),
 ]
 
 if settings.DEBUG:

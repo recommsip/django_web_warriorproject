@@ -1,6 +1,7 @@
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
-from .models import Warrior, Monster
+from .models import Monster
+from .warrior import Warrior
 from django import forms
 
 class EncounterView(View):          # inherits from Django's View
@@ -42,7 +43,7 @@ class EncounterView(View):          # inherits from Django's View
         if not troll.is_alive:
             warrior.victories += 1
             warrior.save()
-            return redirect('journey')
-        return redirect('encounter')
+            return redirect('boss')
+        return redirect('tavern')
     
    

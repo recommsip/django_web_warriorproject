@@ -2,10 +2,21 @@
 {% block content %}
   <h1>The Tavern</h1>
   <p>Choose your name and class, warrior.</p>
-  <form method='post'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type='submit'>Begin Journey</button>
-  </form>
-  
+  <p> images: </p>
+        <img src="/static/images/warrior.png" alt="Warrior" width="100">
+        <img src="/static/images/mage.png" alt="Mage" width="100">
+        <img src="/static/images/rogue.png" alt="Rogue" width="100">
+        <img src="/static/images/ranger.png" alt="Ranger" width="100">
+        <img src="/static/images/warlock.png" alt="Warlock" width="100">
+
+    
+    <div>
+     
+      <form method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type='submit'>Begin Journey</button>
+      </form>
+        
+    </div>
 {% endblock %}

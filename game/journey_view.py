@@ -1,118 +1,100 @@
 import random
-from .models import Warrior, Monster
+from .models import Monster
+from .warrior import Warrior
 from django.views import View  # type: ignore[import]
-from django.views.generic import ListView  # type: ignore[import]
-from django.http import HttpResponse  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
 
 
 class JourneyView(View):
     template_name = 'game/journey.html'
-   
-    def get(self, request):         # handles GET
-        warrior_id = request.session.get('warrior_id')
-        if not warrior_id:
-            return redirect('tavern')
-        warrior = Warrior.objects.get(pk=warrior_id)
-        # Get all goblins that are still alive
-        living_goblins = Monster.objects.filter(
-            monster_type='goblin',
-            health__gt=0          # __gt means "greater than" — ORM for WHERE health > 0
-        )
-        # If none are alive, go to a reset page
-        if not living_goblins.exists():
-            return redirect('reset')
-        # Pick one at random — store its id in session so the
-        # same goblin persists across the GET and POST of one fight
-        goblin_id = request.session.get('current_goblin_id')
-        if goblin_id:
-            # Try to use the same goblin (might have just died)
-            goblin = Monster.objects.filter(pk=goblin_id, health__gt=0).first()
-        else:
-            goblin = None
-        if goblin and goblin.is_alive:
-            self.journey(request)
-        return render(request, self.template_name,
-                      {'warrior': warrior, 'goblin': goblin, 'living_count': living_goblins.count()})
-    
 
-    def journey(self, request):
-        warrior_id = request.session.get('warrior_id')
-        if not warrior_id:
+    def get(self, request):
+        warrior = self._get_warrior(request)
+        if not warrior:
             return redirect('tavern')
 
-        warrior = Warrior.objects.get(pk=warrior_id)
-
-        # Get all goblins that are still alive
-        living_goblins = Monster.objects.filter(
-            monster_type='goblin',
-            health__gt=0          # __gt means "greater than" — ORM for WHERE health > 0
-        )
-
-        # If none are alive, go to a reset page
-        if not living_goblins.exists():
+        goblin = self._get_or_choose_goblin(request)
+        if goblin is None:
+            print("No goblins left! Redirecting to reset.")
             return redirect('reset')
 
-        # Pick one at random — store its id in session so the
-        # same goblin persists across the GET and POST of one fight
-        goblin_id = request.session.get('current_goblin_id')
-        if goblin_id:
-            # Try to use the same goblin (might have just died)
-            goblin = Monster.objects.filter(pk=goblin_id, health__gt=0).first()
-        else:
-            goblin = None
+        return render(request, self.template_name, {
+            'warrior': warrior,
+            'goblin': goblin,
+            'living_count': Monster.objects.filter(monster_type='goblin', health__gt=0).count(),
+        })
 
-        if not goblin:
-            # Pick a fresh random live goblin
-            goblin = random.choice(living_goblins)
-            request.session['current_goblin_id'] = goblin.pk
+    def post(self, request):
+        print(request.method)
+        warrior = self._get_warrior(request)
+        if not warrior:
+            return redirect('tavern')
 
+        goblin = self._get_or_choose_goblin(request)
+        if goblin is None:
+            return redirect('reset')
 
-
-        if  request.method == 'POST':
-            if request.POST.get('flee') == 'flee':
-                print(request.POST)
-                # Clear current goblin so next fight picks a fresh one
-                del request.session['current_goblin_id']
-                return redirect('tavern')
-        
-        if request.method == 'POST':
-            if request.POST.get('attack') == 'attack':
-                print(request.POST)
+        if request.POST.get('flee') == 'flee':
+            print("Fleeing from battle, returning to tavern.")
+            print(request.session.items(), flush=True, end="\n\n")
+            request.session.pop('current_goblin_id', None)
+            request.session.pop('warrior_id', None)
+            return redirect('tavern')
+        #WARRIOR ATTACK
+        if request.POST.get('attack') == 'attack':
             if warrior.miss_chance > 0:
-                # Warrior misses this turn
-                warrior.miss_chance -= 10  # Reduce miss chance for next turn
+                warrior.miss_chance = max(0, warrior.miss_chance - 10)
+                warrior.last_attack_missed = True
                 warrior.save()
             else:
-                damage = warrior.attack()  # uses computed @property
-                goblin.health -= damage
+                damage = warrior.attack()
+                goblin.health = max(0, goblin.health - damage)
                 goblin.save()
-            if goblin.miss_chance > 0:
-                # Goblin misses this turn
-                goblin.miss_chance -= 10  # Reduce miss chance for next turn
-                goblin.save()
-            else:
-                warrior.health -= goblin.atk_power
-                warrior.rage += 5
-                goblin.save()
-                warrior.save()
 
-            if not goblin.is_alive:
-                warrior.victories += 1
-                warrior.save()
-                # Clear current goblin so next fight picks a fresh one
-                del request.session['current_goblin_id']
-                # Check if any goblins remain
-                if not Monster.objects.filter(monster_type='goblin', health__gt=0).exists():
-                    return redirect('reset')
+            if goblin.is_alive:
+                if goblin.miss_chance > 0:
+                    goblin.miss_chance = max(0, goblin.miss_chance - 10)
+                    goblin.save()
+                else:
+                    warrior.health = max(0, warrior.health - goblin.atk_power)
+                    warrior.rage += 5
+                    warrior.save()
+
+        if not goblin.is_alive:
+            warrior.victories += 1
+            warrior.save()
+            request.session.pop('current_goblin_id', None)
+            if not Monster.objects.filter(monster_type='goblin', health__gt=0).exists():
+                #return redirect('reset')
+                return redirect('encounter')
+
+        # Use default refresh to avoid type-checking issues with the "fields" parameter
+        goblin.refresh_from_db()
+        return render(request, self.template_name, {
+            'warrior': warrior,
+            'goblin': goblin,
+            'living_count': Monster.objects.filter(monster_type='goblin', health__gt=0).count(),
+        })
+
+    def _get_warrior(self, request):
+        warrior_id = request.session.get('warrior_id')
+        if not warrior_id:
+            return None
+        return Warrior.objects.get(pk=warrior_id)
+
+    def _get_or_choose_goblin(self, request):
+        living_goblins = Monster.objects.filter(monster_type='goblin', health__gt=0)
+        if not living_goblins.exists():
+            return None
+
+        goblin_id = request.session.get('current_goblin_id')
+        if goblin_id:
+            goblin = Monster.objects.filter(pk=goblin_id, health__gt=0).first()
+            if goblin:
+                return goblin
+
+        goblin = random.choice(list(living_goblins))
+        request.session['current_goblin_id'] = goblin.pk
+        return goblin
     
-
-            # Refresh from DB after save
-            goblin.refresh_from_db()
-
-            context = {
-                'warrior': warrior,
-                'goblin':  goblin,
-                'living_count': Monster.objects.filter(monster_type='goblin', health__gt=0).count(),
-            }
-            return render(request, 'game/journey.html', context)
+   

@@ -4,9 +4,13 @@ from django.views.generic import ListView  # type: ignore[import]
 from django.http import HttpResponse  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
 from .forms import CreateWarriorForm
-from .models import Warrior, Monster, Boss
+from .models import Monster
+from .boss import Boss
+from .warrior import Warrior
 from .encounter_view import EncounterView
 from .journey_view import JourneyView
+from .boss_view import BossListView
+
 
 class BossView(ListView):
     model = Boss
@@ -26,6 +30,10 @@ class VictoryView(ListView):
         return Warrior.objects.order_by('-victories')
 
 def tavern(request):
+    choosen_warrior_id = request.session.get('warrior_id')
+    if choosen_warrior_id:
+        return redirect('journey')             # already have a warrior, skip tavern
+    
     # GET: show empty form
     # POST: validate, save warrior, store id in session
     if request.method == 'POST':
