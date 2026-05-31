@@ -9,7 +9,8 @@ from django.shortcuts import render, redirect  # type: ignore[import]
 
 class BossListView(View):
     template_name = 'game/boss.html'
-    def get(self, request):
+    
+    def get(self, request, pk=None):
         warrior_id = request.session.get('warrior_id')
         if not warrior_id:
             return redirect('tavern')
@@ -19,20 +20,25 @@ class BossListView(View):
     
         boss = Monster.objects.get_or_create(
             name='Fire Dragon',
-            defaults={'monster_type':'overlord','health':150,'max_health':150},
-            set_image='/static/images/Fire_Dragon.png'
+            defaults={'boss_type':'overlord','health':150,'max_health':150},
+            
         )[0]
-
-        return render(request, self.template_name, {'warrior': warrior, 'boss': boss})
+        if pk==None:
+            return render(request, self.template_name, {'warrior': warrior, 'boss': boss})
+        else:
+            boss = Monster.objects.get(pk=pk)
+            return render(request, self.template_name, {'warrior': warrior, 'boss': boss})
     
     def post(self, request):
+        
+        boss = Boss.objects.filter(boss_type='overlord', health__gt=0).first()
+        
         warrior = self._get_warrior(request)
         if not warrior:
-            return redirect('tavern')
+            return redirect('game:tavern')
 
-        boss = self._get_or_choose_boss(request)
         if not boss:
-            return redirect('victory')
+            return redirect('game:victory')
 
         boss.health -= warrior.attack_power
         warrior.health -= 20
@@ -43,9 +49,9 @@ class BossListView(View):
             warrior.victories += 1
             warrior.save()
             del request.session['current_boss_id']
-            return redirect('victory')
+            return redirect('game:victory')
         
-        return redirect('boss')
+        return redirect('game:boss_fight', pk=boss.pk)
     
     def _get_warrior(self, request):
         warrior_id = request.session.get('warrior_id')

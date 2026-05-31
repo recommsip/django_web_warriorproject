@@ -10,12 +10,12 @@ class EncounterView(View):          # inherits from Django's View
     def get(self, request):         # handles GET
         warrior_id = request.session.get('warrior_id')
         if not warrior_id:
-            return redirect('tavern')
+            return redirect('game:tavern')
         if request.POST.get('flee') == 'flee':
             print(request.POST)
             # Clear current goblin so next fight picks a fresh one
             del request.session['current_goblin_id']
-            return redirect('tavern')
+            return redirect('game:tavern')
         
         warrior = Warrior.objects.get(pk=warrior_id)
 
@@ -33,17 +33,16 @@ class EncounterView(View):          # inherits from Django's View
                       {'warrior': warrior, 'troll': troll, 'dragon': dragon})
 
     def post(self, request):        # handles POST
+        print(request.POST, " - POST received in EncounterView")
         warrior = Warrior.objects.get(
             pk=request.session['warrior_id'])
-        troll   = Monster.objects.get(name='Cave Troll')
-        troll.health  -= warrior.attack_power
         warrior.health -= 10
-        troll.save(); warrior.save()
-    
-        if not troll.is_alive:
+        warrior.save()
+        if warrior.health > 0:
             warrior.victories += 1
             warrior.save()
-            return redirect('boss')
-        return redirect('tavern')
+            print(f"Warrior {warrior.name} attacked and now has {warrior.health} health and {warrior.victories} victories.")
+            return redirect('game:boss_list')
+        return redirect('game:tavern')
     
    

@@ -10,6 +10,7 @@ from .warrior import Warrior
 from .encounter_view import EncounterView
 from .journey_view import JourneyView
 from .boss_view import BossListView
+from .wins_losses import WinsVsLossesView
 
 
 class BossView(ListView):
@@ -32,7 +33,7 @@ class VictoryView(ListView):
 def tavern(request):
     choosen_warrior_id = request.session.get('warrior_id')
     if choosen_warrior_id:
-        return redirect('journey')             # already have a warrior, skip tavern
+        return redirect('game:journey')             # already have a warrior, skip tavern
     
     # GET: show empty form
     # POST: validate, save warrior, store id in session
@@ -41,7 +42,7 @@ def tavern(request):
         if form.is_valid():
             warrior = form.save()             # INSERT into DB
             request.session['warrior_id'] = warrior.pk
-            return redirect('journey')
+            return redirect('game:journey')
     else:
         form = CreateWarriorForm()            # empty form
     return render(request, 'game/tavern.html', {'form': form})
@@ -65,7 +66,7 @@ def encounter(request):
             print(request.POST)
             # Clear current goblin so next fight picks a fresh one
             del request.session['current_goblin_id']
-            return redirect('journey')
+            return redirect('game:journey')
         
     if request.method == 'POST':
         goblin.health -= warrior.attack_power  # uses computed @property
@@ -87,7 +88,7 @@ def reset_monster_health(request):
     goblin = Monster.objects.get(random=True)  # Get a random goblin
     goblin.health = goblin.max_health
     goblin.save()
-    return redirect('journey')
+    return redirect('game:journey')
 
 def reset(request):
     if request.method == 'POST':
@@ -97,7 +98,7 @@ def reset(request):
             monster.save()
         # Clear session state
         request.session.flush()
-        return redirect('tavern')
+        return redirect('game:tavern')
 
     # GET: show the reset page
     dead_count = Monster.objects.filter(monster_type='goblin', health__lte=0).count()

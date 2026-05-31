@@ -2,6 +2,7 @@ from django.db import models
 from game.models import Character
 
 class Boss(Character):
+    monster_type = 'boss'
     boss_type = models.CharField(max_length=20)
     reward_xp = models.IntegerField(default=200)
     health = models.IntegerField(default=150)
@@ -40,6 +41,9 @@ class Boss(Character):
                 name=boss['name'],
                 defaults=boss
             )
+    
+    def is_alive(self):
+        return self.health > 0
     
     @property
     def set_image(self) -> str:

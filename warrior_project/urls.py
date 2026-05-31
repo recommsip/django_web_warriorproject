@@ -18,6 +18,7 @@ from django.contrib import admin  # type: ignore[import]
 from django.urls import include, path  # type: ignore[import]
 from django.conf import settings  # type: ignore[import]
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include(("game.urls", "game"), namespace="game")),

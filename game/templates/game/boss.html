@@ -1,8 +1,49 @@
 {% extends 'game/base.html' %}
+
 {% block content %}
+    {% for boss in bosses %}
+        <img src="{{ boss.set_image }}" alt="{{ boss.name }} Image" width="100">
+    {% endfor %}
     <h1>Boss -- Encounter</h1>
+
+    <p>You have chosen to fight {{ boss.name }}!</p>
+
+    {% if boss.is_alive %}
+        <p>{{ boss.name }} is still alive. You can choose to attack or flee.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button name="encounter" value="attack_next">
+                Attack!
+            </button>
+
+            <button name="action" value="flee">
+                Flee
+            </button>
+        </form>
+
+    {% else %}
+
+        <p>{{ boss.name }} has been defeated! You can continue on your journey.</p>
+
+        <a href="{% url 'game:journey' %}">
+            Continue Journey
+        </a>
+
+    {% endif %}
+
     <ul>
         {% for boss in bosses %}
-            <li>{{ boss.name }} - Type: {{ boss.get_boss_type_display }} - Victories: {{ boss.victories }}</li>
+            <img src="{{ boss.set_image }}"
+                 alt="{{ boss.name }} Image"
+                 width="100">
+
+            <li>
+                {{ boss.name }}
+                - Type: {{ boss.get_boss_type_display }}
+                - Victories: {{ boss.victories }}
+            </li>
         {% endfor %}
+    </ul>
+
 {% endblock %}

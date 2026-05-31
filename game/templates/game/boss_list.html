@@ -1,15 +1,16 @@
-{% extends 'game/base.html' %}
-{% block content %}
-    <h1>Boss List -- BOSS APPEARS.</h1>
-    <ul>
-        {% for boss in bosses %}
-            <img src="{{ boss.set_image }}" alt="{{ boss.name }} Image" width="100">
-            <li>{{ boss.name }} - Type: {{ boss.get_boss_type_display }} - Victories: {{ boss.victories }}</li>
-            {% csrf_token %}
-            <form method="post" action="{% url 'boss_fight' boss.pk %}">
-                <button type="submit">Fight {{ boss.name }}</button>
-            </form>
+    {% extends 'game/base.html' %}
+    {% block content %}
+        <h1>Boss List -- BOSS APPEARS.</h1>
+        <ul>
+            {% for boss in bosses %}
+                <img src="{{ boss.set_image }}" alt="{{ boss.name }} Image" width="100">
+                <li>{{ boss.name }} - Type: {{ boss.get_boss_type_display }} - Victories: {{ boss.victories }}</li>
+                
+                <form method="post" action="{% url 'game:boss_fight' boss.pk %}">
+                    {% csrf_token %}
+                    <button type="submit">Fight {{ boss.name }}</button>
+                </form>
 
-        {% endfor %}
-{% endblock %}
+            {% endfor %}
+    {% endblock %}
 

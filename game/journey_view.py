@@ -11,12 +11,12 @@ class JourneyView(View):
     def get(self, request):
         warrior = self._get_warrior(request)
         if not warrior:
-            return redirect('tavern')
+            return redirect('game:game:tavern')
 
         goblin = self._get_or_choose_goblin(request)
         if goblin is None:
             print("No goblins left! Redirecting to reset.")
-            return redirect('reset')
+            return redirect('game:reset')
 
         return render(request, self.template_name, {
             'warrior': warrior,
@@ -28,18 +28,18 @@ class JourneyView(View):
         print(request.method)
         warrior = self._get_warrior(request)
         if not warrior:
-            return redirect('tavern')
+            return redirect('game:tavern')
 
         goblin = self._get_or_choose_goblin(request)
         if goblin is None:
-            return redirect('reset')
+            return redirect('game:reset')
 
         if request.POST.get('flee') == 'flee':
             print("Fleeing from battle, returning to tavern.")
             print(request.session.items(), flush=True, end="\n\n")
             request.session.pop('current_goblin_id', None)
             request.session.pop('warrior_id', None)
-            return redirect('tavern')
+            return redirect('game:tavern')
         #WARRIOR ATTACK
         if request.POST.get('attack') == 'attack':
             if warrior.miss_chance > 0:
@@ -65,8 +65,8 @@ class JourneyView(View):
             warrior.save()
             request.session.pop('current_goblin_id', None)
             if not Monster.objects.filter(monster_type='goblin', health__gt=0).exists():
-                #return redirect('reset')
-                return redirect('encounter')
+                #return redirect('game:reset')
+                return redirect('game:encounter')
 
         # Use default refresh to avoid type-checking issues with the "fields" parameter
         goblin.refresh_from_db()
