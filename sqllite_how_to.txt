@@ -1,0 +1,22 @@
+sqlite3 db.sqlite3
+.tables
+.schema game_warrior
+SELECT * FROM game_warrior;
+SELECT * FROM game_warrior LIMIT 10;
+SELECT id, name, victories
+FROM game_warrior;
+SELECT *
+FROM game_warrior
+WHERE health < 50;
+SELECT *
+FROM game_warrior
+ORDER BY victories DESC;
+SELECT COUNT(*)
+FROM game_warrior;
+.headers on
+.mode column
+SELECT id, name, victories
+FROM game_warrior
+LIMIT 10;
+
+.quit

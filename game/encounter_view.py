@@ -1,6 +1,7 @@
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
 from .models import Monster
+from .boss import Boss
 from .warrior import Warrior
 from django import forms
 
@@ -12,6 +13,8 @@ class EncounterView(View):          # inherits from Django's View
         if not warrior_id:
             return redirect('game:tavern')
         if request.POST.get('flee') == 'flee':
+            request.session.pop('current_goblin_id', None)
+            request.session.pop('warrior_id', None)
             print(request.POST)
             # Clear current goblin so next fight picks a fresh one
             del request.session['current_goblin_id']
@@ -33,6 +36,7 @@ class EncounterView(View):          # inherits from Django's View
                       {'warrior': warrior, 'troll': troll, 'dragon': dragon})
 
     def post(self, request):        # handles POST
+        
         print(request.POST, " - POST received in EncounterView")
         warrior = Warrior.objects.get(
             pk=request.session['warrior_id'])
@@ -42,7 +46,8 @@ class EncounterView(View):          # inherits from Django's View
             warrior.victories += 1
             warrior.save()
             print(f"Warrior {warrior.name} attacked and now has {warrior.health} health and {warrior.victories} victories.")
-            return redirect('game:boss_list')
+            print(f"Current session data: {request.session.items()}, boss health: {Boss.objects.filter(boss_type='dragon').first()._get_health()}")
+            return redirect(self.template_name)
         return redirect('game:tavern')
     
    

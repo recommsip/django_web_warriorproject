@@ -23,14 +23,15 @@ class BossView(ListView):
 
 class VictoryView(ListView):
     model         = Warrior
-    template_name = 'game/victory.html'
+    template_name = 'game/wins_vs_losses.html'
     context_object_name = 'warriors'   # name used in template
 
     def get_queryset(self):
         # Override to sort by victories descending
         return Warrior.objects.order_by('-victories')
-
+    
 def tavern(request):
+    request.session.set_expiry(0)  # Session expires on browser close
     choosen_warrior_id = request.session.get('warrior_id')
     if choosen_warrior_id:
         return redirect('game:journey')             # already have a warrior, skip tavern
@@ -40,6 +41,7 @@ def tavern(request):
     if request.method == 'POST':
         form = CreateWarriorForm(request.POST)
         if form.is_valid():
+           
             warrior = form.save()             # INSERT into DB
             request.session['warrior_id'] = warrior.pk
             return redirect('game:journey')

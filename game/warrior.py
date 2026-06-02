@@ -9,6 +9,7 @@ class Warrior(Character):
                                     default='warrior')
         rage       = models.IntegerField(default=0)
         victories  = models.IntegerField(default=0)
+        defeats     = models.IntegerField(default=0)
         image = models.CharField(max_length=100, default='/static/images/Warrior.png')
         miss_chance = models.IntegerField(default=0)  # New field for miss chance
        # NEW

@@ -8,37 +8,39 @@ from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
 
 class BossListView(View):
-    template_name = 'game/boss.html'
-    
+    template_name = '.game/boss.html'
+
     def get(self, request, pk=None):
         warrior_id = request.session.get('warrior_id')
         if not warrior_id:
             return redirect('tavern')
 
         warrior = Warrior.objects.get(pk=warrior_id)
-
-    
-        boss = Monster.objects.get_or_create(
-            name='Fire Dragon',
-            defaults={'boss_type':'overlord','health':150,'max_health':150},
-            
-        )[0]
+        random_value = random.randint(1, 4)
+        boss = Boss.objects.get(pk=random_value)    
+        
+        boss.save()
         if pk==None:
             return render(request, self.template_name, {'warrior': warrior, 'boss': boss})
         else:
-            boss = Monster.objects.get(pk=pk)
+            boss = Boss.objects.get(pk=pk)
             return render(request, self.template_name, {'warrior': warrior, 'boss': boss})
     
     def post(self, request):
-        
-        boss = Boss.objects.filter(boss_type='overlord', health__gt=0).first()
-        
+        #boss = self._get_or_choose_boss(request)
+        #boss = Monster.objects.filter(boss_type='overlord', health__gt=0).first()
+        boss_id = request.session.get('current_boss_id')
+        boss = Boss.objects.filter(pk=boss_id, health__gt=0).first()
         warrior = self._get_warrior(request)
         if not warrior:
+            print("No warrior found in session. Redirecting to tavern.")
             return redirect('game:tavern')
 
         if not boss:
-            return redirect('game:victory')
+            print("Boss not found!")
+            get_boss = Boss.objects.all().first()
+            print(f"Available bosses: {get_boss}")
+            return render(request, 'game:boss_list')
 
         boss.health -= warrior.attack_power
         warrior.health -= 20
@@ -49,7 +51,8 @@ class BossListView(View):
             warrior.victories += 1
             warrior.save()
             del request.session['current_boss_id']
-            return redirect('game:victory')
+            print("No bosses left! Redirecting to wins vs losses.")
+            return redirect('game:wins_vs_losses')
         
         return redirect('game:boss_fight', pk=boss.pk)
     
@@ -60,13 +63,14 @@ class BossListView(View):
         return Warrior.objects.get(pk=warrior_id)
 
     def _get_or_choose_boss(self, request):
-        bosses = Boss.objects.filter(monster_type='boss', health__gt=0)
+        print("Fetching bosses for encounter...")
+        bosses = Boss.objects.filter(boss_type='boss', health__gt=0)
         if not bosses.exists():
             return None
 
         boss_id = request.session.get('current_boss_id')
         if boss_id:
-            boss = Monster.objects.filter(pk=boss_id, health__gt=0).first()
+            boss = Boss.objects.filter(pk=boss_id, health__gt=0).first()
             if boss:
                 return boss
 

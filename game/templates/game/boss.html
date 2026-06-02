@@ -1,49 +1,146 @@
 {% extends 'game/base.html' %}
 
 {% block content %}
-    {% for boss in bosses %}
-        <img src="{{ boss.set_image }}" alt="{{ boss.name }} Image" width="100">
-    {% endfor %}
-    <h1>Boss -- Encounter</h1>
 
-    <p>You have chosen to fight {{ boss.name }}!</p>
+<div class="container mt-5">
 
-    {% if boss.is_alive %}
-        <p>{{ boss.name }} is still alive. You can choose to attack or flee.</p>
+{% if warrior.is_alive %}
 
-        <form method="post">
-            {% csrf_token %}
-            <button name="encounter" value="attack_next">
-                Attack!
-            </button>
+<h1 class="text-center mb-5">
+    {{ warrior.name }} faces {{ boss.name }}!
+</h1>
 
-            <button name="action" value="flee">
-                Flee
-            </button>
-        </form>
+<div class="row align-items-center text-center">
 
-    {% else %}
+    <!-- WARRIOR -->
+    <div class="col-md-5">
+        <div class="card shadow-lg p-4">
 
-        <p>{{ boss.name }} has been defeated! You can continue on your journey.</p>
+            {% if warrior.image %}
+                <img src="{{ warrior.set_image }}"
+                     class="img-fluid rounded mb-3"
+                     style="max-height:450px;">
+            {% endif %}
 
-        <a href="{% url 'game:journey' %}">
-            Continue Journey
-        </a>
+            <h2>{{ warrior.name }}</h2>
 
-    {% endif %}
+            <p>
+                HP: {{ warrior.health }} / {{ warrior.max_health }}
+            </p>
 
-    <ul>
-        {% for boss in bosses %}
-            <img src="{{ boss.set_image }}"
-                 alt="{{ boss.name }} Image"
-                 width="100">
+            <div class="progress mb-3">
+                <div class="progress-bar bg-success"
+                     style="width: {{ warrior.health_pct }}%">
+                </div>
+            </div>
 
-            <li>
-                {{ boss.name }}
-                - Type: {{ boss.get_boss_type_display }}
-                - Victories: {{ boss.victories }}
-            </li>
-        {% endfor %}
-    </ul>
+            <p>
+                Attack Power: {{ warrior.attack_power }}
+            </p>
+
+            {% if boss.is_alive %}
+                <form method="post">
+                    {% csrf_token %}
+
+                    <button class="btn btn-danger btn-lg"
+                            name="action"
+                            value="attack">
+                        Attack {{ boss.name }}
+                    </button>
+
+                    <button class="btn btn-warning"
+                            name="action"
+                            value="flee">
+                        Flee
+                    </button>
+
+                </form>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <!-- VS -->
+    <div class="col-md-2">
+
+        <h1 class="display-1 fw-bold">
+            VS
+        </h1>
+
+        <p class="lead">
+            Boss Battle
+        </p>
+
+    </div>
+
+    <!-- BOSS -->
+    <div class="col-md-5">
+
+        <div class="card shadow-lg p-4">
+
+            {% if boss.image %}
+                <img src="{{ boss.set_image }}"
+                     class="img-fluid rounded mb-3">
+            {% endif %}
+
+            <h2>{{ boss.name }}</h2>
+
+            <p>
+                HP: {{ boss.health }} / {{ boss.max_health }}
+            </p>
+
+            <div class="progress mb-3">
+                <div class="progress-bar bg-danger"
+                     style="width: {{ boss.health_pct }}%">
+                </div>
+            </div>
+
+            <p>
+                Type: {{ boss.get_boss_type_display }}
+            </p>
+
+            <p>
+                Victories: {{ boss.victories }}
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% else %}
+
+<div class="text-center">
+
+    <h1>{{ warrior.name }} has fallen...</h1>
+
+    <a href="{% url 'game:reset' %}"
+       class="btn btn-primary">
+        Start Over
+    </a>
+
+</div>
+
+{% endif %}
+
+{% if not boss.is_alive %}
+
+<div class="text-center mt-5">
+
+    <h2 class="text-success">
+        {{ boss.name }} has been defeated!
+    </h2>
+
+    <a href="{% url 'game:journey' %}"
+       class="btn btn-success">
+        Continue Journey
+    </a>
+
+</div>
+
+{% endif %}
+
+</div>
 
 {% endblock %}

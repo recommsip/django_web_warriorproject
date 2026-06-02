@@ -30,6 +30,7 @@ class Character(models.Model):
 class Monster(Character):
     TYPES = [('goblin','Goblin'),('troll','Troll'),('dragon','Dragon')]
     monster_type = models.CharField(max_length=20, choices=TYPES)
+    boss_type = models.CharField(max_length=20, default='')  # New field to distinguish bosses
     xp    = models.IntegerField(default=50)
     rage       = models.IntegerField(default=0)
     atk_power = models.IntegerField(default=10)

@@ -35,6 +35,8 @@ class JourneyView(View):
             return redirect('game:reset')
 
         if request.POST.get('flee') == 'flee':
+            warrior.defeats += 1
+            warrior.save()
             print("Fleeing from battle, returning to tavern.")
             print(request.session.items(), flush=True, end="\n\n")
             request.session.pop('current_goblin_id', None)

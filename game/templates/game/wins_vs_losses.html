@@ -1,7 +1,26 @@
 {% extends 'game/base.html' %}
+{% load warrior_wins_losses_tag %}
+
 {% block content %}
+{% render_character_table warriors %}
+<p><a href="{% url 'game:journey' %}">Go back to Journey</a></p>
+    {% if page_obj.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
 
+    <span>
+        Page {{ page_obj.number }}
+        of {{ page_obj.paginator.num_pages }}
+    </span>
 
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
 
-
+</div>
+<h1>Wins vs Losses</h1>
+    <p>Here you can see your victories and defeats against the bosses you've faced.</p>
+    <p><a href="{% url 'game:journey' %}">Go back to Journey</a></p>
 {% endblock %}

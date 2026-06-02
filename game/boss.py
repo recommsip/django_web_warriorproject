@@ -9,6 +9,9 @@ class Boss(Character):
     max_health = models.IntegerField(default=150)
     image = models.CharField(max_length=100, default='/static/images/Boss.png')
 
+    def _get_health(self):
+        return self.health
+    
     @classmethod
     def create_bosses(cls):
 
@@ -35,7 +38,7 @@ class Boss(Character):
                 'image': '/static/images/Ancient_Dragon.png'
             },
         ]
-
+            
         for boss in bosses:
             cls.objects.update_or_create(
                 name=boss['name'],

@@ -5,6 +5,16 @@
     <p>To be continued...</p>
     {% if boss.is_alive %}
         <p>{{ boss.name }} is still alive. You can choose to attack or flee.</p>
+        <p>{{ boss.name }} Health: {{ boss.health }} / {{ boss.max_health }}</p>
+        <img src="{{ boss.image_url }}" alt="{{ boss.name }}" />
+         <form method='post'>
+            {% csrf_token %}
+            <button name='encounter' value='attack_next'>Attack!</button>
+            <button name='action' value='flee'>Flee</button>
+        </form>
+     {% else %}
+        <p>{{ boss.name }} has been defeated! You can continue on your journey.</p>
+        <a href='{% url "game:journey" %}'>Continue Journey</
         <form method='post'>
             {% csrf_token %}
             <button name='encounter' value='attack_next'>Attack!</button>
