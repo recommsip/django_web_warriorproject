@@ -8,18 +8,32 @@
         <img src="/static/images/rogue.png" alt="Rogue" width="100">
         <img src="/static/images/ranger.png" alt="Ranger" width="100">
         <img src="/static/images/warlock.png" alt="Warlock" width="100">
-
-    
     <div>
       <form method='get'>
         <button type='submit' name="winslosses">Wins Losses</button>
       </form>
-     
-      <form method='post'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type='submit'>Begin Journey</button>
-      </form>
+
+    
+    <div class="form-group">
+      <form method= ' post' >
+          {% csrf_token %}
+          <button type='submit' name="warrior_list">Choose Warrior</button>
+        </form>
+        {% if warriors.exists %}
+          <ul>
+            {% for warrior in warriors %}
+              <li>{{ warrior.name }} - Class: {{ warrior.get_warrior_class_display }} - Health: {{ warrior.health }} / {{ warrior.max_health }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No warriors available. Please create a warrior to begin your journey.</p>
+        {% endif %}
+    </div>
+    <form method='post'>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type='submit'>Begin Journey</button>
+    </form>
         
     </div>
 {% endblock %}

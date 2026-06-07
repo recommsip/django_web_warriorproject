@@ -1,5 +1,7 @@
 import random
 
+from requests import request
+
 from game.forms import CreateWarriorForm
 from game.models import Monster
 from game.boss import Boss
@@ -11,6 +13,7 @@ class BossListView(View):
     template_name = '.game/boss.html'
 
     def get(self, request, pk=None):
+        print("GET request received in BossListView")
         warrior_id = request.session.get('warrior_id')
         if not warrior_id:
             return redirect('tavern')
@@ -27,8 +30,9 @@ class BossListView(View):
             return render(request, self.template_name, {'warrior': warrior, 'boss': boss})
     
     def post(self, request):
-        #boss = self._get_or_choose_boss(request)
-        #boss = Monster.objects.filter(boss_type='overlord', health__gt=0).first()
+       
+        
+        
         boss_id = request.session.get('current_boss_id')
         boss = Boss.objects.filter(pk=boss_id, health__gt=0).first()
         warrior = self._get_warrior(request)
@@ -42,10 +46,10 @@ class BossListView(View):
             print(f"Available bosses: {get_boss}")
             return render(request, 'game:boss_list')
 
-        boss.health -= warrior.attack_power
-        warrior.health -= 20
-        boss.save()
-        warrior.save()
+        # boss.health -= warrior.attack_power
+        # warrior.health -= 20
+        # boss.save()
+        # warrior.save()
 
         if not boss.is_alive:
             warrior.victories += 1
@@ -55,6 +59,8 @@ class BossListView(View):
             return redirect('game:wins_vs_losses')
         
         return redirect('game:boss_fight', pk=boss.pk)
+    
+  
     
     def _get_warrior(self, request):
         warrior_id = request.session.get('warrior_id')
@@ -79,5 +85,7 @@ class BossListView(View):
         return render(request, 'game/boss_list.html', {
         'bosses': bosses,
     })
+        
+  
     
    

@@ -1,29 +1,104 @@
 {% extends 'game/base.html' %}
 {% block content %}
-    <h1>Boss Fight</h1>
-    <p>You have chosen to fight {{ boss.name }}!</p>
-    <p>To be continued...</p>
-    {% if boss.is_alive %}
-        <p>{{ boss.name }} is still alive. You can choose to attack or flee.</p>
-        <p>{{ boss.name }} Health: {{ boss.health }} / {{ boss.max_health }}</p>
-        <img src="{{ boss.image_url }}" alt="{{ boss.name }}" />
-         <form method='post'>
-            {% csrf_token %}
-            <button name='encounter' value='attack_next'>Attack!</button>
-            <button name='action' value='flee'>Flee</button>
-        </form>
+
+<div class="container mt-5">
+<div class="row align-items-center text-center">
+
+<div class="col-md-5">
+  <h1>Boss Fight</h1>
+      <div class="card shadow-lg p-4">
+        {% if boss.is_alive %}
+        
+        <!-- future boss image -->
+        <div class="mb-3">
+          <div class="bg-secondary text-white d-flex align-items-center justify-content-center"
+               style="height:450px;">
+            {% if boss.image %}
+              <img src="{{ boss.set_image }}" alt="Boss Image" class="card img-fluid rounded center-block" style="max-height: 450px;">
+            {% endif %}
+          </div>
+        </div>
+        <h2>{{ boss.name }}</h2>
+        <p>
+          HP: {{ boss.health }} / {{ boss.max_health }}
+        </p>
+        <div class="progress mb-3 progress-bar-height">
+          <div
+            class="progress-bar bg-danger progress-fill"
+            style="width: {{ boss.health_pct }}%">
+          </div>
+        </div>
+        {% if boss.miss_chance > 0 %}
+          <p class="text-warning fw-bold">
+            Warning: {{ boss.name }}'s attacks may miss!
+          </p>
+        {% endif %}
+        <p>
+          Attack Power: {{ boss.attack_power }}
+        </p>
+</div>
+</div>
+  
+        <div class="col-md-2 d-flex justify-content-center align-items-center">
+            <h1 class="display-3 fw-bold">
+                VS
+            </h1>
+        </div>
+        <!-- future warrior image -->
+        <div class="col-md-5">
+             <div class="card shadow-lg p-4">
+                 <div class="mb-12">
+                 <div class="bg-dark text-white d-flex align-items-center justify-content-center goblin-image-container">
+                    {% if warrior.image %}
+                    <img src="{{ warrior.set_image }}" alt="Warrior Image" class="card img-fluid rounded center-block" style="max-height: 450px;">
+                    {% endif %}
+                </div>
+            </div>
+   
+
+        {% if warrior.health <= 0 %}
+            <p>{{ warrior.name }} has been defeated by {{ boss.name }}.</p>
+            <a href="{% url 'game:wins_vs_losses' %}">View Wins vs Losses</a>
+        {% else %}
+
+            <!-- <p>{{ warrior.name }} is still alive and fighting {{ boss.name }}!</p>
+            <p>{{ warrior.name }} Health: {{ warrior.health }} / {{ warrior.max_health }}</p>
+            <p>{{ boss.name }} is still alive. You can choose to attack or flee.</p>
+            <p>{{ boss.name }} Health: {{ boss.health }} / {{ boss.max_health }}</p> -->
+
+
+            <p>
+                HP: {{ warrior.health }} / {{ warrior.max_health }}
+            </p>
+            <p> Miss chance: {{ warrior.miss_chance }}%</p>
+            <div class="progress mb-3" style="height: 25px;">
+            <div
+                class="progress-bar bg-danger"
+                style="width: {{ warrior.health_pct }}%">
+            </div>
+            </div>
+         </div>
+        </div>
+        <div class="col-md-12 text-center mt-4">
+            <form method='post'>
+                {% csrf_token %}
+                <button name='encounter' value='attack_next'>Attack!</button>
+                <button name='action' value='flee'>Flee</button>
+                <button name='action' value='drink_potion'>Drink Potion</button>
+            </form>
+        {% endif %}
+        </div>
+</div>
+</div>     
      {% else %}
         <p>{{ boss.name }} has been defeated! You can continue on your journey.</p>
-        <a href='{% url "game:journey" %}'>Continue Journey</
+        <a href='{% url "game:journey" %}'>Continue Journey</a>
         <form method='post'>
             {% csrf_token %}
             <button name='encounter' value='attack_next'>Attack!</button>
             <button name='action' value='flee'>Flee</button>
+          
         </form>
-    {% else %}
-        <p>{{ boss.name }} has been defeated! You can continue on your journey.</p>
-        <a href='{% url "game:journey" %}'>Continue Journey</a>
-    {% endif %}
     <p><a href="{% url 'game:journey' %}">Go back to Journey</a></p>
-
+    {% endif %}
 {% endblock %}

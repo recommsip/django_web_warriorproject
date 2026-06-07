@@ -7,7 +7,7 @@ class Boss(Character):
     reward_xp = models.IntegerField(default=200)
     health = models.IntegerField(default=150)
     max_health = models.IntegerField(default=150)
-    image = models.CharField(max_length=100, default='/static/images/Boss.png')
+    image = models.CharField(max_length=100)
 
     def _get_health(self):
         return self.health
@@ -56,3 +56,7 @@ class Boss(Character):
             'dragon':  '/static/images/' + self.name.replace(' ', '_') + '.png',
         }
         return images.get(self.boss_type, '/static/images/' + self.name.replace(' ', '_') + '.png')
+    
+    def __str__(self):
+        return f"{self.name} (Type: {self.boss_type}, Health: {self.health}/{self.max_health})"
+    

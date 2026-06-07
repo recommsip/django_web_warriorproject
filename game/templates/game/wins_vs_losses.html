@@ -2,6 +2,18 @@
 {% load warrior_wins_losses_tag %}
 
 {% block content %}
+<div class="container mt-5">
+    {% if boss and boss.image %}
+            <img src="{{ set_boss_image }}"
+                class="img-fluid rounded mb-3"
+                style="max-height:450px;">
+        {% endif %}
+</div>
+<div class="container mt-5">
+        <h1 class="text-center mb-5">
+            {{ warrior.name }} has been defeated by {{ boss.name }}.
+        </h1>
+</div>
 {% render_character_table warriors %}
 <p><a href="{% url 'game:journey' %}">Go back to Journey</a></p>
     {% if page_obj.has_previous %}
