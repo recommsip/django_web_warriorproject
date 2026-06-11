@@ -10,6 +10,7 @@ from .warrior import Warrior
 from .encounter_view import EncounterView
 from .journey_view import JourneyView
 from .boss_view import BossListView
+from .character_view import CharacterDetailView
 from .wins_losses import WinsVsLossesView
 
 
@@ -48,7 +49,7 @@ def tavern(request):
            
             warrior = form.save()             # INSERT into DB
             request.session['warrior_id'] = warrior.pk
-            return redirect('game:journey')
+            return redirect('game:character_sheet', pk=warrior.pk)  # redirect to character detail page
     else:
         form = CreateWarriorForm()            # empty form
     return render(request, 'game/tavern.html', {'form': form})

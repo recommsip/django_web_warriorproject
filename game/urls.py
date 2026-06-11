@@ -13,5 +13,6 @@ urlpatterns = [
     path('boss_list/', views.BossListView.as_view(), name='boss_list'),
     path('boss_fight/<int:pk>/', views.BossListView.as_view(), name='boss_fight'),
     path('wins-vs-losses/', views.WinsVsLossesView.as_view(), name='wins_vs_losses'),
+    path('character/<int:pk>/', views.CharacterDetailView.as_view(), name='character_sheet'),
     path('reset/', views.reset, name='reset'),
 ]

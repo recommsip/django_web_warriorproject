@@ -1,0 +1,35 @@
+{% extends 'game/base.html' %}
+{% block content %}
+
+{% if warrior %}
+<div class="container mt-5">
+    <div class="row align-items-center text-center">
+        <div class="col-md-6">
+            <h1>{{ warrior.name }}'s Character Sheet</h1>
+            <p>Class: {{ warrior.char_class }}</p>
+            <p>HP: {{ warrior.health }} / {{ warrior.max_health }}</p>
+            <div class="progress mb-3 progress-bar-height">
+                <div
+                    class="progress-bar bg-success progress-fill"
+                    style="width: {{ warrior.health_pct }}%">
+                </div>
+            </div>
+            <p>Attack Power: {{ warrior.attack_power }}</p>
+            <p>Defense: {{ warrior.defense }}</p>
+            <p>Experience Points: {{ warrior.experience_points }}</p>
+            <div class="d-flex justify-content-around mt-4">
+            <a href="{% url 'game:journey' %}" class="btn btn-primary btn-lg">Continue Journey</a>
+        </div>
+        </div>
+        <div class="col-md-6">
+            {% if warrior.image %}
+                <img src="{{ warrior.set_image }}" alt="Character Image" class="img-fluid rounded center-block" style="max-height: 2048px;">
+            {% endif %}
+        </div>
+        
+</div>
+{% else %}
+    <p>No character found. Please create a character to view the character sheet.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from django.db import models  # type: ignore[import]
 import random
 
@@ -9,6 +8,7 @@ class Character(models.Model):
     health = models.IntegerField(default=100)
     max_health = models.IntegerField(default=100)
     image = models.CharField(max_length=100, default='/static/images/character.png')
+    
 
     class Meta:
         abstract = True          # <-- no table created
@@ -30,7 +30,7 @@ class Character(models.Model):
 class Monster(Character):
     TYPES = [('goblin','Goblin'),('troll','Troll'),('dragon','Dragon')]
     monster_type = models.CharField(max_length=20, choices=TYPES)
-    boss_type = models.CharField(max_length=20, default='')  # New field to distinguish bosses
+    #boss_type = models.CharField(max_length=20, default='')  # New field to distinguish bosses
     xp    = models.IntegerField(default=50)
     rage       = models.IntegerField(default=0)
     atk_power = models.IntegerField(default=10)

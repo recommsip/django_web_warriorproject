@@ -8,7 +8,9 @@ class CreateWarriorForm(forms.ModelForm):
         images = {
             'warrior': '/static/images/warrior.png',
             'mage': '/static/images/mage.png',
-            'rogue': '/static/images/rogue.png'
+            'rogue': '/static/images/rogue.png',
+            'ranger': '/static/images/ranger.png',
+            'warlock': '/static/images/warlock.png'
         }
         widgets = {
             'name': forms.TextInput(

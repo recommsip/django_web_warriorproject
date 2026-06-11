@@ -22,6 +22,8 @@ class EncounterView(View):          # inherits from Django's View
     print(f"Current sessions in database: {Session.objects.all()}")
     
     def get(self, request):         # handles GET
+        session = request.session
+        print(f"GET request received in EncounterView. Current session data: {session.items()}")
         if self.boss and self.boss.health <= 0: 
             print(f"Boss {self.boss.name} is already defeated. Redirecting to wins vs losses.")
             # return redirect('game:wins_vs_losses')
@@ -45,13 +47,12 @@ class EncounterView(View):          # inherits from Django's View
                       {'warrior': warrior, 'boss': self.boss})
 
     def post(self, request):        # handles POST
-        
+        ''' post method for encounter view '''
         print(request.POST, " - POST received in EncounterView")
         
         print("POST DATA:", request.POST.dict())
         #boss = self._get_or_choose_boss(request)
         #boss = Monster.objects.filter(boss_type='overlord', health__gt=0).first()
-        print(request.POST, " - POST received in BossListView")
         ##### drink potion logic
         if request.POST.get('action') == 'drink_potion':
             print("Player chose to drink a potion.")
@@ -68,25 +69,25 @@ class EncounterView(View):          # inherits from Django's View
         boss.save()
         
         if boss.health <= 0:
+            print(f"Boss {boss.name} has been defeated! Redirecting to wins vs losses.")
             if warrior.health > 0:
                 warrior.victories += 1
                 warrior.save()
+                print(f"Warrior {warrior.name} has defeated the boss! Redirecting to wins vs losses.")
                 print(f"Warrior {warrior.name} attacked and now has {warrior.health} health and {warrior.victories} victories.")
                 print(f"Current session data: {request.session.items()}, boss health: {boss.health}")
-                return render(request, 'game/boss_fight.html',
+                return render(request, 'game/wins_vs_losses.html',
                         {'warrior': warrior, 'boss': self.boss})
-                return redirect('game:tavern')
-            print(f"Boss {boss.name} has been defeated! Redirecting to wins vs losses.")
             
-            return render(request, 'game/wins_vs_losses.html', {'warrior': warrior, 'boss': boss})
+            # return render(request, 'game/wins_vs_losses.html', {'warrior': warrior, 'boss': boss})
         else:
             if warrior.health <= 0:
-                print(f"Warrior {warrior.name} has been defeated! Redirecting to wins vs losses.")
+                # print(f"Warrior {warrior.name} has been defeated! Redirecting to wins vs losses.")
                 return redirect('game:wins_vs_losses')
             print(f"Warrior {warrior.name} attacked and now has {warrior.health} health.")
             print(f"Boss {boss.name} attacked and now has {boss.health} health.")
             print(f"Current session data: {request.session.items()}")
-            return render(request, 'game/boss_fight.html',
+            return render(request, 'game/wins_vs_losses.html',
                         {'warrior': warrior, 'boss': boss})
    
     def _drink_potion(self, request):

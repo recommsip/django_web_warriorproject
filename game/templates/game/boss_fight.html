@@ -7,7 +7,7 @@
 <div class="col-md-5">
   <h1>Boss Fight</h1>
       <div class="card shadow-lg p-4">
-        {% if boss.is_alive %}
+      {% if boss.is_alive %}
         
         <!-- future boss image -->
         <div class="mb-3">
@@ -82,21 +82,22 @@
         <div class="col-md-12 text-center mt-4">
             <form method='post'>
                 {% csrf_token %}
-                <button name='encounter' value='attack_next'>Attack!</button>
-                <button name='action' value='flee'>Flee</button>
-                <button name='action' value='drink_potion'>Drink Potion</button>
+                <button class="btn btn-danger btn-lg" name='encounter' value='attack_next'>Attack!</button>
+                <button class="btn btn-warning btn-lg" name='action' value='flee'>Flee</button>
+                <button class="btn btn-success btn-lg" name='action' value='drink_potion'>Drink Potion</button>
             </form>
         {% endif %}
         </div>
 </div>
 </div>     
-     {% else %}
+      {% else %}
+        <img src="{{ boss.set_image }}" alt="Boss Image" class="card img-fluid rounded center-block" style="max-height: 450px;">
         <p>{{ boss.name }} has been defeated! You can continue on your journey.</p>
         <a href='{% url "game:journey" %}'>Continue Journey</a>
         <form method='post'>
             {% csrf_token %}
-            <button name='encounter' value='attack_next'>Attack!</button>
-            <button name='action' value='flee'>Flee</button>
+            <button class="btn btn-danger btn-lg"  name='encounter' value='attack_next'>Attack!</button>
+            <button class="btn btn-warning btn-lg" name='action' value='flee'>Flee</button>
           
         </form>
     <p><a href="{% url 'game:journey' %}">Go back to Journey</a></p>
