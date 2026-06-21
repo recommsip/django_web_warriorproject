@@ -9,10 +9,11 @@ from django.core.exceptions import ValidationError
 from .boss_view import BossListView
 import random
 
-from game import boss
+#from game import boss
 
 class EncounterView(View):          # inherits from Django's View
     ''' this is some description '''
+    template = "game/boss_fight.html"
     random_int = random.randint(0, 3)
     random_boss = Boss.objects.all().order_by('?').first() if Boss.objects.exists() else None
     boss = random_boss if random_boss else None
@@ -33,13 +34,7 @@ class EncounterView(View):          # inherits from Django's View
         warrior_id = request.session.get('warrior_id')
         if not warrior_id:
             return redirect('game:tavern')
-        if request.POST.get('flee') == 'flee':
-            request.session.pop('current_goblin_id', None)
-            request.session.pop('warrior_id', None)
-            print(request.POST)
-            # Clear current goblin so next fight picks a fresh one
-            del request.session['current_goblin_id']
-            return redirect('game:tavern')
+       
         
         warrior = Warrior.objects.get(pk=warrior_id)
         
@@ -50,6 +45,14 @@ class EncounterView(View):          # inherits from Django's View
         ''' post method for encounter view '''
         print(request.POST, " - POST received in EncounterView")
         
+        if request.POST.get('flee') == 'flee':
+            request.session.pop('current_goblin_id', None)
+            request.session.pop('warrior_id', None)
+            print(request.POST)
+            # Clear current goblin so next fight picks a fresh one
+            del request.session['current_goblin_id']
+            return redirect('game:tavern')
+        
         print("POST DATA:", request.POST.dict())
         #boss = self._get_or_choose_boss(request)
         #boss = Monster.objects.filter(boss_type='overlord', health__gt=0).first()
@@ -57,16 +60,18 @@ class EncounterView(View):          # inherits from Django's View
         if request.POST.get('action') == 'drink_potion':
             print("Player chose to drink a potion.")
             return self._drink_potion(request)
-        
+       
         #boss = Boss.objects.get(pk=request.session.get('current_boss_id'))
         warrior = Warrior.objects.get(
             pk=request.session['warrior_id'])
-        warrior.health -= 10
-        warrior.save()
-        
+         
         boss = Boss.objects.get(pk=self.boss_id)
-        boss.health -= 15
-        boss.save()
+       
+        self.warrior_attack(boss, warrior)
+        self.boss_attack(boss, warrior)
+       
+       
+        
         
         if boss.health <= 0:
             print(f"Boss {boss.name} has been defeated! Redirecting to wins vs losses.")
@@ -76,8 +81,7 @@ class EncounterView(View):          # inherits from Django's View
                 print(f"Warrior {warrior.name} has defeated the boss! Redirecting to wins vs losses.")
                 print(f"Warrior {warrior.name} attacked and now has {warrior.health} health and {warrior.victories} victories.")
                 print(f"Current session data: {request.session.items()}, boss health: {boss.health}")
-                return render(request, 'game/wins_vs_losses.html',
-                        {'warrior': warrior, 'boss': self.boss})
+                return render(request, 'game/wins_vs_losses.html', {'warrior': warrior, 'boss': boss})
             
             # return render(request, 'game/wins_vs_losses.html', {'warrior': warrior, 'boss': boss})
         else:
@@ -87,8 +91,7 @@ class EncounterView(View):          # inherits from Django's View
             print(f"Warrior {warrior.name} attacked and now has {warrior.health} health.")
             print(f"Boss {boss.name} attacked and now has {boss.health} health.")
             print(f"Current session data: {request.session.items()}")
-            return render(request, 'game/wins_vs_losses.html',
-                        {'warrior': warrior, 'boss': boss})
+            return render(request, 'game/boss_fight.html', {'warrior': warrior, 'boss': boss})
    
     def _drink_potion(self, request):
         warrior = Warrior.objects.get(
@@ -105,3 +108,15 @@ class EncounterView(View):          # inherits from Django's View
             print(f"{warrior.name} is already at full health.")
         
         return render(request, 'game/boss_fight.html', {'warrior': warrior, 'boss': self.boss})
+    
+    # Warrior attacks boss
+    def warrior_attack(self, boss, warrior):
+        print(f"Warrior Attack Power: {warrior.attack_power}, Warrior Health: {warrior.health}")
+        boss.health -= warrior.attack_power
+        boss.save()
+        
+    # Boss attacks warrior
+    def boss_attack(self, boss, warrior):
+        print(f"Boss Attack Power: {boss.attack_power}, Boss Health: {boss.health}")
+        warrior.health -= boss.attack_power
+        warrior.save()

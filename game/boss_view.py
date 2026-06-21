@@ -16,7 +16,7 @@ class BossListView(View):
         print("GET request received in BossListView")
         warrior_id = request.session.get('warrior_id')
         if not warrior_id:
-            return redirect('tavern')
+            return redirect('game:tavern')
 
         warrior = Warrior.objects.get(pk=warrior_id)
         random_value = random.randint(1, 4)

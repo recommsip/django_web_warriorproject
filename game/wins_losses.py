@@ -20,6 +20,7 @@ class WinsVsLossesView(View):
         boss = Boss.objects.filter(pk=boss_id).first() if boss_id else None
         
         warriors = Warrior.objects.all().order_by('-victories')
+        
         paginator = Paginator(warriors, 10)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)

@@ -1,0 +1,55 @@
+{% extends 'game/base.html' %}
+{% block content %}
+
+<div class="container d-flex">
+    <div class="row row-cols-5 g-2">
+
+        {% for warrior in warriors %}
+        <div class="col">
+            <div class="card d-flex text-center h-100 w-125">
+                <div class="card-body d-flex flex-column w-222">
+                    <img src="{{ warrior.set_image }}"     class="img-fluid"     style="height: 225px;">
+                        <h5>{{ warrior.name }}</h5>
+                        <p>{{ warrior.char_class }}</p>
+                        <p>Victories: {{ warrior.victories }}</p>
+                        <p>Experience: {{ warrior.experience}}
+                        <p>Character ID: {{warrior.pk}}</p>
+                        <a href="{% url 'game:character_sheet' warrior.id %}"   class="btn btn-primary mt-auto w-150">
+                            Continue
+                        </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+       
+        <div class="container d-flex">
+            <div class="col justify-center-align">
+                
+                <div class="row row-cols-1 align-center">
+                    <div class="text-center ">
+                        <p>
+                        {% if page_obj.has_previous %}
+                            <a class="btn btn-success" href="?page=1">First</a>
+                            <a class="btn btn-success" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        {% endif %}
+
+                        <span>
+                            Page {{ page_obj.number }}
+                            of {{ page_obj.paginator.num_pages }}
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a class="btn btn-success" href="?page={{ page_obj.next_page_number }}">Next</a>
+                            <a class="btn btn-success" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                        {% endif %}
+                        </p>
+                        <p><a class="btn btn-success" href="{% url 'game:tavern'  %}">Go back to Journey</a></p>
+                    </div>
+                </div>
+             
+             </div>
+              </div>
+        </div>
+</div>
+
+{% endblock %}

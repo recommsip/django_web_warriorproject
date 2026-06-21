@@ -11,8 +11,10 @@ from .encounter_view import EncounterView
 from .journey_view import JourneyView
 from .boss_view import BossListView
 from .character_view import CharacterDetailView
+from .selectcharacter_view import SelectCharacterView
 from .wins_losses import WinsVsLossesView
-
+from .boss_create_view import BossCreateView
+from .boss_delete import BossDeleteView
 
 class BossView(ListView):
     ''' View to display the list of bosses, sorted by boss type. '''
@@ -39,11 +41,20 @@ def tavern(request):
     request.session.set_expiry(0)  # Session expires on browser close
     choosen_warrior_id = request.session.get('warrior_id')
     if choosen_warrior_id:
-        return redirect('game:journey')             # already have a warrior, skip tavern
+        return redirect('game:journey', choosen_warrior_id)             # already have a warrior, skip tavern
+    
+    if request.method == 'POST' and request.POST.get('createBoss') == 'createBoss':
+        print("creating boss")
+        return redirect('game:boss_create')
+
+    if request.method == 'POST' and request.POST.get('characterSelect') == 'characterSelect':
+        print("Pick A previous Character...")
+        return redirect('game:character_select')
     
     # GET: show empty form
     # POST: validate, save warrior, store id in session
     if request.method == 'POST':
+       
         form = CreateWarriorForm(request.POST)
         if form.is_valid():
            

@@ -2,12 +2,13 @@ from django.db import models
 from game.models import Character
 
 class Boss(Character):
-    monster_type = 'boss'
+    # monster_type = 'boss'
     boss_type = models.CharField(max_length=20,default='Dragon')
     reward_xp = models.IntegerField(default=200)
     health = models.IntegerField(default=150)
     max_health = models.IntegerField(default=150)
-    image = models.CharField(max_length=100)
+    image = models.CharField(max_length=100, default='/game/static')
+    attack_power = models.IntegerField(default=15)
 
     def _get_health(self):
         return self.health
@@ -21,6 +22,7 @@ class Boss(Character):
                 'boss_type': 'goblin',
                 'health': 80,
                 'max_health': 80,
+                'attack_power': 9,
                 'image': '/static/images/Goblin_King.png'
             },
             {
@@ -28,6 +30,7 @@ class Boss(Character):
                 'boss_type': 'troll',
                 'health': 120,
                 'max_health': 120,
+                'attack_power': 12,
                 'image': '/static/images/Troll_Warlord.png'
             },
             {
@@ -35,6 +38,7 @@ class Boss(Character):
                 'boss_type': 'dragon',
                 'health': 200,
                 'max_health': 200,
+                'attack_power': 15,
                 'image': '/static/images/Ancient_Dragon.png'
             },
         ]

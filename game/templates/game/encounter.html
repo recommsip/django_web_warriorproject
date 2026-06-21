@@ -4,7 +4,6 @@
 <div class="row align-items-center text-center">
     <h1>Encounter</h1>
     <p>You continue on your journey and encounter a mysterious figure...</p>
-    <p>To be continued...</p>
 </div>
 <div class="row align-items-center text-center">
     <p>You have encountered the boss!</p>
@@ -18,14 +17,10 @@
         {% endif %}
 
     {% if not goblin.is_alive %}
-        <p>The goblin has been defeated! You can continue on your journey.</p>
          <form method='post'>{% csrf_token %}
             <button class="btn btn-danger btn-lg"  name='encounter' value='attack_next'>Attack!</button>
             <button class="btn btn-warning btn-lg" name='action' value='flee'>Flee</button>
         </form>
-    {% else %}
-        <p>The goblin has been defeated! You can continue on your journey.</p>
-        <a href='{% url "game:journey" %}'>Continue Journey</a>
     {% endif %}
     <p></p>
   

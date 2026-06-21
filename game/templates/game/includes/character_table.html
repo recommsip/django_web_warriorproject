@@ -1,19 +1,29 @@
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Victories</th>
-            <th>Defeats</th>
-        </tr>
-    </thead>
+<div class="container mt-5">
+    <div class="row align-items-center text-center">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Victories</th>
+                    <th>Defeats</th>
+                </tr>
+            </thead>
 
-    <tbody>
-        {% for character in characters %}
-        <tr>
-            <td>{{ character.name }}</td>
-            <td>{{ character.victories }}</td>
-            <td>{{ character.defeats }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            <tbody>
+                {% for character in characters %}
+                <tr>
+                    <div class="col-md-5">
+                        <td>{{ character.name }}</td>
+                    </div>
+                    <div class="col-md-2">
+                        <td>{{ character.victories }}</td>
+                    </div>
+                    <div class="col-md-5">
+                        <td>{{ character.defeats }}</td>
+                    </div>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

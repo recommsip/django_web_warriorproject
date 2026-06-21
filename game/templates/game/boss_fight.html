@@ -34,7 +34,7 @@
           </p>
         {% endif %}
         <p>
-          Attack Power: {{ boss.attack_power }}
+          Attack Power: {{ boss.atk_power }}
         </p>
 </div>
 </div>
@@ -71,6 +71,8 @@
                 HP: {{ warrior.health }} / {{ warrior.max_health }}
             </p>
             <p> Miss chance: {{ warrior.miss_chance }}%</p>
+
+            <p> Attack Power: {{ warrior.attack_power }}</p>
             <div class="progress mb-3" style="height: 25px;">
             <div
                 class="progress-bar bg-danger"

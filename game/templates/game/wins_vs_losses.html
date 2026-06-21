@@ -2,37 +2,53 @@
 {% load warrior_wins_losses_tag %}
 
 {% block content %}
-<div class="container mt-5">
-    {% if boss and boss.image %}
-            <img src="{{ set_boss_image }}"
-                class="img-fluid rounded mb-3"
-                style="max-height:450px;">
-        {% endif %}
-</div>
-<div class="container mt-5">
-        <h1 class="text-center mb-5">
-            {{ warrior.name }} has been defeated by {{ boss.name }}.
-        </h1>
-</div>
-{% render_character_table warriors %}
-<p><a href="{% url 'game:journey' %}">Go back to Journey</a></p>
-    {% if page_obj.has_previous %}
-        <a href="?page=1">First</a>
-        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-    {% endif %}
 
-    <span>
-        Page {{ page_obj.number }}
-        of {{ page_obj.paginator.num_pages }}
-    </span>
 
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">Next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-    {% endif %}
-
-</div>
-<h1>Wins vs Losses</h1>
+<div class="container">
+    <div class="text-center mb-5">
+    <h1>Wins vs Losses</h1>
     <p>Here you can see your victories and defeats against the bosses you've faced.</p>
-    <p><a href="{% url 'game:journey' %}">Go back to Journey</a></p>
+    </div>
+    <div class="col d-flex justify-content-center   ">
+        <div class="row">
+            {% if boss and boss.image %}
+                <img src="{{ boss.set_image }}" alt="Boss Image" class="card img-fluid rounded center-block" style="max-height: 450px;">
+            {% endif %}
+        </div>
+    </div>
+
+    {% if  warrior.victories > 1 %}
+        <h1 class="text-center mb-5">
+            {{ warrior.name }} DEATS {{ boss.name }}.
+        </h1>
+    {% else %}
+        <h1 class="text-center mb-5">
+            {{ warrior.name }} DEAD AT THE HANDS OF {{ boss.name }}.
+        </h1>
+    {% endif %}
+
+    {% render_character_table warriors %}
+
+            <div class="text-center ">
+                <p>
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-success" href="?page=1">First</a>
+                    <a class="btn btn-success" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+
+                <span>
+                    Page {{ page_obj.number }}
+                    of {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a class="btn btn-success" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a class="btn btn-success" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+                </p>
+
+                <p><a class="btn btn-success" href="{% url 'game:tavern'  %}">Go back to Journey</a></p>
+            </div>
+        </div>
+</div>
 {% endblock %}

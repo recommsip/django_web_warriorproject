@@ -1,0 +1,72 @@
+{% extends 'game/base.html' %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+       
+        <div class="col d-flex align-self">
+            <div class="card-body">
+                <h1>Create Boss</h1>
+                <form method="post">
+                    {% csrf_token %}
+                 
+
+                    {{ form.as_p }}
+
+                    <button type="submit" class="btn btn-danger">
+                        Create Boss
+                    </button>
+                 
+                   
+                </form>
+             
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success" name="tavern" value="tavern">
+                    Tavern
+                    </button>
+                </form>
+
+            </div>  
+        </div>
+   
+    <div class="col">
+        <div class="card-body">
+            <div class="row">
+                
+                <h1>Delete Boss</h1>
+        {% for boss in bosses %}
+            <div class="col d-flex align-self">
+                 <div class="row">
+                    <div class="col">
+                        <p>
+                        <h3>{{ boss.name }}</h3>
+                        <p>Health: {{ boss.health }}</p>
+                        <p>Attack Power: {{boss.attack_power}}</p>
+                        <p>Experience: {{ boss.reward_xp}}</p>
+                        <form method="post"
+                            action="{% url 'game:boss_delete' boss.pk %}">
+                            {% csrf_token %}
+                            <button class="btn btn-danger">
+                                Delete Boss
+                            </button>
+                        </form>
+                        </p>
+                    </div>
+                    <div class="col">
+                        <p> {{boss.image}}</p>
+                        <img src="{{ boss.set_image }}" alt="Boss Image" class="card img-fluid rounded center-block" style="max-height: 450px;">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+            </div>
+        </div>
+    </div>
+     </div>
+  
+</div>
+
+{% endblock %}

@@ -8,12 +8,18 @@ from django.shortcuts import render, redirect  # type: ignore[import]
 class JourneyView(View):
     template_name = 'game/journey.html'
 
-    def get(self, request):
-        warrior = self._get_warrior(request)
+    def get(self, request, pk):
+        if pk:
+            warrior = Warrior.objects.get(pk=pk)
+            request.session['warrior_id'] = warrior.pk
+        else:
+            warrior = self._get_warrior(request)
+
         if not warrior:
-            return redirect('game:game:tavern')
+            return redirect('game:tavern')
 
         goblin = self._get_or_choose_goblin(request)
+        
         if goblin is None:
             print("No goblins left! Redirecting to reset.")
             return redirect('game:reset')
@@ -24,7 +30,8 @@ class JourneyView(View):
             'living_count': Monster.objects.filter(monster_type='goblin', health__gt=0).count(),
         })
 
-    def post(self, request):
+    def post(self, request, pk):
+        
         print(request.method)
         warrior = self._get_warrior(request)
         if not warrior:
@@ -98,5 +105,3 @@ class JourneyView(View):
         goblin = random.choice(list(living_goblins))
         request.session['current_goblin_id'] = goblin.pk
         return goblin
-    
-   
