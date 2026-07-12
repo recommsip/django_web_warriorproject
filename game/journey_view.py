@@ -3,7 +3,7 @@ from .models import Monster
 from .warrior import Warrior
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
-
+from game.warrior_calculate_level_helper import LevelCalculator
 
 class JourneyView(View):
     template_name = 'game/journey.html'
@@ -65,6 +65,8 @@ class JourneyView(View):
                     goblin.miss_chance = max(0, goblin.miss_chance - 10)
                     goblin.save()
                 else:
+                    warrior.experience += goblin.xp
+                    self.apply_experience(warrior)
                     warrior.health = max(0, warrior.health - goblin.atk_power)
                     warrior.rage += 5
                     warrior.save()
@@ -105,3 +107,11 @@ class JourneyView(View):
         goblin = random.choice(list(living_goblins))
         request.session['current_goblin_id'] = goblin.pk
         return goblin
+    
+    def apply_experience(self, warrior):
+        warrior.level, warrior.experience = (
+            LevelCalculator.apply_experience(
+                warrior.level,
+                warrior.experience
+            )
+        )

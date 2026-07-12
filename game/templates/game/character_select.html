@@ -12,7 +12,8 @@
                         <h5>{{ warrior.name }}</h5>
                         <p>{{ warrior.char_class }}</p>
                         <p>Victories: {{ warrior.victories }}</p>
-                        <p>Experience: {{ warrior.experience}}
+                        <p>Experience: {{ warrior.experience}}</p>
+                        <p>Level: {{ warrior.level}}</p>
                         <p>Character ID: {{warrior.pk}}</p>
                         <a href="{% url 'game:character_sheet' warrior.id %}"   class="btn btn-primary mt-auto w-150">
                             Continue

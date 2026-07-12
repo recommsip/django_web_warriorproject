@@ -7,11 +7,13 @@ from django import forms
 from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from .boss_view import BossListView
+from game.warrior_calculate_level_helper import LevelCalculator
 import random
 
 #from game import boss
 
 class EncounterView(View):          # inherits from Django's View
+    
     ''' this is some description '''
     template = "game/boss_fight.html"
     random_int = random.randint(0, 3)
@@ -74,14 +76,20 @@ class EncounterView(View):          # inherits from Django's View
         
         
         if boss.health <= 0:
+            print(f"No HTTP Response")
             print(f"Boss {boss.name} has been defeated! Redirecting to wins vs losses.")
             if warrior.health > 0:
                 warrior.victories += 1
+                self.apply_experience(warrior)
                 warrior.save()
                 print(f"Warrior {warrior.name} has defeated the boss! Redirecting to wins vs losses.")
                 print(f"Warrior {warrior.name} attacked and now has {warrior.health} health and {warrior.victories} victories.")
                 print(f"Current session data: {request.session.items()}, boss health: {boss.health}")
                 return render(request, 'game/wins_vs_losses.html', {'warrior': warrior, 'boss': boss})
+            else:
+                return render(request, 'game/wins_vs_losses.html', {'warrior': warrior, 'boss': boss})
+                
+            
             
             # return render(request, 'game/wins_vs_losses.html', {'warrior': warrior, 'boss': boss})
         else:
@@ -120,3 +128,11 @@ class EncounterView(View):          # inherits from Django's View
         print(f"Boss Attack Power: {boss.attack_power}, Boss Health: {boss.health}")
         warrior.health -= boss.attack_power
         warrior.save()
+        
+    def apply_experience(self, warrior):
+        warrior.level, warrior.experience = (
+            LevelCalculator.apply_experience(
+                warrior.level,
+                warrior.experience
+            )
+        )

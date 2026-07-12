@@ -40,6 +40,8 @@ def tavern(request):
     ''' View for the tavern page where players can create a new warrior or continue with an existing one. '''
     request.session.set_expiry(0)  # Session expires on browser close
     choosen_warrior_id = request.session.get('warrior_id')
+    
+      
     if choosen_warrior_id:
         return redirect('game:journey', choosen_warrior_id)             # already have a warrior, skip tavern
     

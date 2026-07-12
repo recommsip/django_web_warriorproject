@@ -12,6 +12,9 @@ class Warrior(Character):
         defeats     = models.IntegerField(default=0)
         image = models.CharField(max_length=100, default='/static/images/Warrior.png')
         miss_chance = models.IntegerField(default=0)  # New field for miss chance
+        level = models.IntegerField(default=1)
+        experience = models.IntegerField(default=1)
+        
        # NEW
         last_attack_missed = models.BooleanField(default=False)
 
@@ -19,22 +22,27 @@ class Warrior(Character):
             image = '/static/images/warrior.png'
             health = 120
             max_health = 120
+            level = 1
         elif char_class == 'mage':
             image = '/static/images/mage.png'
             health = 80
             max_health = 80
+            level = 1
         elif char_class == 'rogue':
             image = '/static/images/rogue.png'
             health = 100
             max_health = 100
+            level = 1
         elif char_class == 'ranger':
             image = '/static/images/ranger.png'
             health = 90
             max_health = 90
+            level = 1
         elif char_class == 'warlock':
             image = '/static/images/warlock.png'
             health = 110
             max_health = 110
+            level = 1
         def attack(self):
             roll = random.randint(1, 100)
 

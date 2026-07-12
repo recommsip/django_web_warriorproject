@@ -70,6 +70,9 @@
             <p>
                 HP: {{ warrior.health }} / {{ warrior.max_health }}
             </p>
+             <p>
+                Exp: {{ warrior.experience }} - Level: {{ warrior.level }}
+            </p>
             <p> Miss chance: {{ warrior.miss_chance }}%</p>
 
             <p> Attack Power: {{ warrior.attack_power }}</p>
@@ -95,13 +98,13 @@
       {% else %}
         <img src="{{ boss.set_image }}" alt="Boss Image" class="card img-fluid rounded center-block" style="max-height: 450px;">
         <p>{{ boss.name }} has been defeated! You can continue on your journey.</p>
-        <a href='{% url "game:journey" %}'>Continue Journey</a>
+        <a href='{% url "game:journey" warrior.pk %}'>Continue Journey</a>
         <form method='post'>
             {% csrf_token %}
             <button class="btn btn-danger btn-lg"  name='encounter' value='attack_next'>Attack!</button>
             <button class="btn btn-warning btn-lg" name='action' value='flee'>Flee</button>
           
         </form>
-    <p><a href="{% url 'game:journey' %}">Go back to Journey</a></p>
+    <p><a href="{% url 'game:journey' warrior.pk  %}">Go back to Journey</a></p>
     {% endif %}
 {% endblock %}

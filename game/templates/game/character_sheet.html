@@ -17,6 +17,7 @@
             <p>Attack Power: {{ warrior.attack_power }}</p>
             <p>Defense: {{ warrior.defense }}</p>
             <p>Experience Points: {{ warrior.experience_points }}</p>
+            <p>Level: {{ warrior.level }}</p>
             <div class="d-flex justify-content-around mt-4">
             <a href="{% url 'game:journey'  warrior.id %}" class="btn btn-primary btn-lg">Continue Journey</a>
         </div>

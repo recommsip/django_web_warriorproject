@@ -3,6 +3,19 @@ from django.shortcuts import render, redirect  # type: ignore[import]
 from .warrior import Warrior
 from django.core.paginator import Paginator
 
+""" Database
+   ↓
+Model (Warrior)
+   ↓
+View (SelectCharacterView)
+   ↓
+Context {'warriors': page_obj}
+   ↓
+Template {{ warriors }}
+   ↓
+HTML sent to browser
+
+"""
 
 class SelectCharacterView(View):
     template_name = "game/character_select.html"
