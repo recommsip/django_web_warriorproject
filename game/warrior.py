@@ -54,6 +54,7 @@ class Warrior(Character):
             self.last_attack_missed = False
             self.save()
 
+            
             base = {
                 'warrior': 15,
                 'mage': 10,
@@ -79,6 +80,10 @@ class Warrior(Character):
                 'rogue':  '/static/images/' + self.char_class.replace(' ', '_') + '.png',
             }
             return images.get(self.char_class, '/static/images/' + self.char_class.replace(' ', '_') + '.png')
+        
+        @property
+        def set_health_perexperiernce(self) -> int:
+            return self.experience
 
 
 

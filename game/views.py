@@ -15,6 +15,7 @@ from .selectcharacter_view import SelectCharacterView
 from .wins_losses import WinsVsLossesView
 from .boss_create_view import BossCreateView
 from .boss_delete import BossDeleteView
+from .anotherviewtype import AnotherViewType
 
 class BossView(ListView):
     ''' View to display the list of bosses, sorted by boss type. '''
@@ -53,6 +54,9 @@ def tavern(request):
         print("Pick A previous Character...")
         return redirect('game:character_select')
     
+    if request.POST.get('characterSelect') == 'nonya':
+        print("Nonya chosen nothing to see here...")
+    
     # GET: show empty form
     # POST: validate, save warrior, store id in session
     if request.method == 'POST':
@@ -67,9 +71,23 @@ def tavern(request):
         form = CreateWarriorForm()            # empty form
     return render(request, 'game/tavern.html', {'form': form})
 
+def inputs(request):
+    print_names("john", "bob", "sarah")
+    create_user("john", "bob", "sarah")
+    create_user(name="john",age=40)
+    if request.GET.get:
+        print(Warrior.objects.all().filter().exists())
+        # if (Warrior.objects.all().filter("experience").exists()):
+    print("inputs")
+    return render(request, 'game/input_types.html')
 
+def print_names(*args):
 
+    for name in args:
+        print(name)
 
+def create_user(*args, **kwargs):
+    print(kwargs)
 # def encounter(request):
 #     ''' View for the encounter page where the player fights a goblin. '''
 #     warrior_id = request.session.get('warrior_id')

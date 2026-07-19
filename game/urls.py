@@ -17,5 +17,7 @@ urlpatterns = [
     path('character_select/', views.SelectCharacterView.as_view(), name='character_select'),
     path('boss/create/', views.BossCreateView.as_view(), name='boss_create'),
     path('boss/delete/<int:pk>/',views.BossDeleteView.as_view(),name='boss_delete'),
+    path('input_types',views.inputs,name='input_types'),
+    path('input_types/',views.AnotherViewType.as_view(),name='another_view'),
     path('reset/', views.reset, name='reset'),
 ]

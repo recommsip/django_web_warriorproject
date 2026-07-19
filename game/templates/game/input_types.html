@@ -1,0 +1,327 @@
+{% extends 'game/base.html' %}
+
+{% block extra_css %}
+<style>
+  :root {
+    --bg: #0f1115;
+    --card: #171a21;
+    --border: #2a2e38;
+    --text: #e6e8ec;
+    --muted: #9aa1ac;
+    --accent: #6ea8fe;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 40px 20px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+  }
+  h1 {
+    max-width: 900px;
+    margin: 0 auto 8px;
+    font-size: 1.7rem;
+  }
+  p.sub {
+    max-width: 900px;
+    margin: 0 auto 32px;
+    color: var(--muted);
+  }
+  .grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .field {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .field-info label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .field-info code {
+    display: block;
+    margin-top: 2px;
+    color: var(--accent);
+    font-size: 0.8rem;
+  }
+  .field-info small {
+    display: block;
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+  input, textarea, select, button {
+    font-family: inherit;
+    font-size: 0.95rem;
+    background: #0f1115;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    width: 100%;
+  }
+  input[type="checkbox"], input[type="radio"] {
+    width: auto;
+    accent-color: var(--accent);
+    margin-right: 6px;
+  }
+  input[type="range"] { padding: 0; }
+  input[type="color"] { padding: 2px; height: 38px; cursor: pointer; }
+  input[type="file"] { padding: 6px; }
+  button {
+    cursor: pointer;
+    background: var(--accent);
+    color: #0f1115;
+    font-weight: 600;
+    border: none;
+  }
+  fieldset {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+  }
+  legend { color: var(--muted); font-size: 0.85rem; padding: 0 6px; }
+  h2 {
+    max-width: 900px;
+    margin: 40px auto 12px;
+    font-size: 1.1rem;
+    color: var(--accent);
+  }
+  @media (max-width: 640px) {
+    .field { grid-template-columns: 1fr; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h1>HTML Form Input Types — Reference</h1>
+<p class="sub">Every &lt;input&gt; type plus other common form elements, live and editable.</p>
+
+<h2>&lt;input&gt; types&lt;/input&gt; types</h2>
+<div class="grid">
+
+  <div class="field">
+    <div class="field-info"><label>text</label><code>input type="text"</code></div>
+    <input type="text" placeholder="Enter text">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>password</label><code>input type="password"</code></div>
+    <input type="password" placeholder="Enter password">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>email</label><code>input type="email"</code><small>validates format</small></div>
+    <input type="email" placeholder="name@example.com">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>number</label><code>input type="number"</code></div>
+    <input type="number" min="0" max="100" step="1" placeholder="0-100">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>tel</label><code>input type="tel"</code><small>no built-in validation</small></div>
+    <input type="tel" placeholder="(555) 555-5555">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>url</label><code>input type="url"</code><small>validates format</small></div>
+    <input type="url" placeholder="https://example.com">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>search</label><code>input type="search"</code></div>
+    <input type="search" placeholder="Search…">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>date</label><code>input type="date"</code></div>
+    <input type="date">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>time</label><code>input type="time"</code></div>
+    <input type="time">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>datetime-local</label><code>input type="datetime-local"</code></div>
+    <input type="datetime-local">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>month</label><code>input type="month"</code></div>
+    <input type="month">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>week</label><code>input type="week"</code></div>
+    <input type="week">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>checkbox</label><code>input type="checkbox"</code></div>
+    <div>
+      <label><input type="checkbox" checked> Option A</label><br>
+      <label><input type="checkbox"> Option B</label>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>radio</label><code>input type="radio"</code><small>same name = one group</small></div>
+    <div>
+      <label><input type="radio" name="radio-demo" checked> Choice 1</label><br>
+      <label><input type="radio" name="radio-demo"> Choice 2</label>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>range</label><code>input type="range"</code></div>
+    <input type="range" min="0" max="10" value="5">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>color</label><code>input type="color"</code></div>
+    <input type="color" value="#6ea8fe">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>file</label><code>input type="file"</code></div>
+    <input type="file">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>hidden</label><code>input type="hidden"</code><small>not rendered — value shown here only for reference</small></div>
+    <div style="color:var(--muted); font-size:0.85rem;">
+      &lt;input type="hidden" name="token" value="abc123"&gt;
+      <input type="hidden" value="abc123">
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>submit</label><code>input type="submit"</code></div>
+    <input type="submit" value="Submit">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>reset</label><code>input type="reset"</code></div>
+    <input type="reset" value="Reset">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>button</label><code>input type="button"</code><small>no default behavior</small></div>
+    <input type="button" value="Click me">
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>image</label><code>input type="image"</code><small>submit button as image</small></div>
+    <input type="image" src="https://placehold.co/32x32/6ea8fe/0f1115?text=%E2%9C%93" alt="Submit" width="32">
+  </div>
+
+</div>
+
+<h2>Other form elements</h2>
+<div class="grid">
+
+  <div class="field">
+    <div class="field-info"><label>textarea</label><code>&lt;textarea&gt;</code></div>
+    <textarea rows="3" placeholder="Multi-line text"></textarea>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>select</label><code>&lt;select&gt; + &lt;option&gt;</code></div>
+    <select>
+      <option>Option 1</option>
+      <option>Option 2</option>
+      <option>Option 3</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>select multiple</label><code>&lt;select multiple&gt;</code></div>
+    <select multiple size="3">
+      <option>Apple</option>
+      <option>Banana</option>
+      <option>Cherry</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>optgroup</label><code>&lt;optgroup&gt;</code></div>
+    <select>
+      <optgroup label="Fruits">
+        <option>Apple</option>
+        <option>Banana</option>
+      </optgroup>
+      <optgroup label="Vegetables">
+        <option>Carrot</option>
+        <option>Pea</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>button</label><code>&lt;button&gt;</code></div>
+    <button type="button">Generic Button</button>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>output</label><code>&lt;output&gt;</code></div>
+    <output>42 (calculated result)</output>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>progress</label><code>&lt;progress&gt;</code></div>
+    <progress value="60" max="100" style="width:100%"></progress>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>meter</label><code>&lt;meter&gt;</code></div>
+    <meter value="0.7" style="width:100%"></meter>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>fieldset + legend</label><code>&lt;fieldset&gt;&lt;legend&gt;</code></div>
+    <fieldset>
+      <legend>Group label</legend>
+      <label><input type="checkbox"> Grouped item</label>
+    </fieldset>
+  </div>
+
+  <div class="field">
+    <div class="field-info"><label>datalist</label><code>&lt;datalist&gt;</code><small>autocomplete suggestions</small></div>
+    <input list="fruit-list" placeholder="Start typing…">
+    <datalist id="fruit-list">
+      <option value="Apple">
+      <option value="Banana">
+      <option value="Cherry">
+    </datalist>
+  </div>
+
+</div>
+
+<div>
+  <p><a href="{% url 'game:tavern' %}"> <button class="btn btn-primary btn-lg"> <h2>Tavern</h2></button></a></p>
+{% for warrior in Warriors %}
+  
+{% endfor %}
+</div>
+
+
+
+{% endblock %}
