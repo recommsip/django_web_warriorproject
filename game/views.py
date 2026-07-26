@@ -3,6 +3,7 @@ from django.views import View  # type: ignore[import]
 from django.views.generic import ListView  # type: ignore[import]
 from django.http import HttpResponse  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
+from django.template.response import TemplateResponse  # type: ignore[import]
 from .forms import CreateWarriorForm
 from .models import Monster
 from .boss import Boss
@@ -16,6 +17,9 @@ from .wins_losses import WinsVsLossesView
 from .boss_create_view import BossCreateView
 from .boss_delete import BossDeleteView
 from .anotherviewtype import AnotherViewType
+from game.config import CONFIG_FILE  # type: ignore[import]
+import json
+from pathlib import Path
 
 class BossView(ListView):
     ''' View to display the list of bosses, sorted by boss type. '''
@@ -37,11 +41,20 @@ class VictoryView(ListView):
         # Override to sort by victories descending
         return Warrior.objects.order_by('-victories')
     
+CONFIG_FILE = Path(__file__).resolve().parent / "jsonconfigfiles/enemy.config.json"
+
+
+with open(CONFIG_FILE) as f:
+    CONFIG = json.load(f)
+
+
+def get_config(key):
+    return CONFIG.get(key)
+    
 def tavern(request):
     ''' View for the tavern page where players can create a new warrior or continue with an existing one. '''
     request.session.set_expiry(0)  # Session expires on browser close
     choosen_warrior_id = request.session.get('warrior_id')
-    
       
     if choosen_warrior_id:
         return redirect('game:journey', choosen_warrior_id)             # already have a warrior, skip tavern
@@ -71,64 +84,50 @@ def tavern(request):
         form = CreateWarriorForm()            # empty form
     return render(request, 'game/tavern.html', {'form': form})
 
-def inputs(request):
-    print_names("john", "bob", "sarah")
-    create_user("john", "bob", "sarah")
-    create_user(name="john",age=40)
+def inputs(request, *args, **kwargs):
+
     if request.GET.get:
-        print(Warrior.objects.all().filter().exists())
+        gob_one = get_config("goblin")
+        
+        # for value in gob_one:
+        #     print(value , gob_one[value])
+            
+    if request.POST == 'POST':
+        create_user(kwargs)
+        print(kwargs)
+        return request
+    
+    #print_names("john", "bob", "sarah")
+    #create_user(args)
+    #create_user(kwargs)
+    #if request.GET.get:
+        #print(Warrior.objects.all().filter().exists())
         # if (Warrior.objects.all().filter("experience").exists()):
-    print("inputs")
-    return render(request, 'game/input_types.html')
+    #print("inputs")
+    contexto = update_enemy_values(request)
+    return render(request, 'game/input_types.html', contexto)
 
 def print_names(*args):
-
     for name in args:
         print(name)
 
 def create_user(*args, **kwargs):
     print(kwargs)
-# def encounter(request):
-#     ''' View for the encounter page where the player fights a goblin. '''
-#     warrior_id = request.session.get('warrior_id')
-#     if not warrior_id:
-#         return redirect('tavern')             # no session? back to start
-
-#     warrior = Warrior.objects.get(pk=warrior_id)
-#     goblin  = Monster.objects.get_or_create(
-#         name='Forest Goblin',
-#         defaults={'monster_type': 'goblin', 'health': 30, 'max_health': 30}
-#     )[0]
     
-#     if  request.method == 'POST':
-#         if request.POST.get('encounter') == 'attack_next':
-#             print(request.POST)
-#             # Clear current goblin so next fight picks a fresh one
-#             del request.session['current_goblin_id']
-#             return redirect('game:journey')
-        
-#     if request.method == 'POST':
-#         goblin.health -= warrior.attack_power  # uses computed @property
-#         warrior.health -= 10
-#         goblin.atk_power += 2 * random.randint(1, 5)  # randomize goblin attack
-#         warrior.rage  += 5
-#         goblin.save()
-#         warrior.save()
-#         if not goblin.is_alive:               # uses @property
-#             return redirect('encounter')
+def update_enemy_values(self):
+    # print(request)
+    print(get_config("goblin"))
+    contexto = {
+        "goblin": get_config("goblin"),
+        "orc": get_config("orc"),
+    }
+    # print(get_config("goblin"))
+    print("CONTEXTO: ", contexto["goblin"])
+    # print(contextoitems())
+    return contexto
+    
 
-#     context = {
-#         'warrior': warrior,
-#         'goblin':  goblin,
-#     }
-#     return render(request, 'game/encounter.html', context)
-
-# def reset_monster_health(request):
-#     goblin = Monster.objects.get(random=True)  # Get a random goblin
-#     goblin.health = goblin.max_health
-#     goblin.save()
-#     return redirect('game:journey')
-
+    
 def reset(request):
     ''' View to reset the game state by restoring all goblins, bosses, and warriors to full health and clearing session data. '''
     if request.method == 'POST':

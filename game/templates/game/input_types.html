@@ -2,6 +2,8 @@
 
 {% block extra_css %}
 <style>
+ 
+
   :root {
     --bg: #0f1115;
     --card: #171a21;
@@ -103,6 +105,41 @@
   @media (max-width: 640px) {
     .field { grid-template-columns: 1fr; }
   }
+
+   .tooltip {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .2s;
+
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    transform: translate(-50%, -100%);
+
+    background: #1e1e1e;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 6px;
+
+    padding: 10px;
+    min-width: 260px;
+
+    font-family: Consolas, monospace;
+    white-space: pre;
+
+    z-index: 1000;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
 </style>
 {% endblock %}
 
@@ -313,15 +350,35 @@
     </datalist>
   </div>
 
+  <div>
+    <div class="field">Goblin: {{ goblin }}</div>
+    <div class="field">Goblin Health: {{ goblin.health }}</div>
+    <div class="field">Goblin Attack: {{ goblin.attack }}</div>
+    <div class="field"> Goblin Speed: {{ goblin.speed }}</div>
+  </div>
+
+</div>
+
+<div>
+  <form name="formone" method="POST">
+  {% csrf_token %}
+  <div class="field">
+    <div class="field-info"><label>name</label><code>input type="text"</code></div>
+    <div class="field-info"><label>last</label><code>input type="text"</code></div>
+      <input type="name" placeholder="Enter text" />
+      <input type="last" placeholder="Enter text" />
+    <button type="submit" value="Submit"/>Submit</button>
+  </div>
+
+  </form>
+
+  
+
 </div>
 
 <div>
   <p><a href="{% url 'game:tavern' %}"> <button class="btn btn-primary btn-lg"> <h2>Tavern</h2></button></a></p>
 {% for warrior in Warriors %}
-  
 {% endfor %}
 </div>
-
-
-
 {% endblock %}

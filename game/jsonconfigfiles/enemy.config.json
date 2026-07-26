@@ -1,0 +1,17 @@
+ {
+    "goblin": {
+        "health": 50,
+        "attack": 10,
+        "speed": 3
+    },
+    "orc": {
+        "health": 100,
+        "attack": 25,
+        "speed": 2
+    },
+    "troll": {
+        "health": 150,
+        "attack": 40,
+        "speed": 1
+    }
+}
