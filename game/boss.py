@@ -2,6 +2,7 @@ from django.db import models
 from game.models import Character
 
 class Boss(Character):
+    
     # monster_type = 'boss'
     boss_type = models.CharField(max_length=20,default='Dragon')
     reward_xp = models.IntegerField(default=200)
@@ -42,12 +43,16 @@ class Boss(Character):
                 'image': '/static/images/Ancient_Dragon.png'
             },
         ]
-            
+        
+        lengths = (map(lambda x: len(x), bosses))
+        other = list(lengths)
+                
         for boss in bosses:
             cls.objects.update_or_create(
                 name=boss['name'],
                 defaults=boss
             )
+    
     
     def is_alive(self):
         return self.health > 0

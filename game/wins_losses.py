@@ -1,5 +1,4 @@
 import random
-
 from urllib3 import request
 from .models import Monster
 from .warrior import Warrior

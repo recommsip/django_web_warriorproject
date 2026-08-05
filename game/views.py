@@ -1,4 +1,5 @@
 import random
+
 from django.views import View  # type: ignore[import]
 from django.views.generic import ListView  # type: ignore[import]
 from django.http import HttpResponse  # type: ignore[import]
@@ -96,7 +97,7 @@ def inputs(request, *args, **kwargs):
         create_user(kwargs)
         print(kwargs)
         return request
-    
+
     #print_names("john", "bob", "sarah")
     #create_user(args)
     #create_user(kwargs)

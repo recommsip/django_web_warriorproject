@@ -358,7 +358,6 @@
   </div>
 
 </div>
-
 <div>
   <form name="formone" method="POST">
   {% csrf_token %}
@@ -369,13 +368,8 @@
       <input type="last" placeholder="Enter text" />
     <button type="submit" value="Submit"/>Submit</button>
   </div>
-
   </form>
-
-  
-
 </div>
-
 <div>
   <p><a href="{% url 'game:tavern' %}"> <button class="btn btn-primary btn-lg"> <h2>Tavern</h2></button></a></p>
 {% for warrior in Warriors %}

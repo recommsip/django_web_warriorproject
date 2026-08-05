@@ -19,6 +19,7 @@ class BossCreateView(View):
         )
 
     def post(self, request):
+        
         form = BossForm(request.POST)
         print(request.POST.values)
         if request.POST.get("tavern")=="tavern":

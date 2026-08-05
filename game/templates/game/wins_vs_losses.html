@@ -1,8 +1,7 @@
 {% extends 'game/base.html' %}
-{% load warrior_wins_losses_tag %}
-
+<!-- this is a template tag '{  % load tagname % }' -->
+{% load warrior_wins_losses_tag %} 
 {% block content %}
-
 
 <div class="container">
     <div class="text-center mb-5">
@@ -26,11 +25,13 @@
             {{ warrior.name }} DEAD AT THE HANDS OF {{ boss.name }}.
         </h1>
     {% endif %}
-
-    {% render_character_table warriors %}
-
+    <!-- here is the templatetag function used to render the character table called from the template tag -->
+    
+     <div> <p> characters warriors </p> {% render_character_table warriors %}   </div>
+        <div> <p> Date </p> {% get_date %}  </div>
             <div class="text-center ">
                 <p>
+               
                 {% if page_obj.has_previous %}
                     <a class="btn btn-success" href="?page=1">First</a>
                     <a class="btn btn-success" href="?page={{ page_obj.previous_page_number }}">Previous</a>
