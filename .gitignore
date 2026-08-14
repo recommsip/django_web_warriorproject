@@ -1,3 +1,24 @@
+# Python bytecode and cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Django local database & static files
+*.sqlite3
+/staticfiles/
+/media/
+
+# Environment files and virtual environments
+.env
+venv/
+.venv/
+env/
+
+# IDE / Editor settings
+.vscode/
+.idea/
+
 home/.tcproxy.env
 home/.vm-serial-file
 home/data.img

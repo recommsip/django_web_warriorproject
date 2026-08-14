@@ -1,0 +1,74 @@
+# ======================================================================
+DJANGO: RENDER VS. REDIRECT
+
+The primary difference between `render` and `redirect` in Django comes down
+to what response is sent to the browser and how the browser handles it:
+
+* RENDER: Returns a "200 OK" response with HTML content generated directly
+on the server. The user's browser stays on the current URL.
+* REDIRECT: Returns a "302 Found" (or 301) response with a Location header
+telling the browser to issue a NEW HTTP GET request to a different URL.
+
+---
+
+## KEY COMPARISON
+
+FEATURE           | RENDER()                    | REDIRECT()
+------------------+-----------------------------+---------------------
+HTTP Response     | 200 OK                      | 302 Found
+Browser Action    | Renders template HTML now.  | Sends a second request.
+URL Bar           | Does NOT change.            | Changes to new URL.
+Primary Use Case  | Displaying pages (GET).     | After form submit (POST).
+First Argument    | Template ('index.html').    | URL or view name ('home').
+
+---
+
+## CODE EXAMPLES
+
+1. USING RENDER:
+Use render when you want to supply context data to an HTML template and
+display it immediately.
+
+```python
+from django.shortcuts import render
+
+def profile_view(request):
+    user_data = {"username": "jane_doe"}
+    # Renders 'profile.html' directly and returns status 200
+    return render(request, "profile.html", user_data)
+
+```
+
+2. USING REDIRECT:
+Use redirect after an action completes -- especially after processing a
+form submission -- to send the user elsewhere.
+
+```python
+from django.shortcuts import redirect, render
+
+def update_profile(request):
+    if request.method == "POST":
+        # ... process and save form data ...
+        
+        # Redirect to the profile view after saving (status 302)
+        return redirect("profile_view") 
+
+    return render(request, "edit_profile.html")
+
+```
+
+---
+
+## THE PRG PATTERN (POST / REDIRECT / GET)
+
+The main architectural reason to choose redirect over render is the
+Post/Redirect/Get pattern:
+
+1. User submits a form (POST request).
+2. Server processes and saves the data.
+3. If you use RENDER: The browser stays on the POST request URL. If the
+user presses Refresh (F5), the browser asks: "Are you sure you want to
+resubmit this form?", which can create duplicate database entries.
+4. If you use REDIRECT: The browser gets a 302 response and immediately
+makes a fresh GET request to the new URL. Refreshing now simply reloads
+the new page safely without resubmitting data.

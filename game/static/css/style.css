@@ -1,13 +1,46 @@
-.card-container {
-       display: flex;
-       justify-content: center; /* Center horizontally */
-       align-items: center; /* Center vertically */
-       width: 300px; /* Adjust as needed */
-       height: 250px; /* Adjust as needed */
-       border: 1px solid #ccc; /* Optional: for better visibility */
-   }
+body { 
+  display: flex;
+  justify-content: center; /* Centers child horizontally */
+  font-family: sans-serif; 
+  margin: 100px; /* Fixed: added 'px' */
+  min-height: 100vh; /* Ensures body takes up full screen height */
+}
 
-   .card-container img {
-       max-width: 100%; /* Ensure images do not exceed the container width */
-       max-height: 100%; /* Ensure images do not exceed the container height */
-   }
+/* Make sure your inner element has a defined max-width */
+.content {
+  max-width: 500px;
+  padding: 0 1rem; /* Keeps padding on small mobile screens */
+}
+
+/* style.css */
+.page-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 0 1rem; 
+}
+
+.hp-bar { 
+  background: #eee; 
+  border-radius: 4px; 
+  height: 16px; 
+}
+
+.hp-fill { 
+  background: #2a9d2a; 
+  height: 16px; 
+  border-radius: 4px; 
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 250px;
+  border: 1px solid #ccc;
+}
+
+.card-container img {
+  max-width: 100%;
+  max-height: 100%;
+}

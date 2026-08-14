@@ -9,33 +9,50 @@ from .warrior import Warrior
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
 
+import random
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views import View
+
+
 class BossListView(View):
-    template_name = '.game/boss.html'
+    template_name = "game/boss.html"  # Note: fixed leading dot in path
 
     def get(self, request, pk=None):
         print("GET request received in BossListView")
-        warrior_id = request.session.get('warrior_id')
+        warrior_id = request.session.get("warrior_id")
         if not warrior_id:
-            return redirect('game:tavern')
+            return redirect("game:tavern")
 
-        warrior = Warrior.objects.get(pk=warrior_id)
-        random_value = random.randint(1, 4)
-        boss = Boss.objects.get(pk=random_value)    
-        
-        boss.save()
-        if pk==None:
-            return render(request, self.template_name, {'warrior': warrior, 'boss': boss})
+        warrior = get_object_or_404(Warrior, pk=warrior_id)
+
+        # If a specific pk is passed in the URL, fetch that boss
+        if pk is not None:
+            boss = get_object_or_404(Boss, pk=pk)
         else:
-            boss = Boss.objects.get(pk=pk)
-            return render(request, self.template_name, {'warrior': warrior, 'boss': boss})
+            # Fetch a random boss from existing database records
+            bosses = Boss.objects.all()
+            if not bosses.exists():
+                # Fallback if no bosses exist in DB at all
+                return render(
+                    request,
+                    self.template_name,
+                    {"warrior": warrior, "error": "No bosses found!"},
+                )
+
+            boss = random.choice(bosses)
+
+        return render(
+            request, self.template_name, {"warrior": warrior, "boss": boss}
+        )
     
     def post(self, request):
        
-        
+        template_name = "game/boss_list.html"  # Note: fixed leading dot in path
         
         boss_id = request.session.get('current_boss_id')
         boss = Boss.objects.filter(pk=boss_id, health__gt=0).first()
         warrior = self._get_warrior(request)
+        
         if not warrior:
             print("No warrior found in session. Redirecting to tavern.")
             return redirect('game:tavern')
@@ -44,7 +61,7 @@ class BossListView(View):
             print("Boss not found!")
             get_boss = Boss.objects.all().first()
             print(f"Available bosses: {get_boss}")
-            return render(request, 'game:boss_list')
+            return render(request, template_name)
 
         # boss.health -= warrior.attack_power
         # warrior.health -= 20

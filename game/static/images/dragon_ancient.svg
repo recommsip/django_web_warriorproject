@@ -1,0 +1,78 @@
+<svg width="500" height="600" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgAD" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#2a2a4a"/>
+      <stop offset="100%" stop-color="#0e0e1c"/>
+    </radialGradient>
+    <radialGradient id="arcaneGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a8c8ff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#4a6ad9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="500" height="600" fill="url(#bgAD)"/>
+  <circle cx="250" cy="245" r="195" fill="none" stroke="#a0b0e0" stroke-width="6" opacity="0.5"/>
+
+  <!-- arcane energy -->
+  <circle cx="400" cy="330" r="70" fill="url(#arcaneGlow)"/>
+  <circle cx="100" cy="330" r="55" fill="url(#arcaneGlow)"/>
+
+  <!-- weathered wings -->
+  <path d="M150 300 Q35 255 25 145 Q95 195 150 255 Q120 215 135 165 Q170 215 175 285 Z" fill="#3a3a5a" stroke="#0e0e1c" stroke-width="6"/>
+  <path d="M350 300 Q465 255 475 145 Q405 195 350 255 Q380 215 365 165 Q330 215 325 285 Z" fill="#3a3a5a" stroke="#0e0e1c" stroke-width="6"/>
+  <!-- wing tears -->
+  <path d="M60 190 Q75 210 65 230" fill="none" stroke="#0e0e1c" stroke-width="4"/>
+  <path d="M440 190 Q425 210 435 230" fill="none" stroke="#0e0e1c" stroke-width="4"/>
+
+  <!-- body, stony grey-blue -->
+  <path d="M175 350 Q250 320 325 350 L335 480 Q250 515 165 480 Z" fill="#5a6a8a" stroke="#0e0e1c" stroke-width="7"/>
+  <path d="M215 360 L285 360 L278 470 Q250 485 222 470 Z" fill="#7a8ab0" stroke="#0e0e1c" stroke-width="4"/>
+
+  <!-- ancient scale ridges -->
+  <path d="M235 370 L245 385 L255 370 L265 385 L275 370" fill="none" stroke="#3a4a6a" stroke-width="4"/>
+  <path d="M230 410 L245 425 L260 410 L275 425" fill="none" stroke="#3a4a6a" stroke-width="4"/>
+
+  <!-- arms/claws -->
+  <rect x="150" y="360" width="34" height="90" rx="16" fill="#5a6a8a" stroke="#0e0e1c" stroke-width="6" transform="rotate(15 167 405)"/>
+  <rect x="316" y="360" width="34" height="90" rx="16" fill="#5a6a8a" stroke="#0e0e1c" stroke-width="6" transform="rotate(-15 333 405)"/>
+  <path d="M155 450 L145 470 M170 458 L165 480 M185 452 L188 474" stroke="#e0e4f0" stroke-width="6" stroke-linecap="round"/>
+  <path d="M345 450 L355 470 M330 458 L335 480 M315 452 L312 474" stroke="#e0e4f0" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- neck -->
+  <rect x="220" y="320" width="60" height="42" fill="#6a7a9a" stroke="#0e0e1c" stroke-width="6"/>
+
+  <!-- head -->
+  <ellipse cx="250" cy="228" rx="90" ry="80" fill="#6a7a9a" stroke="#0e0e1c" stroke-width="8"/>
+
+  <!-- long snout, ancient -->
+  <path d="M175 235 Q120 240 105 268 Q145 288 195 275 Z" fill="#5a6a8a" stroke="#0e0e1c" stroke-width="6"/>
+  <path d="M325 235 Q380 240 395 268 Q355 288 305 275 Z" fill="#5a6a8a" stroke="#0e0e1c" stroke-width="6"/>
+  <circle cx="120" cy="260" r="4" fill="#1a1210"/>
+  <circle cx="380" cy="260" r="4" fill="#1a1210"/>
+
+  <!-- long curved ancient horns -->
+  <path d="M175 170 Q130 110 155 40 Q195 100 200 175 Z" fill="#c8ceda" stroke="#0e0e1c" stroke-width="6"/>
+  <path d="M325 170 Q370 110 345 40 Q305 100 300 175 Z" fill="#c8ceda" stroke="#0e0e1c" stroke-width="6"/>
+  <path d="M220 160 Q215 90 250 55 Q285 90 280 160 Z" fill="#c8ceda" stroke="#0e0e1c" stroke-width="5"/>
+
+  <!-- glowing rune on forehead -->
+  <circle cx="250" cy="175" r="14" fill="#a8c8ff" opacity="0.9"/>
+  <path d="M243 175 L257 175 M250 168 L250 182" stroke="#0e0e1c" stroke-width="2"/>
+
+  <!-- eyes, ancient wisdom -->
+  <ellipse cx="212" cy="228" rx="15" ry="18" fill="#c8e0ff"/>
+  <ellipse cx="288" cy="228" rx="15" ry="18" fill="#c8e0ff"/>
+  <ellipse cx="212" cy="230" rx="4" ry="13" fill="#1a1210"/>
+  <ellipse cx="288" cy="230" rx="4" ry="13" fill="#1a1210"/>
+  <path d="M185 200 Q212 185 240 202" fill="none" stroke="#0e0e1c" stroke-width="5" stroke-linecap="round"/>
+  <path d="M260 202 Q288 185 315 200" fill="none" stroke="#0e0e1c" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- brow ridges -->
+  <path d="M188 195 Q212 180 236 196" fill="none" stroke="#3a4a6a" stroke-width="4"/>
+  <path d="M264 196 Q288 180 312 195" fill="none" stroke="#3a4a6a" stroke-width="4"/>
+
+  <!-- mouth with fangs -->
+  <path d="M180 285 Q250 312 320 285 Q308 305 250 310 Q192 305 180 285 Z" fill="#2a2a3a" stroke="#0e0e1c" stroke-width="5"/>
+  <path d="M204 290 L198 308 M234 297 L231 312 M266 297 L269 312 M296 290 L302 308" stroke="#e8e8f0" stroke-width="5" stroke-linecap="round"/>
+
+  <text x="250" y="580" text-anchor="middle" font-family="Georgia, serif" font-size="28" font-weight="bold" fill="#c8d8f0">ancient dragon</text>
+</svg>

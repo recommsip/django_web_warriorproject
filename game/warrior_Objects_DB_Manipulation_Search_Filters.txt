@@ -57,10 +57,38 @@ Warrior.objects.filter(id__in=ids) <-----> WHERE id IN (1,5,8)
 
 CREATE OBJECTS:
 
+
 Warrior.objects.create(
     char_class="warrior",
     victories=0,
     defeats=0
 )
-      
+**** create() automatically saves the object. ****
+
+INSERT INTO game_warrior (...)
+VALUES (...);
+
+Equates to:
+w = Warrior(
+    char_class="warrior",
+    victories=0,
+    defeats=0
+)
+
+w.save()
+
+
+*** objects.get() ***
+
+warrior = Warrior.objects.get(id=5)
+
+SQL Equiv:
+
+SELECT *
+FROM game_warrior
+WHERE id=5;
+
+If there is not exactly one: raises-> Warrior.DoesNotExist or 
+if multiple> Warrior.MultipleObjectsReturned
+
 """

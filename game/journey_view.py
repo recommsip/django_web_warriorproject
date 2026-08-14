@@ -76,8 +76,9 @@ class JourneyView(View):
             warrior.save()
             request.session.pop('current_goblin_id', None)
             if not Monster.objects.filter(monster_type='goblin', health__gt=0).exists():
-                #return redirect('game:reset')
-                return redirect('game:encounter')
+                # return redirect('game:reset')
+                # return redirect('game:encounter')
+                return redirect('game:boss_fight')
 
         # Use default refresh to avoid type-checking issues with the "fields" parameter
         goblin.refresh_from_db()

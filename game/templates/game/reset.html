@@ -1,10 +1,13 @@
 {% extends 'game/base.html' %}
 {% block content %}
+  <div class="text-center mb-5">
   <h1>All goblins defeated!</h1>
-  <p>Your warrior cleared {{ dead_count }} goblins.</p>
-
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit">Reset world &amp; play again</button>
-  </form>
+  <h3>
+    <p>Your warrior cleared {{ dead_count }} goblins.</p>
+  </h3>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary btn-lg">Reset world &amp; play again</button>
+    </form>
+  </div>
 {% endblock %}

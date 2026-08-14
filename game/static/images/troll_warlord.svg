@@ -1,0 +1,81 @@
+<svg width="500" height="600" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgTW" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#2a4a3a"/>
+      <stop offset="100%" stop-color="#0e1c14"/>
+    </radialGradient>
+  </defs>
+  <rect width="500" height="600" fill="url(#bgTW)"/>
+  <circle cx="250" cy="245" r="195" fill="none" stroke="#7ac09a" stroke-width="6" opacity="0.5"/>
+
+  <!-- banner/totem behind -->
+  <rect x="395" y="120" width="10" height="280" fill="#5a3a1c" stroke="#0e1c14" stroke-width="3"/>
+  <path d="M400 130 L440 150 L400 175 Z" fill="#8a1a1a" stroke="#0e1c14" stroke-width="3"/>
+  <circle cx="400" cy="115" r="16" fill="#e8e0c8" stroke="#0e1c14" stroke-width="3"/>
+
+  <!-- fur mantle, huge -->
+  <path d="M110 360 Q80 495 125 585 L375 585 Q420 495 390 360 Z" fill="#3a2c1a" stroke="#0e1c14" stroke-width="6"/>
+  <g fill="#5a4428" stroke="#0e1c14" stroke-width="3">
+    <path d="M140 380 L158 425 L124 425 Z"/>
+    <path d="M360 380 L378 425 L342 425 Z"/>
+  </g>
+
+  <!-- massive body armor -->
+  <path d="M150 345 Q250 312 350 345 L360 485 Q250 522 140 485 Z" fill="#5a8a5c" stroke="#0e1c14" stroke-width="7"/>
+  <path d="M195 358 L305 358 L295 475 Q250 492 205 475 Z" fill="#4a7248" stroke="#0e1c14" stroke-width="5"/>
+  <circle cx="250" cy="418" r="24" fill="#c8a848" stroke="#0e1c14" stroke-width="5"/>
+  <path d="M235 418 L250 405 L265 418 L250 431 Z" fill="#8a1a1a"/>
+
+  <!-- shoulder spikes -->
+  <ellipse cx="160" cy="352" rx="42" ry="32" fill="#3a5a3c" stroke="#0e1c14" stroke-width="6"/>
+  <ellipse cx="340" cy="352" rx="42" ry="32" fill="#3a5a3c" stroke="#0e1c14" stroke-width="6"/>
+  <path d="M130 335 L120 300 L150 325 Z M370 335 L380 300 L350 325 Z" fill="#e0d8c0" stroke="#0e1c14" stroke-width="4"/>
+
+  <!-- massive arms -->
+  <rect x="95" y="355" width="50" height="140" rx="22" fill="#5a8258" stroke="#0e1c14" stroke-width="7" transform="rotate(10 120 425)"/>
+  <rect x="355" y="355" width="50" height="140" rx="22" fill="#5a8258" stroke="#0e1c14" stroke-width="7" transform="rotate(-16 380 425)"/>
+  <circle cx="122" cy="498" r="30" fill="#6a9a68" stroke="#0e1c14" stroke-width="6"/>
+  <circle cx="385" cy="472" r="30" fill="#6a9a68" stroke="#0e1c14" stroke-width="6"/>
+
+  <!-- spiked warhammer -->
+  <g transform="rotate(-25 385 472)">
+    <rect x="374" y="390" width="22" height="105" rx="6" fill="#4a3418" stroke="#0e1c14" stroke-width="4"/>
+    <rect x="352" y="360" width="66" height="46" rx="8" fill="#5a5048" stroke="#0e1c14" stroke-width="5"/>
+    <path d="M352 365 L338 350 M418 365 L432 350 M352 400 L338 415 M418 400 L432 415" stroke="#c8c0b0" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- neck -->
+  <rect x="212" y="318" width="76" height="46" fill="#6a9a68" stroke="#0e1c14" stroke-width="6"/>
+
+  <!-- head, large brutish -->
+  <ellipse cx="250" cy="235" rx="98" ry="84" fill="#6a9a68" stroke="#0e1c14" stroke-width="8"/>
+
+  <!-- jaw, extended -->
+  <path d="M180 280 Q250 340 320 280 Q305 320 250 328 Q195 320 180 280 Z" fill="#5a8858" stroke="#0e1c14" stroke-width="7"/>
+
+  <!-- warlord helm/circlet -->
+  <path d="M160 195 Q250 165 340 195 L332 218 Q250 195 168 218 Z" fill="#8a7a4a" stroke="#0e1c14" stroke-width="5"/>
+  <path d="M245 168 L235 120 L250 145 L265 120 L255 168 Z" fill="#c8a848" stroke="#0e1c14" stroke-width="4"/>
+
+  <!-- scars -->
+  <line x1="185" y1="220" x2="205" y2="270" stroke="#3a5a3c" stroke-width="5" stroke-linecap="round"/>
+  <line x1="295" y1="250" x2="315" y2="290" stroke="#3a5a3c" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- small fierce eyes -->
+  <ellipse cx="210" cy="235" rx="12" ry="10" fill="#e8d090"/>
+  <ellipse cx="290" cy="235" rx="12" ry="10" fill="#e8d090"/>
+  <circle cx="210" cy="237" r="5" fill="#1a1210"/>
+  <circle cx="290" cy="237" r="5" fill="#1a1210"/>
+  <path d="M185 213 L235 226" stroke="#0e1c14" stroke-width="6" stroke-linecap="round"/>
+  <path d="M265 226 L315 213" stroke="#0e1c14" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- broad nose -->
+  <path d="M250 250 Q228 278 250 290 Q272 278 250 250" fill="#5a8858" stroke="#0e1c14" stroke-width="5"/>
+
+  <!-- mouth with tusks jutting up -->
+  <path d="M195 300 L185 260 L210 285 Z" fill="#e0d8c0" stroke="#0e1c14" stroke-width="4"/>
+  <path d="M305 300 L315 260 L290 285 Z" fill="#e0d8c0" stroke="#0e1c14" stroke-width="4"/>
+  <path d="M200 300 Q250 320 300 300" fill="none" stroke="#0e1c14" stroke-width="5" stroke-linecap="round"/>
+
+  <text x="250" y="580" text-anchor="middle" font-family="Georgia, serif" font-size="28" font-weight="bold" fill="#c8e8c0">troll warlord</text>
+</svg>

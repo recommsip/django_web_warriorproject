@@ -119,6 +119,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "game" / "static",   # if style.css lives in games/static/css/style.css
+]
+
 
 # Add INTERNAL_IPS configuration
 INTERNAL_IPS = [

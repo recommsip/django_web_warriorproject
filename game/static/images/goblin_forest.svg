@@ -1,0 +1,65 @@
+<svg width="500" height="600" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgFG" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#3a5a2a"/>
+      <stop offset="100%" stop-color="#182814"/>
+    </radialGradient>
+  </defs>
+  <rect width="500" height="600" fill="url(#bgFG)"/>
+  <circle cx="250" cy="240" r="190" fill="none" stroke="#7ab04a" stroke-width="6" opacity="0.5"/>
+
+  <!-- leaf cloak -->
+  <path d="M150 360 Q130 480 165 570 L335 570 Q370 480 350 360 Z" fill="#3a5424" stroke="#182814" stroke-width="6"/>
+  <g fill="#5a8a34" stroke="#182814" stroke-width="3">
+    <ellipse cx="190" cy="420" rx="16" ry="24" transform="rotate(-20 190 420)"/>
+    <ellipse cx="230" cy="450" rx="16" ry="24" transform="rotate(10 230 450)"/>
+    <ellipse cx="280" cy="440" rx="16" ry="24" transform="rotate(-10 280 440)"/>
+    <ellipse cx="315" cy="410" rx="16" ry="24" transform="rotate(20 315 410)"/>
+  </g>
+
+  <!-- body -->
+  <path d="M185 350 Q250 330 315 350 L320 470 Q250 495 180 470 Z" fill="#6a9a3c" stroke="#182814" stroke-width="6"/>
+
+  <!-- arms -->
+  <rect x="150" y="355" width="30" height="95" rx="14" fill="#6a9a3c" stroke="#182814" stroke-width="6" transform="rotate(12 165 402)"/>
+  <rect x="320" y="355" width="30" height="95" rx="14" fill="#6a9a3c" stroke="#182814" stroke-width="6" transform="rotate(-18 335 402)"/>
+  <circle cx="172" cy="452" r="18" fill="#7ab04a" stroke="#182814" stroke-width="5"/>
+  <circle cx="326" cy="440" r="18" fill="#7ab04a" stroke="#182814" stroke-width="5"/>
+
+  <!-- wooden dagger -->
+  <g transform="rotate(20 326 440)">
+    <rect x="320" y="400" width="10" height="45" rx="3" fill="#c8c8b0" stroke="#182814" stroke-width="3"/>
+    <rect x="315" y="443" width="20" height="10" rx="2" fill="#5a3a1c" stroke="#182814" stroke-width="3"/>
+  </g>
+
+  <!-- neck -->
+  <rect x="228" y="320" width="44" height="34" fill="#8ab84e" stroke="#182814" stroke-width="5"/>
+
+  <!-- head -->
+  <ellipse cx="250" cy="240" rx="80" ry="76" fill="#8ab84e" stroke="#182814" stroke-width="7"/>
+
+  <!-- large ears -->
+  <path d="M170 230 Q120 210 130 160 Q175 175 195 220 Z" fill="#7aa840" stroke="#182814" stroke-width="6"/>
+  <path d="M330 230 Q380 210 370 160 Q325 175 305 220 Z" fill="#7aa840" stroke="#182814" stroke-width="6"/>
+
+  <!-- leaf hood -->
+  <path d="M185 195 Q195 130 250 120 Q305 130 315 195 Q305 165 250 160 Q195 165 185 195 Z" fill="#4a6a2a" stroke="#182814" stroke-width="6"/>
+
+  <!-- eyes -->
+  <ellipse cx="220" cy="240" rx="13" ry="15" fill="#f0e880"/>
+  <ellipse cx="280" cy="240" rx="13" ry="15" fill="#f0e880"/>
+  <circle cx="220" cy="242" r="6" fill="#1a1210"/>
+  <circle cx="280" cy="242" r="6" fill="#1a1210"/>
+  <path d="M200 220 Q220 208 240 222" fill="none" stroke="#182814" stroke-width="5" stroke-linecap="round"/>
+  <path d="M260 222 Q280 208 300 220" fill="none" stroke="#182814" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- nose -->
+  <path d="M250 250 Q240 268 250 275 Q260 268 250 250" fill="#7aa840" stroke="#182814" stroke-width="4"/>
+
+  <!-- mouth with tusks -->
+  <path d="M215 285 Q250 305 285 285 Q280 300 250 302 Q220 300 215 285 Z" fill="#4a2818" stroke="#182814" stroke-width="4"/>
+  <path d="M228 288 L224 300" stroke="#f0f0e0" stroke-width="5" stroke-linecap="round"/>
+  <path d="M272 288 L276 300" stroke="#f0f0e0" stroke-width="5" stroke-linecap="round"/>
+
+  <text x="250" y="580" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-weight="bold" fill="#c8e8a0">forest goblin</text>
+</svg>

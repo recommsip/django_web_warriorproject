@@ -1,0 +1,9 @@
+to create a requirements.txt .. helps in moving project or recreating venv
+pip freeze > requirements.txt
+
+
+then when recreating ..
+
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt

@@ -1,4 +1,4 @@
-#!/home/ron/Documents/django_web_warriorproject/venv/bin/python3
+#!/home/ron/Documents/django_web_warriorproject/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -8,7 +8,7 @@ class Boss(Character):
     reward_xp = models.IntegerField(default=200)
     health = models.IntegerField(default=150)
     max_health = models.IntegerField(default=150)
-    image = models.CharField(max_length=100, default='/game/static')
+    image = models.CharField(max_length=100, default='/game/static/images')
     attack_power = models.IntegerField(default=15)
 
     def _get_health(self):
@@ -19,28 +19,28 @@ class Boss(Character):
 
         bosses = [
             {
-                'name': 'Goblin King',
+                'name': 'goblin king',
                 'boss_type': 'goblin',
                 'health': 80,
                 'max_health': 80,
                 'attack_power': 9,
-                'image': '/static/images/Goblin_King.png'
+                'image': '/static/images/goblin_king.svg'
             },
             {
-                'name': 'Troll Warlord',
+                'name': 'troll warlord',
                 'boss_type': 'troll',
                 'health': 120,
                 'max_health': 120,
                 'attack_power': 12,
-                'image': '/static/images/Troll_Warlord.png'
+                'image': '/static/images/troll_warlord.svg'
             },
             {
-                'name': 'Ancient Dragon',
+                'name': 'ancien dragon',
                 'boss_type': 'dragon',
                 'health': 200,
                 'max_health': 200,
                 'attack_power': 15,
-                'image': '/static/images/Ancient_Dragon.png'
+                'image': '/static/images/dragon_ancient.svg'
             },
         ]
         
@@ -57,14 +57,24 @@ class Boss(Character):
     def is_alive(self):
         return self.health > 0
     
+    # @property
+    # def set_image(self) -> str:
+    #     images = {
+    #         'goblin': 'game/static/images/' + self.name.replace(' ', '_') + '.svg',
+    #         'troll':  'game/static/images/' + self.name.replace(' ', '_') + '.svg',
+    #         'dragon':  'game/static/images/' + self.name.replace(' ', '_') + '.svg',
+    #     }
+    #     return images.get(self.boss_type, 'game/static/images/' + self.name.replace(' ', '_') + '.svg').lower()
+    
     @property
     def set_image(self) -> str:
-        images = {
-            'goblin': '/static/images/' + self.name.replace(' ', '_') + '.png',
-            'troll':  '/static/images/' + self.name.replace(' ', '_') + '.png',
-            'dragon':  '/static/images/' + self.name.replace(' ', '_') + '.png',
-        }
-        return images.get(self.boss_type, '/static/images/' + self.name.replace(' ', '_') + '.png')
+        # 1. Fall back to the stored database image path if available
+        if self.image and self.image.startswith('/static/'):
+            return self.image
+        
+        # 2. Otherwise generate a proper public static URL path
+        filename = self.name.replace(' ', '_').lower()
+        return f'/static/images/{filename}.svg'
     
     def __str__(self):
         return f"{self.name} (Type: {self.boss_type}, Health: {self.health}/{self.max_health})"

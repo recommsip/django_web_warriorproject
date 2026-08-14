@@ -10,36 +10,37 @@ class Warrior(Character):
         rage       = models.IntegerField(default=0)
         victories  = models.IntegerField(default=0)
         defeats     = models.IntegerField(default=0)
-        image = models.CharField(max_length=100, default='/static/images/Warrior.png')
+        image = models.CharField(max_length=100, default='/static/images/Warrior.svg')
         miss_chance = models.IntegerField(default=0)  # New field for miss chance
         level = models.IntegerField(default=1)
         experience = models.IntegerField(default=1)
+        isdead = models.BooleanField(default=False)
         
        # NEW
         last_attack_missed = models.BooleanField(default=False)
 
         if char_class == 'warrior':
-            image = '/static/images/warrior.png'
+            image = '/static/images/warrior.svg'
             health = 120
             max_health = 120
             level = 1
         elif char_class == 'mage':
-            image = '/static/images/mage.png'
+            image = '/static/images/mage.svg'
             health = 80
             max_health = 80
             level = 1
         elif char_class == 'rogue':
-            image = '/static/images/rogue.png'
+            image = '/static/images/rogue.svg'
             health = 100
             max_health = 100
             level = 1
         elif char_class == 'ranger':
-            image = '/static/images/ranger.png'
+            image = '/static/images/ranger.svg'
             health = 90
             max_health = 90
             level = 1
         elif char_class == 'warlock':
-            image = '/static/images/warlock.png'
+            image = '/static/images/warlock.svg'
             health = 110
             max_health = 110
             level = 1
@@ -75,11 +76,11 @@ class Warrior(Character):
         @property
         def set_image(self) -> str:
             images = {
-                'warrior': '/static/images/' + self.char_class.replace(' ', '_') + '.png',
-                'mage':  '/static/images/' + self.char_class.replace(' ', '_') + '.png',
-                'rogue':  '/static/images/' + self.char_class.replace(' ', '_') + '.png',
+                'warrior': '/static/images/' + self.char_class.replace(' ', '_') + '.svg',
+                'mage':  '/static/images/' + self.char_class.replace(' ', '_') + '.svg',
+                'rogue':  '/static/images/' + self.char_class.replace(' ', '_') + '.svg',
             }
-            return images.get(self.char_class, '/static/images/' + self.char_class.replace(' ', '_') + '.png')
+            return images.get(self.char_class, '/static/images/' + self.char_class.replace(' ', '_') + '.svg')
         
         @property
         def set_health_perexperiernce(self) -> int:

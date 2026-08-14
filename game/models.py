@@ -28,33 +28,43 @@ class Character(models.Model):
 
 
 class Monster(Character):
-    TYPES = [('goblin','Goblin'),('troll','Troll'),('dragon','Dragon')]
+    TYPES = [('goblin','goblin'),('troll','troll'),('dragon','dragon')]
     monster_type = models.CharField(max_length=20, choices=TYPES)
     #boss_type = models.CharField(max_length=20, default='')  # New field to distinguish bosses
     xp    = models.IntegerField(default=50)
     rage       = models.IntegerField(default=0)
     atk_power = models.IntegerField(default=10)
-    image = models.CharField(max_length=100, default='/static/images/Goblin.png')
+    image = models.CharField(max_length=100, default='/static/images/goblin_brute.svg')
     miss_chance = models.IntegerField(default=0)  # New field for miss chance
 
     def create_monters(self):
-        if Monster.objects.exists():
-            return  # Already created
+        
+        # if Monster.objects.exists():
+            
+        #     return  # Already created
         monsters = [
-            {'name': 'Forest Goblin', 'monster_type': 'goblin', 'health': 15, 'max_health': 30, 'image': '/static/images/Forest.png'},
-            {'name': 'Swamp Goblin', 'monster_type': 'goblin', 'health': 16, 'max_health': 30, 'image': '/static/images/Swamp.png'},
-            {'name': 'Cave Goblin', 'monster_type': 'goblin', 'health': 18, 'max_health': 30, 'image': '/static/images/Cave.png'},
-            {'name': 'Goblin Brute', 'monster_type': 'goblin', 'health': 22, 'max_health': 30, 'image': '/static/images/Brute.png'},
-            {'name': 'Mountain Troll', 'monster_type': 'troll', 'health': 50, 'max_health': 50, 'image': '/static/images/Mountain_Troll.png'},
-            {'name': 'Fire Dragon', 'monster_type': 'dragon', 'health': 100, 'max_health': 100, 'image': '/static/images/Fire_Dragon.png'},
+            {'name': 'goblin forest', 'monster_type': 'goblin', 'health': 15, 'max_health': 30, 'image': '/static/images/goblin_forest.svg'},
+            {'name': 'goblin swamp', 'monster_type': 'goblin', 'health': 16, 'max_health': 30, 'image': '/static/images/goblin_swamp.svg'},
+            {'name': 'goblin cave', 'monster_type': 'goblin', 'health': 18, 'max_health': 30, 'image': '/static/images/goblin_cave.svg'},
+            {'name': 'goblin brute', 'monster_type': 'goblin', 'health': 22, 'max_health': 30, 'image': '/static/images/goblin_brute.svg'},
+            {'name': 'troll warlord', 'monster_type': 'troll', 'health': 50, 'max_health': 50, 'image': '/static/images/troll_warlord.svg'},
+            {'name': 'dragon fire', 'monster_type': 'dragon', 'health': 100, 'max_health': 100, 'image': '/static/images/dragon_fire.png'},
+            {'name': 'dragon ancient', 'monster_type': 'dragon', 'health': 100, 'max_health': 100, 'image': '/static/images/dragon_ancient.png'},
         ]
+
         for m in monsters:
-            Monster.objects.get_or_create(name=m['name'], defaults=m)
+            monster = Monster.objects.get(id=m['id'])
+            monster.name = m['name']
+            monster.monster_type = m['monster_type']
+            monster.health = m['health']
+            monster.max_health = m['max_health']
+            monster.image = m['image']
+            monster.save()
 
     @property
     def set_image(self) -> str:
         images = {
-            'goblin': '/static/images/' + self.name.replace(' ', '_') + '.png',
+            'goblin': '/static/images/' + self.name.replace(' ', '_') + '.svg',
             'troll':  '/static/images/' + self.name.replace(' ', '_') + '.png',
             'dragon':  '/static/images/' + self.name.replace(' ', '_') + '.png',
         }

@@ -3,7 +3,7 @@ from django.utils import timezone
 from datetime import date
 from game.warrior import Warrior
 from game.boss import Boss
-from game.wins_losses import WinsVsLossesView
+from game.wins_losses_view import WinsVsLossesView
 register = template.Library()
 
 

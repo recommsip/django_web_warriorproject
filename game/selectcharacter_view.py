@@ -21,7 +21,7 @@ class SelectCharacterView(View):
     template_name = "game/character_select.html"
     
     def get(self, request):
-        
+
         warriors = Warrior.objects.all()
         paginator = Paginator(warriors, 5)
         page_number = request.GET.get("page")
@@ -31,6 +31,7 @@ class SelectCharacterView(View):
             'warriors': page_obj,
             'page_obj': page_obj,
         }
+        
         #warrior = warriors.get(pk=pk)
         #request.session['warrior_id'] = warrior.pk
         return render(

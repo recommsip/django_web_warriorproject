@@ -1,0 +1,67 @@
+<svg width="500" height="600" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgWl" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#2a1a3a"/>
+      <stop offset="100%" stop-color="#120a1a"/>
+    </radialGradient>
+    <radialGradient id="skullGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7cff8a" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#2ecc40" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="500" height="600" fill="url(#bgWl)"/>
+  <circle cx="250" cy="230" r="190" fill="none" stroke="#8a5ac0" stroke-width="6" opacity="0.5"/>
+
+  <!-- floating skull totem -->
+  <circle cx="370" cy="360" r="50" fill="url(#skullGlow)"/>
+  <circle cx="370" cy="360" r="20" fill="#e8e8d8" stroke="#0f0a14" stroke-width="3"/>
+  <circle cx="362" cy="357" r="4" fill="#2ecc40"/>
+  <circle cx="378" cy="357" r="4" fill="#2ecc40"/>
+
+  <!-- robe -->
+  <path d="M150 330 Q250 300 350 330 L390 570 L110 570 Z" fill="#1e1330" stroke="#0f0a14" stroke-width="7"/>
+  <path d="M200 340 L300 340 L318 570 L182 570 Z" fill="#2e1e48" stroke="#0f0a14" stroke-width="5"/>
+
+  <!-- runes -->
+  <g stroke="#7cff8a" stroke-width="3" fill="none" opacity="0.85">
+    <path d="M225 420 L235 440 L215 440 Z"/>
+    <circle cx="270" cy="480" r="8"/>
+    <path d="M225 520 L235 540 M225 540 L235 520"/>
+  </g>
+
+  <!-- arms -->
+  <rect x="120" y="335" width="34" height="100" rx="16" fill="#1e1330" stroke="#0f0a14" stroke-width="6" transform="rotate(-14 137 385)"/>
+  <rect x="346" y="335" width="34" height="100" rx="16" fill="#1e1330" stroke="#0f0a14" stroke-width="6" transform="rotate(22 363 385)"/>
+  <circle cx="128" cy="440" r="20" fill="#c48a6a" stroke="#0f0a14" stroke-width="5"/>
+  <circle cx="368" cy="418" r="20" fill="#c48a6a" stroke="#0f0a14" stroke-width="5"/>
+
+  <!-- twisted staff -->
+  <path d="M368 240 Q380 320 360 450" fill="none" stroke="#3a2418" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="368" cy="235" r="16" fill="#7cff8a" opacity="0.85"/>
+
+  <!-- neck -->
+  <rect x="228" y="290" width="44" height="40" fill="#c48a6a" stroke="#0f0a14" stroke-width="5"/>
+
+  <!-- head -->
+  <circle cx="250" cy="220" r="78" fill="#cf9070" stroke="#0f0a14" stroke-width="7"/>
+
+  <!-- hood with horns -->
+  <path d="M168 205 Q158 100 250 92 Q342 100 332 205 Q332 145 250 140 Q168 145 168 205 Z" fill="#1e1330" stroke="#0f0a14" stroke-width="6"/>
+  <path d="M180 130 Q160 70 185 30 Q210 75 200 130 Z" fill="#4a3a5a" stroke="#0f0a14" stroke-width="5"/>
+  <path d="M320 130 Q340 70 315 30 Q290 75 300 130 Z" fill="#4a3a5a" stroke="#0f0a14" stroke-width="5"/>
+
+  <!-- eyes glowing -->
+  <ellipse cx="218" cy="215" rx="10" ry="11" fill="#7cff8a"/>
+  <ellipse cx="282" cy="215" rx="10" ry="11" fill="#7cff8a"/>
+  <path d="M198 198 Q218 186 238 200" fill="none" stroke="#0f0a14" stroke-width="5" stroke-linecap="round"/>
+  <path d="M262 200 Q282 186 302 198" fill="none" stroke="#0f0a14" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- markings -->
+  <path d="M230 245 Q250 255 270 245" fill="none" stroke="#7cff8a" stroke-width="3" opacity="0.8"/>
+
+  <!-- nose + mouth -->
+  <path d="M250 222 L245 245 Q250 250 255 245" fill="none" stroke="#0f0a14" stroke-width="4" stroke-linecap="round"/>
+  <path d="M232 262 Q250 258 268 262" fill="none" stroke="#0f0a14" stroke-width="5" stroke-linecap="round"/>
+
+  <text x="250" y="575" text-anchor="middle" font-family="Georgia, serif" font-size="34" font-weight="bold" fill="#a0f0a8">warlock</text>
+</svg>

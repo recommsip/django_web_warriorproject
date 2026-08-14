@@ -1,0 +1,71 @@
+<svg width="500" height="600" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgBG" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#5a2a22"/>
+      <stop offset="100%" stop-color="#241010"/>
+    </radialGradient>
+  </defs>
+  <rect width="500" height="600" fill="url(#bgBG)"/>
+  <circle cx="250" cy="245" r="195" fill="none" stroke="#c06a4a" stroke-width="6" opacity="0.5"/>
+
+  <!-- hide/fur mantle, extra wide for bulk -->
+  <path d="M120 360 Q95 490 135 580 L365 580 Q405 490 380 360 Z" fill="#4a2418" stroke="#241010" stroke-width="6"/>
+  <g fill="#6a3a24" stroke="#241010" stroke-width="3">
+    <path d="M150 380 L165 420 L135 420 Z"/>
+    <path d="M350 380 L365 420 L335 420 Z"/>
+  </g>
+
+  <!-- bulky body -->
+  <path d="M155 345 Q250 315 345 345 L355 480 Q250 515 145 480 Z" fill="#8a5a3a" stroke="#241010" stroke-width="7"/>
+  <ellipse cx="250" cy="420" rx="70" ry="50" fill="#7a4e30" opacity="0.5"/>
+
+  <!-- thick arms -->
+  <rect x="105" y="350" width="46" height="130" rx="20" fill="#8a5a3a" stroke="#241010" stroke-width="7" transform="rotate(8 128 415)"/>
+  <rect x="349" y="350" width="46" height="130" rx="20" fill="#8a5a3a" stroke="#241010" stroke-width="7" transform="rotate(-14 372 415)"/>
+  <circle cx="130" cy="482" r="28" fill="#9a6a44" stroke="#241010" stroke-width="6"/>
+  <circle cx="378" cy="462" r="28" fill="#9a6a44" stroke="#241010" stroke-width="6"/>
+
+  <!-- massive club -->
+  <g transform="rotate(-25 378 462)">
+    <rect x="368" y="380" width="20" height="100" rx="6" fill="#5a3a1c" stroke="#241010" stroke-width="4"/>
+    <ellipse cx="378" cy="370" rx="34" ry="28" fill="#4a3016" stroke="#241010" stroke-width="5"/>
+    <circle cx="365" cy="360" r="5" fill="#7a7a7a"/>
+    <circle cx="390" cy="368" r="5" fill="#7a7a7a"/>
+    <circle cx="378" cy="382" r="5" fill="#7a7a7a"/>
+  </g>
+
+  <!-- neck, thick -->
+  <rect x="215" y="315" width="70" height="45" fill="#9a6a44" stroke="#241010" stroke-width="6"/>
+
+  <!-- head, large and squat -->
+  <ellipse cx="250" cy="240" rx="95" ry="82" fill="#9a6a44" stroke="#241010" stroke-width="8"/>
+
+  <!-- ears, torn -->
+  <path d="M162 225 Q108 210 122 155 Q170 175 195 218 Z" fill="#8a5a3a" stroke="#241010" stroke-width="6"/>
+  <path d="M338 225 Q392 210 378 155 Q330 175 305 218 Z" fill="#8a5a3a" stroke="#241010" stroke-width="6"/>
+
+  <!-- bandana -->
+  <path d="M170 190 Q250 165 330 190 L322 215 Q250 195 178 215 Z" fill="#6a1e1e" stroke="#241010" stroke-width="5"/>
+
+  <!-- scars -->
+  <line x1="290" y1="200" x2="305" y2="270" stroke="#5a3220" stroke-width="5" stroke-linecap="round"/>
+  <line x1="185" y1="260" x2="200" y2="285" stroke="#5a3220" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- small angry eyes -->
+  <ellipse cx="215" cy="240" rx="11" ry="9" fill="#f0d090"/>
+  <ellipse cx="295" cy="240" rx="11" ry="9" fill="#f0d090"/>
+  <circle cx="215" cy="242" r="5" fill="#1a1210"/>
+  <circle cx="295" cy="242" r="5" fill="#1a1210"/>
+  <path d="M192 220 L238 232" stroke="#241010" stroke-width="6" stroke-linecap="round"/>
+  <path d="M272 232 L318 220" stroke="#241010" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- broad nose -->
+  <path d="M250 255 Q232 278 250 288 Q268 278 250 255" fill="#8a5a3a" stroke="#241010" stroke-width="5"/>
+
+  <!-- wide mouth with tusks -->
+  <path d="M195 295 Q250 322 305 295 Q296 315 250 318 Q204 315 195 295 Z" fill="#2a1810" stroke="#241010" stroke-width="5"/>
+  <path d="M212 298 L205 316" stroke="#f0f0e0" stroke-width="6" stroke-linecap="round"/>
+  <path d="M288 298 L295 316" stroke="#f0f0e0" stroke-width="6" stroke-linecap="round"/>
+
+  <text x="250" y="580" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-weight="bold" fill="#f0c0a0">brute goblin</text>
+</svg>

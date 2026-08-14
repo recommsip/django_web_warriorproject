@@ -1,0 +1,82 @@
+<svg width="500" height="600" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgGK" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#4a3a1a"/>
+      <stop offset="100%" stop-color="#1c160a"/>
+    </radialGradient>
+    <radialGradient id="royalGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffe870" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#ffe870" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="500" height="600" fill="url(#bgGK)"/>
+  <circle cx="250" cy="245" r="195" fill="none" stroke="#d4af37" stroke-width="6" opacity="0.5"/>
+  <circle cx="250" cy="150" r="90" fill="url(#royalGlow)"/>
+
+  <!-- royal cape, red and gold trimmed -->
+  <path d="M135 350 Q108 490 150 580 L350 580 Q392 490 365 350 Z" fill="#7a1a1a" stroke="#1c160a" stroke-width="6"/>
+  <path d="M135 350 L165 350 L150 580 L120 580 Z" fill="#c8a848" stroke="#1c160a" stroke-width="4"/>
+  <path d="M365 350 L335 350 L350 580 L380 580 Z" fill="#c8a848" stroke="#1c160a" stroke-width="4"/>
+
+  <!-- body, ornate armor -->
+  <path d="M180 345 Q250 320 320 345 L328 475 Q250 502 172 475 Z" fill="#7a9a4c" stroke="#1c160a" stroke-width="6"/>
+  <path d="M212 356 L288 356 L280 465 Q250 480 220 465 Z" fill="#8aae58" stroke="#1c160a" stroke-width="4"/>
+  <circle cx="250" cy="410" r="20" fill="#d4af37" stroke="#1c160a" stroke-width="4"/>
+  <path d="M238 410 L250 398 L262 410 L250 422 Z" fill="#8a1a1a"/>
+
+  <!-- shoulder plates, gold -->
+  <ellipse cx="188" cy="350" rx="38" ry="28" fill="#c8a848" stroke="#1c160a" stroke-width="6"/>
+  <ellipse cx="312" cy="350" rx="38" ry="28" fill="#c8a848" stroke="#1c160a" stroke-width="6"/>
+
+  <!-- arms -->
+  <rect x="152" y="352" width="32" height="100" rx="15" fill="#6a8a44" stroke="#1c160a" stroke-width="6" transform="rotate(14 168 402)"/>
+  <rect x="316" y="352" width="32" height="100" rx="15" fill="#6a8a44" stroke="#1c160a" stroke-width="6" transform="rotate(-18 332 402)"/>
+  <circle cx="176" cy="452" r="20" fill="#8ab04e" stroke="#1c160a" stroke-width="5"/>
+  <circle cx="342" cy="440" r="20" fill="#8ab04e" stroke="#1c160a" stroke-width="5"/>
+
+  <!-- jeweled scepter -->
+  <g transform="rotate(20 342 440)">
+    <rect x="336" y="290" width="12" height="155" rx="4" fill="#c8a848" stroke="#1c160a" stroke-width="4"/>
+    <circle cx="342" cy="278" r="20" fill="#8a1ac0" stroke="#1c160a" stroke-width="4"/>
+    <circle cx="342" cy="278" r="8" fill="#e8b8ff"/>
+  </g>
+
+  <!-- neck -->
+  <rect x="225" y="315" width="50" height="38" fill="#8ab04e" stroke="#1c160a" stroke-width="5"/>
+
+  <!-- head -->
+  <ellipse cx="250" cy="232" rx="82" ry="78" fill="#8ab04e" stroke="#1c160a" stroke-width="7"/>
+
+  <!-- big ears with gold rings -->
+  <path d="M170 222 Q116 200 128 145 Q182 168 205 216 Z" fill="#7aa044" stroke="#1c160a" stroke-width="6"/>
+  <path d="M330 222 Q384 200 372 145 Q318 168 295 216 Z" fill="#7aa044" stroke="#1c160a" stroke-width="6"/>
+  <circle cx="145" cy="185" r="8" fill="#d4af37" stroke="#1c160a" stroke-width="2"/>
+  <circle cx="355" cy="185" r="8" fill="#d4af37" stroke="#1c160a" stroke-width="2"/>
+
+  <!-- crown -->
+  <path d="M170 185 L185 120 L215 165 L250 105 L285 165 L315 120 L330 185 Z" fill="#d4af37" stroke="#1c160a" stroke-width="6"/>
+  <circle cx="250" cy="115" r="10" fill="#8a1ac0" stroke="#1c160a" stroke-width="3"/>
+  <circle cx="200" cy="150" r="7" fill="#c0202a" stroke="#1c160a" stroke-width="2"/>
+  <circle cx="300" cy="150" r="7" fill="#c0202a" stroke="#1c160a" stroke-width="2"/>
+
+  <!-- eyes, cunning -->
+  <ellipse cx="220" cy="232" rx="13" ry="14" fill="#f0e880"/>
+  <ellipse cx="280" cy="232" rx="13" ry="14" fill="#f0e880"/>
+  <circle cx="222" cy="234" r="6" fill="#1a1210"/>
+  <circle cx="278" cy="234" r="6" fill="#1a1210"/>
+  <path d="M198 212 Q220 200 242 214" fill="none" stroke="#1c160a" stroke-width="5" stroke-linecap="round"/>
+  <path d="M258 214 Q280 200 302 212" fill="none" stroke="#1c160a" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- nose -->
+  <path d="M250 244 Q238 262 250 270 Q262 262 250 244" fill="#7aa044" stroke="#1c160a" stroke-width="4"/>
+
+  <!-- smug grin with tusks -->
+  <path d="M210 278 Q250 300 290 278 Q282 296 250 298 Q218 296 210 278 Z" fill="#3a2818" stroke="#1c160a" stroke-width="4"/>
+  <path d="M222 281 L217 297" stroke="#f0f0e0" stroke-width="5" stroke-linecap="round"/>
+  <path d="M278 281 L283 297" stroke="#f0f0e0" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- goatee -->
+  <path d="M235 296 Q250 320 265 296 Q258 310 250 312 Q242 310 235 296" fill="#3a2818" stroke="#1c160a" stroke-width="3"/>
+
+  <text x="250" y="580" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-weight="bold" fill="#f0d878">goblin king</text>
+</svg>

@@ -14,7 +14,7 @@ from .journey_view import JourneyView
 from .boss_view import BossListView
 from .character_view import CharacterDetailView
 from .selectcharacter_view import SelectCharacterView
-from .wins_losses import WinsVsLossesView
+from .wins_losses_view import WinsVsLossesView
 from .boss_create_view import BossCreateView
 from .boss_delete import BossDeleteView
 from .anotherviewtype import AnotherViewType
@@ -52,39 +52,10 @@ with open(CONFIG_FILE) as f:
 def get_config(key):
     return CONFIG.get(key)
     
-def tavern(request):
-    ''' View for the tavern page where players can create a new warrior or continue with an existing one. '''
-    request.session.set_expiry(0)  # Session expires on browser close
-    choosen_warrior_id = request.session.get('warrior_id')
-      
-    if choosen_warrior_id:
-        return redirect('game:journey', choosen_warrior_id)             # already have a warrior, skip tavern
-    
-    if request.method == 'POST' and request.POST.get('createBoss') == 'createBoss':
-        print("creating boss")
-        return redirect('game:boss_create')
 
-    if request.method == 'POST' and request.POST.get('characterSelect') == 'characterSelect':
-        print("Pick A previous Character...")
-        return redirect('game:character_select')
-    
-    if request.POST.get('characterSelect') == 'nonya':
-        print("Nonya chosen nothing to see here...")
-    
-    # GET: show empty form
-    # POST: validate, save warrior, store id in session
-    if request.method == 'POST':
-       
-        form = CreateWarriorForm(request.POST)
-        if form.is_valid():
-           
-            warrior = form.save()             # INSERT into DB
-            request.session['warrior_id'] = warrior.pk
-            return redirect('game:character_sheet', pk=warrior.pk)  # redirect to character detail page
-    else:
-        form = CreateWarriorForm()            # empty form
-    return render(request, 'game/tavern.html', {'form': form})
 
+# args take tuple, kwargs take dict.
+# 
 def inputs(request, *args, **kwargs):
 
     if request.GET.get:
@@ -97,7 +68,10 @@ def inputs(request, *args, **kwargs):
         create_user(kwargs)
         print(kwargs)
         return request
-
+    
+    
+    if request.POST == 'POST' and request.POST.__getattribute__("experience") == "10":
+        print("Experience 10")
     #print_names("john", "bob", "sarah")
     #create_user(args)
     #create_user(kwargs)
@@ -140,6 +114,7 @@ def reset(request):
             boss.health = boss.max_health
             boss.save()
         for warrior in Warrior.objects.all():
+            warrior.isdead = False
             warrior.health = warrior.max_health
             warrior.victories = 0
             warrior.save()

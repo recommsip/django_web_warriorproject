@@ -1,0 +1,78 @@
+<svg width="500" height="600" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgFD" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#6a2214"/>
+      <stop offset="100%" stop-color="#240c08"/>
+    </radialGradient>
+    <radialGradient id="fireGlowD" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffcf6b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ff5a1f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="flameBreath" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fff2b0"/>
+      <stop offset="50%" stop-color="#ffab3d"/>
+      <stop offset="100%" stop-color="#ff5a1f" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="500" height="600" fill="url(#bgFD)"/>
+  <circle cx="250" cy="245" r="195" fill="none" stroke="#ff9a3c" stroke-width="6" opacity="0.5"/>
+
+  <!-- flame breath -->
+  <circle cx="405" cy="330" r="70" fill="url(#fireGlowD)"/>
+  <path d="M340 300 Q420 300 460 320 Q420 335 340 345 Q400 330 340 300 Z" fill="url(#flameBreath)"/>
+
+  <!-- wings -->
+  <path d="M150 300 Q40 260 30 150 Q100 200 150 260 Q120 220 135 170 Q170 220 175 290 Z" fill="#7a1f14" stroke="#240c08" stroke-width="6"/>
+  <path d="M350 300 Q460 260 470 150 Q400 200 350 260 Q380 220 365 170 Q330 220 325 290 Z" fill="#7a1f14" stroke="#240c08" stroke-width="6"/>
+
+  <!-- body -->
+  <path d="M175 350 Q250 320 325 350 L335 480 Q250 515 165 480 Z" fill="#c0402a" stroke="#240c08" stroke-width="7"/>
+  <path d="M215 360 L285 360 L278 470 Q250 485 222 470 Z" fill="#e0603a" stroke="#240c08" stroke-width="4"/>
+
+  <!-- belly scales -->
+  <g fill="#f0a060" opacity="0.8">
+    <ellipse cx="250" cy="390" rx="18" ry="12"/>
+    <ellipse cx="250" cy="425" rx="20" ry="13"/>
+    <ellipse cx="250" cy="460" rx="18" ry="12"/>
+  </g>
+
+  <!-- arms/claws -->
+  <rect x="150" y="360" width="34" height="90" rx="16" fill="#c0402a" stroke="#240c08" stroke-width="6" transform="rotate(15 167 405)"/>
+  <rect x="316" y="360" width="34" height="90" rx="16" fill="#c0402a" stroke="#240c08" stroke-width="6" transform="rotate(-15 333 405)"/>
+  <path d="M155 450 L145 470 M170 458 L165 480 M185 452 L188 474" stroke="#f0e0c0" stroke-width="6" stroke-linecap="round"/>
+  <path d="M345 450 L355 470 M330 458 L335 480 M315 452 L312 474" stroke="#f0e0c0" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- neck -->
+  <rect x="220" y="320" width="60" height="42" fill="#d0503a" stroke="#240c08" stroke-width="6"/>
+
+  <!-- head -->
+  <ellipse cx="250" cy="230" rx="88" ry="78" fill="#d0503a" stroke="#240c08" stroke-width="8"/>
+
+  <!-- snout -->
+  <path d="M180 240 Q140 245 130 270 Q160 285 195 275 Z" fill="#c0402a" stroke="#240c08" stroke-width="6"/>
+  <path d="M320 240 Q360 245 370 270 Q340 285 305 275 Z" fill="#c0402a" stroke="#240c08" stroke-width="6"/>
+  <circle cx="145" cy="262" r="4" fill="#1a1210"/>
+  <circle cx="355" cy="262" r="4" fill="#1a1210"/>
+
+  <!-- horns -->
+  <path d="M180 175 Q160 100 190 50 Q205 110 205 175 Z" fill="#f0d090" stroke="#240c08" stroke-width="6"/>
+  <path d="M320 175 Q340 100 310 50 Q295 110 295 175 Z" fill="#f0d090" stroke="#240c08" stroke-width="6"/>
+  <path d="M225 165 Q225 110 250 90 Q275 110 275 165 Z" fill="#f0d090" stroke="#240c08" stroke-width="5"/>
+
+  <!-- spikes down neck -->
+  <path d="M215 320 L205 300 L225 305 Z M285 320 L295 300 L275 305 Z" fill="#f0d090" stroke="#240c08" stroke-width="3"/>
+
+  <!-- eyes -->
+  <ellipse cx="215" cy="230" rx="14" ry="17" fill="#ffe870"/>
+  <ellipse cx="285" cy="230" rx="14" ry="17" fill="#ffe870"/>
+  <ellipse cx="215" cy="232" rx="4" ry="12" fill="#1a1210"/>
+  <ellipse cx="285" cy="232" rx="4" ry="12" fill="#1a1210"/>
+  <path d="M190 208 Q215 195 240 210" fill="none" stroke="#240c08" stroke-width="5" stroke-linecap="round"/>
+  <path d="M260 210 Q285 195 310 208" fill="none" stroke="#240c08" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- mouth with fangs -->
+  <path d="M190 280 Q250 305 310 280 Q300 300 250 305 Q200 300 190 280 Z" fill="#5a1810" stroke="#240c08" stroke-width="5"/>
+  <path d="M212 285 L206 302 M240 292 L237 306 M260 292 L263 306 M288 285 L294 302" stroke="#f8f0e0" stroke-width="5" stroke-linecap="round"/>
+
+  <text x="250" y="580" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-weight="bold" fill="#ffd8a0">fire dragon</text>
+</svg>

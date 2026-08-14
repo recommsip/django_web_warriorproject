@@ -1,0 +1,67 @@
+<svg width="500" height="600" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgCG" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#3a3a45"/>
+      <stop offset="100%" stop-color="#16161d"/>
+    </radialGradient>
+    <radialGradient id="crystalGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a0d8ff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#4a90d9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="500" height="600" fill="url(#bgCG)"/>
+  <circle cx="250" cy="240" r="190" fill="none" stroke="#7a8aa0" stroke-width="6" opacity="0.5"/>
+
+  <!-- glowing crystal -->
+  <circle cx="365" cy="360" r="46" fill="url(#crystalGlow)"/>
+  <path d="M365 335 L378 360 L365 385 L352 360 Z" fill="#c8ecff" stroke="#16161d" stroke-width="3"/>
+
+  <!-- ragged hide cloak -->
+  <path d="M155 360 Q135 480 170 570 L330 570 Q365 480 345 360 Z" fill="#4a4238" stroke="#16161d" stroke-width="6"/>
+
+  <!-- body -->
+  <path d="M188 350 Q250 328 312 350 L316 470 Q250 495 184 470 Z" fill="#6a6a5a" stroke="#16161d" stroke-width="6"/>
+
+  <!-- arms -->
+  <rect x="152" y="355" width="30" height="95" rx="14" fill="#5a6a48" stroke="#16161d" stroke-width="6" transform="rotate(10 167 402)"/>
+  <rect x="318" y="355" width="30" height="95" rx="14" fill="#5a6a48" stroke="#16161d" stroke-width="6" transform="rotate(-20 333 402)"/>
+  <circle cx="174" cy="452" r="18" fill="#7a8a5c" stroke="#16161d" stroke-width="5"/>
+  <circle cx="324" cy="438" r="18" fill="#7a8a5c" stroke="#16161d" stroke-width="5"/>
+
+  <!-- crude club -->
+  <g transform="rotate(-25 324 438)">
+    <rect x="318" y="400" width="12" height="60" rx="4" fill="#5a4a30" stroke="#16161d" stroke-width="3"/>
+    <ellipse cx="324" cy="395" rx="20" ry="16" fill="#4a3a24" stroke="#16161d" stroke-width="4"/>
+  </g>
+
+  <!-- neck -->
+  <rect x="228" y="320" width="44" height="34" fill="#7a8a5c" stroke="#16161d" stroke-width="5"/>
+
+  <!-- head, pale -->
+  <ellipse cx="250" cy="240" rx="80" ry="76" fill="#8a9a6e" stroke="#16161d" stroke-width="7"/>
+
+  <!-- big bat-like ears -->
+  <path d="M175 225 Q115 195 120 130 Q180 155 205 215 Z" fill="#7a8a5c" stroke="#16161d" stroke-width="6"/>
+  <path d="M325 225 Q385 195 380 130 Q320 155 295 215 Z" fill="#7a8a5c" stroke="#16161d" stroke-width="6"/>
+
+  <!-- battle scars -->
+  <line x1="200" y1="200" x2="212" y2="250" stroke="#4a3a28" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- eyes, sunken -->
+  <ellipse cx="220" cy="245" rx="12" ry="10" fill="#e0e8c0"/>
+  <ellipse cx="280" cy="245" rx="12" ry="10" fill="#e0e8c0"/>
+  <circle cx="220" cy="247" r="5" fill="#8a1a1a"/>
+  <circle cx="280" cy="247" r="5" fill="#8a1a1a"/>
+  <path d="M198 225 Q220 218 242 228" fill="none" stroke="#16161d" stroke-width="5" stroke-linecap="round"/>
+  <path d="M258 228 Q280 218 302 225" fill="none" stroke="#16161d" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- nose -->
+  <path d="M250 252 Q238 270 250 278 Q262 270 250 252" fill="#6a7a4e" stroke="#16161d" stroke-width="4"/>
+
+  <!-- mouth with tusks -->
+  <path d="M212 288 Q250 310 288 288 Q282 304 250 306 Q218 304 212 288 Z" fill="#2a2018" stroke="#16161d" stroke-width="4"/>
+  <path d="M226 291 L221 305" stroke="#e8e0d0" stroke-width="5" stroke-linecap="round"/>
+  <path d="M274 291 L279 305" stroke="#e8e0d0" stroke-width="5" stroke-linecap="round"/>
+
+  <text x="250" y="580" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-weight="bold" fill="#c0d0e0">cave goblin</text>
+</svg>

@@ -1,0 +1,373 @@
+These three are part of Django's **model manager**. Every Django model automatically gets a manager called `objects`, and that's your main interface to the database.
+
+Let's use your `Warrior` model as the example.
+
+```python
+from .warrior import Warrior
+```
+
+Now you have access to the `Warrior` model and its manager:
+
+```python
+Warrior.objects
+```
+
+Think of it like this:
+
+```text
+Warrior
+   │
+   └── objects (Manager)
+          │
+          ├── all()
+          ├── filter()
+          ├── get()
+          ├── create()
+          ├── update()
+          ├── delete()
+          └── ...
+```
+
+---
+
+# 1. `objects.all()`
+
+Returns **every row** from the Warrior table.
+
+```python
+warriors = Warrior.objects.all()
+```
+
+Django generates SQL similar to
+
+```sql
+SELECT * FROM game_warrior;
+```
+
+Suppose your table contains
+
+| id | char_class | victories |
+| -- | ---------- | --------- |
+| 1  | warrior    | 5         |
+| 2  | mage       | 10        |
+| 3  | rogue      | 2         |
+
+Then
+
+```python
+warriors = Warrior.objects.all()
+```
+
+returns a QuerySet containing all three warriors.
+
+You can iterate over it.
+
+```python
+for warrior in warriors:
+    print(warrior.id)
+    print(warrior.char_class)
+```
+
+Output
+
+```text
+1 warrior
+2 mage
+3 rogue
+```
+
+---
+
+# 2. `objects.filter()`
+
+Returns only rows matching some condition.
+
+Example:
+
+```python
+Warrior.objects.filter(char_class="mage")
+```
+
+SQL
+
+```sql
+SELECT *
+FROM game_warrior
+WHERE char_class='mage';
+```
+
+Result
+
+```text
+<QuerySet [
+    Warrior(id=2)
+]>
+```
+
+You can have multiple conditions.
+
+```python
+Warrior.objects.filter(
+    victories__gt=10,
+    char_class="warrior"
+)
+```
+
+means
+
+```text
+victories > 10
+AND
+char_class == "warrior"
+```
+
+---
+
+## Lookup expressions
+
+These are extremely useful.
+
+Greater than
+
+```python
+Warrior.objects.filter(level__gt=5)
+```
+
+Less than
+
+```python
+Warrior.objects.filter(level__lt=5)
+```
+
+Greater or equal
+
+```python
+Warrior.objects.filter(level__gte=5)
+```
+
+Contains
+
+```python
+Warrior.objects.filter(name__contains="Bob")
+```
+
+Case insensitive
+
+```python
+Warrior.objects.filter(name__icontains="bob")
+```
+
+IDs in a list
+
+```python
+ids = [1,5,8]
+
+Warrior.objects.filter(id__in=ids)
+```
+
+SQL
+
+```sql
+WHERE id IN (1,5,8)
+```
+
+This is exactly what your template tag is doing.
+
+---
+
+# 3. `objects.create()`
+
+Creates a brand new row in the database.
+
+```python
+Warrior.objects.create(
+    char_class="warrior",
+    victories=0,
+    defeats=0
+)
+```
+
+Django generates
+
+```sql
+INSERT INTO game_warrior (...)
+VALUES (...);
+```
+
+Notice you don't call `save()`.
+
+`create()` automatically saves the object.
+
+Equivalent to
+
+```python
+w = Warrior(
+    char_class="warrior",
+    victories=0,
+    defeats=0
+)
+
+w.save()
+```
+
+---
+
+# 4. `objects.get()`
+
+Returns **one** object.
+
+```python
+warrior = Warrior.objects.get(id=5)
+```
+
+SQL
+
+```sql
+SELECT *
+FROM game_warrior
+WHERE id=5;
+```
+
+If there isn't exactly one result, Django raises an exception.
+
+No object
+
+```python
+Warrior.DoesNotExist
+```
+
+More than one
+
+```python
+Warrior.MultipleObjectsReturned
+```
+
+---
+
+# 5. `objects.first()`
+
+Gets the first object.
+
+```python
+warrior = Warrior.objects.first()
+```
+
+Returns
+
+```python
+None
+```
+
+if there aren't any warriors.
+
+Much safer than `get()`.
+
+---
+
+# 6. `objects.last()`
+
+Gets the last object.
+
+```python
+Warrior.objects.last()
+```
+
+---
+
+# 7. `objects.exists()`
+
+Checks whether anything matches.
+
+Instead of
+
+```python
+if len(Warrior.objects.filter(level=5)) > 0:
+```
+
+write
+
+```python
+if Warrior.objects.filter(level=5).exists():
+```
+
+This is much faster.
+
+---
+
+# 8. `objects.count()`
+
+Returns the number of rows.
+
+```python
+Warrior.objects.count()
+```
+
+Example
+
+```text
+127
+```
+
+---
+
+# 9. `objects.order_by()`
+
+Sorts results.
+
+Highest victories first
+
+```python
+Warrior.objects.order_by("-victories")
+```
+
+Lowest victories first
+
+```python
+Warrior.objects.order_by("victories")
+```
+
+Exactly what you're doing here
+
+```python
+warriors = Warrior.objects.all().order_by("-victories")
+```
+
+---
+
+# 10. Chaining
+
+One of Django's strengths is that you can chain methods together because each call (except methods like `get()` or `count()`) returns another `QuerySet`.
+
+```python
+Warrior.objects.filter(
+    victories__gt=5
+).order_by(
+    "-victories"
+).first()
+```
+
+Read it almost like English:
+
+> Get all warriors where victories are greater than 5, order them by victories descending, then return the first one.
+
+---
+
+# Visual summary
+
+```text
+Warrior
+    │
+    └── objects
+          │
+          ├── all()      → every warrior
+          ├── filter()   → matching warriors
+          ├── get()      → one warrior
+          ├── create()   → insert new warrior
+          ├── first()    → first warrior
+          ├── last()     → last warrior
+          ├── exists()   → True/False
+          ├── count()    → number of warriors
+          └── order_by() → sort warriors
+```
+
+The key concept is that **`objects` is not the database itself**. It's a **manager** attached to the model class. The manager knows how to build SQL queries for the table represented by that model. Calling methods like `all()`, `filter()`, or `create()` tells the manager what database operation you want to perform.
