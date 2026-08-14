@@ -18,7 +18,7 @@
 
     {% if  warrior.victories > 1 %}
         <h1 class="text-center mb-5">
-            {{ warrior.name }} DEATS {{ boss.name }}.
+            {{ warrior.name }} DEATH AT THE HANDS OF {{ boss.name }}.
         </h1>
     {% else %}
         <h1 class="text-center mb-5">
@@ -26,12 +26,15 @@
         </h1>
     {% endif %}
     <!-- here is the templatetag function used to render the character table called from the template tag -->
+    {% get_date as date %}
     
-     <div> <p> characters warriors </p> {% render_character_table warriors %}   </div>
-        <div> <p> Date </p> {% get_date %}  </div>
+    <div> <p> Characters Warriors </p>  
+        {% render_character_table warriors %}
+    </div>
+        <div> <p> Date </p>   </div>
             <div class="text-center ">
                 <p>
-               
+               {{date}}
                 {% if page_obj.has_previous %}
                     <a class="btn btn-success" href="?page=1">First</a>
                     <a class="btn btn-success" href="?page={{ page_obj.previous_page_number }}">Previous</a>

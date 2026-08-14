@@ -1,0 +1,66 @@
+""" 
+
+When importing Warrior you can access the following methods:
+
+you can access everyting in the Warrior database entity, create filters, or create more attributes.
+
+Warrior  -----> Warrior table
+      |
+      +-- Warrior.objects.all()
+      +-- Warrior.objects.filter(...)
+      +-- Warrior.objects.create(...)
+
+Boss -----> Boss table
+      |
+      +-- Boss.objects.all()
+      +-- Boss.objects.filter(...)
+
+Monster -----> Monster table
+      |
+      +-- Monster.objects.all()
+      
+Warrior
+   │
+   └── objects (Manager)
+          │
+          ├── all()
+          ├── filter()
+          ├── get()
+          ├── create()
+          ├── update()
+          ├── delete()
+          └── ...
+          
+warriors = Warrior.objects.all() <----->    SELECT * FROM game_warrior;
+
+for warrior in warriors:
+    print(warrior.id)
+    print(warrior.char_class)
+    
+Warrior.objects.filter(char_class="mage") <----> SELECT * FROM game_warrior WHERE char_class='mage';
+<QuerySet [
+    Warrior(id=2)
+]>
+
+Multiple conditions: Warrior.objects.filter( victories__gt=10, char_class="warrior")
+
+Lookup:
+Warrior.objects.filter(level__gt=5)
+Warrior.objects.filter(level__lt=5)
+Warrior.objects.filter(level__gte=5)
+Warrior.objects.filter(name__contains="Bob")
+Warrior.objects.filter(name__icontains="bob")
+ids = [1,5,8]
+
+Warrior.objects.filter(id__in=ids) <-----> WHERE id IN (1,5,8)
+
+
+CREATE OBJECTS:
+
+Warrior.objects.create(
+    char_class="warrior",
+    victories=0,
+    defeats=0
+)
+      
+"""
