@@ -1,8 +1,9 @@
     {% extends 'game/base.html' %}
     {% block content %}
-        <h1>Boss List -- BOSS APPEARS.</h1>
+        <h1>{{boss.name}}BOSS APPEARS.</h1>
         <ul>
             {% for boss in bosses %}
+                
                 <img src="{{ boss.set_image }}" alt="{{ boss.name }} Image" width="100">
                 <li>{{ boss.name }} - Type: {{ boss.get_boss_type_display }} - Victories: {{ boss.victories }}</li>
                 

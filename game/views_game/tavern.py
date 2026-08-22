@@ -2,9 +2,12 @@ from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect
 from ..warrior import Warrior
 from ..forms import CreateWarriorForm
+# game/views.py (or game/views_game/tavern.py)
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def tavern(request):
+    
     ''' View for the tavern page where players can create a new warrior or continue with an existing one. '''
     request.session.set_expiry(0)  # Session expires on browser close
     choosen_warrior_id = request.session.get('warrior_id')
@@ -35,4 +38,8 @@ def tavern(request):
             return redirect('game:character_sheet', pk=warrior.pk)  # redirect to character detail page
     else:
         form = CreateWarriorForm()            # empty form
+    print(f"DEBUG USER: {request.user} | IS AUTH: {request.user.is_authenticated}")
+    if(request.user.is_authenticated is False):
+        return redirect('login')
+
     return render(request, 'game/tavern.html', {'form': form})

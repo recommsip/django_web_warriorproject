@@ -11,10 +11,12 @@ register = template.Library()
 #    page where you want to use the tag. In this case we are loading a db into a table.
 #    TAGS ARE loaded into templates as Django templates {% load warrior_wins_losses_tag %} 
 #    Then in the template use the function as {% render_character_table %}
-@register.inclusion_tag("game/includes/character_table.html")
-def render_character_table(characters):
+@register.inclusion_tag("game/includes/character_table.html", takes_context=True,)
+def render_character_table(context, characters):
     # warrior = Warrior.objects.filter(id__in=[char.id for char in characters])
     # print(warrior)
+    
+    print("TAG WARRIOR_WINS_LOSSES context:", context)
     print("TYPE:", type(characters))
 
     for c in characters:

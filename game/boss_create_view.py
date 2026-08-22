@@ -3,9 +3,14 @@ from django.shortcuts import render, redirect
 from game.boss_form import BossForm
 from game.boss_view import BossListView
 from game.boss import Boss
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-class BossCreateView(View):
 
+class BossCreateView(LoginRequiredMixin, PermissionRequiredMixin, View):
+
+    permission_required = 'game.can_view_boss'
+    
+    # @role_required(allowed_roles=['Admin', 'Manager'])
     def get(self, request):
         form = BossForm()
         bosses = Boss.objects.all()
@@ -35,3 +40,7 @@ class BossCreateView(View):
             'game/boss_create.html',
             {'form': form}
         )
+class Meta:
+    permissions = [
+        ("can_view_boss", "Can view boss"),
+    ]

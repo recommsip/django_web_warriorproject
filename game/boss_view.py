@@ -1,108 +1,93 @@
 import random
-
-from requests import request
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views import View
 
 from game.forms import CreateWarriorForm
 from game.models import Monster
 from game.boss import Boss
 from .warrior import Warrior
-from django.views import View  # type: ignore[import]
-from django.shortcuts import render, redirect  # type: ignore[import]
-
-import random
-from django.shortcuts import get_object_or_404, redirect, render
-from django.views import View
 
 
 class BossListView(View):
-    template_name = "game/boss.html"  # Note: fixed leading dot in path
+    template_name = "game/boss.html"
 
-    def get(self, request, pk=None):
-        print("GET request received in BossListView")
+    def _get_warrior_or_redirect(self, request):
+        """Helper to safely fetch warrior from session."""
         warrior_id = request.session.get("warrior_id")
         if not warrior_id:
-            return redirect("game:tavern")
-
+            return None, redirect("game:tavern")
         warrior = get_object_or_404(Warrior, pk=warrior_id)
+        return warrior, None
 
-        # If a specific pk is passed in the URL, fetch that boss
+    def _get_boss(self, pk=None):
+        """Helper to fetch a specific boss or a random active boss."""
         if pk is not None:
-            boss = get_object_or_404(Boss, pk=pk)
-        else:
-            # Fetch a random boss from existing database records
-            bosses = Boss.objects.all()
-            if not bosses.exists():
-                # Fallback if no bosses exist in DB at all
-                return render(
-                    request,
-                    self.template_name,
-                    {"warrior": warrior, "error": "No bosses found!"},
-                )
+            return get_object_or_404(Boss, pk=pk)
+        
+        bosses = Boss.objects.filter(health__gt=0) if hasattr(Boss, 'health') else Boss.objects.all()
+        if not bosses.exists():
+            return None
+        return random.choice(list(bosses))
 
-            boss = random.choice(bosses)
+    def get(self, request, pk=None):
+        print("************************************")
+        print("GET request received in BossListView")
+        print("************************************")
+        warrior, redirect_response = self._get_warrior_or_redirect(request)
+        if redirect_response:
+            return redirect_response
+
+        boss = self._get_boss(pk=pk)
+        if not boss:
+            return render(
+                request,
+                self.template_name,
+                {"warrior": warrior, "error": "No bosses found!"},
+            )
 
         return render(
             request, self.template_name, {"warrior": warrior, "boss": boss}
         )
-    
-    def post(self, request):
-       
-        template_name = "game/boss_list.html"  # Note: fixed leading dot in path
-        
-        boss_id = request.session.get('current_boss_id')
-        boss = Boss.objects.filter(pk=boss_id, health__gt=0).first()
-        warrior = self._get_warrior(request)
-        
-        if not warrior:
-            print("No warrior found in session. Redirecting to tavern.")
-            return redirect('game:tavern')
 
+    def post(self, request, pk=None):
+        print("*******************")
+        print("BOSS VIEW: POST")
+        print("*******************")
+        
+        # 1. Fetch Warrior
+        warrior, redirect_response = self._get_warrior_or_redirect(request)
+        if redirect_response:
+            print("No warrior found in session. Redirecting to tavern.")
+            return redirect_response
+
+        # 2. Fetch Boss (Handles both pk passed in URL or fallback to session/random)
+        boss = None
+        if pk is not None:
+            boss = get_object_or_404(Boss, pk=pk)
+        else:
+            boss_id = request.session.get("current_boss_id")
+            if boss_id:
+                boss = Boss.objects.filter(pk=boss_id).first()
+            if not boss:
+                boss = self._get_boss()
+
+        # 3. Handle missing boss
         if not boss:
             print("Boss not found!")
-            get_boss = Boss.objects.all().first()
-            print(f"Available bosses: {get_boss}")
-            return render(request, template_name)
+            contexto = {"warrior": warrior, "error": "No available bosses."}
+            return render(request, "game/boss_list.html", contexto)
 
-        # boss.health -= warrior.attack_power
-        # warrior.health -= 20
-        # boss.save()
-        # warrior.save()
+        # Store selected boss ID in session for consistency
+        request.session["current_boss_id"] = boss.pk
 
-        if not boss.is_alive:
+        # 4. Check boss life status
+        if hasattr(boss, "is_alive") and not boss.is_alive:
             warrior.victories += 1
             warrior.save()
-            del request.session['current_boss_id']
-            print("No bosses left! Redirecting to wins vs losses.")
-            return redirect('game:wins_vs_losses')
-        
-        return redirect('game:boss_fight', pk=boss.pk)
-    
-  
-    
-    def _get_warrior(self, request):
-        warrior_id = request.session.get('warrior_id')
-        if not warrior_id:
-            return None
-        return Warrior.objects.get(pk=warrior_id)
+            if "current_boss_id" in request.session:
+                del request.session["current_boss_id"]
+            print("Boss defeated! Redirecting to wins vs losses.")
+            return redirect("game:wins_vs_losses")
 
-    def _get_or_choose_boss(self, request):
-        print("Fetching bosses for encounter...")
-        bosses = Boss.objects.filter(boss_type='boss', health__gt=0)
-        if not bosses.exists():
-            return None
-
-        boss_id = request.session.get('current_boss_id')
-        if boss_id:
-            boss = Boss.objects.filter(pk=boss_id, health__gt=0).first()
-            if boss:
-                return boss
-
-        boss = random.choice(list(bosses))
-        request.session['current_boss_id'] = boss.pk
-        return render(request, 'game/boss_list.html', {
-        'bosses': bosses,
-    })
-        
-  
-    
-   
+        # 5. Redirect to the fight view with the boss PK
+        return redirect("game:boss_fight", pk=boss.pk)

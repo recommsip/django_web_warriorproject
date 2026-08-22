@@ -1,5 +1,6 @@
 import random
 from .models import Monster
+from .boss import Boss
 from .warrior import Warrior
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
@@ -77,8 +78,8 @@ class JourneyView(View):
             request.session.pop('current_goblin_id', None)
             if not Monster.objects.filter(monster_type='goblin', health__gt=0).exists():
                 # return redirect('game:reset')
-                # return redirect('game:encounter')
-                return redirect('game:boss_fight')
+                return redirect('game:encounter', warrior.pk, self.get_random_boss)
+                # return redirect('game:boss_fight')
 
         # Use default refresh to avoid type-checking issues with the "fields" parameter
         goblin.refresh_from_db()
@@ -116,3 +117,10 @@ class JourneyView(View):
                 warrior.experience
             )
         )
+    @property
+    def get_random_boss(self):
+        random_int = random.randint(0, 3)
+        random_boss = Boss.objects.all().order_by('?').first() if Boss.objects.exists() else None
+        boss = random_boss if random_boss else None
+        boss_id = boss.pk if boss else None
+        return boss_id

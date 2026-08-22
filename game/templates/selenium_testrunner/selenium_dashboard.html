@@ -1,0 +1,31 @@
+{% extends 'game/base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <h1> Selenium Test Runner</h1>
+    <form method="post">
+    {% csrf_token %}
+
+    <button name="test" value="login">
+        Run Login Test
+    </button>
+
+    <button name="test" value="create_warrior">
+        Run Create Warrior Test
+    </button>
+
+    <button name="test" value="seltest_03">
+        Run Seltest_03
+    </button>
+</form>
+<p>
+<h2>Test Output</h2>
+
+<div>
+    {% for line in result %}
+        <p>{{ line }}</p>
+    {% endfor %}
+</div>
+</p>
+</div>
+{% endblock %}

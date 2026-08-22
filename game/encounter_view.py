@@ -10,6 +10,8 @@ from django.core.exceptions import ValidationError
 from .boss_view import BossListView
 from game.warrior_calculate_level_helper import LevelCalculator
 from .helpers import build_winloss_context
+from django.shortcuts import get_object_or_404, render, redirect
+from django.http import Http404
 import random
 
 #from game import boss
@@ -18,29 +20,34 @@ class EncounterView(View):          # inherits from Django's View
     
     ''' this is some description '''
     template = "game/boss_fight.html"
-    random_int = random.randint(0, 3)
-    random_boss = Boss.objects.all().order_by('?').first() if Boss.objects.exists() else None
-    boss = random_boss if random_boss else None
-    boss_id = boss.pk if boss else None
+  
     # boss_image = boss.image if boss and boss.image else None
     warrior = None
-    print(f"Current sessions in database: {Session.objects.all()}")
     
+    print(f"Current sessions in database: {Session.objects.all()}")
     # ejemplo: Raw SQL via Model.objects.raw() — still tied to a model, but you write the SQL yourself:
     # warriors = Warrior.objects.raw('SELECT * FROM game_warrior WHERE victories > %s', [10])
     
-    def get(self, request):         # handles GET
+    def get(self, request, pk, boss_pk):         # handles GET
         print("****************************")
         print("Processing EncounterView GET")
         print("****************************")
         session = request.session
+        warrior_id = pk
+        
+        try:
+            warrior = get_object_or_404(Warrior, pk=pk)
+            boss = get_object_or_404(Boss, pk=boss_pk)
+        except Http404:
+            # object genuinely doesn't exist — this is a real error case
+            return redirect("warrior_list")
         print(f"GET request received in EncounterView. Current session data: {session.items()}")
-        if self.boss and self.boss.health <= 0: 
-            print(f"Boss {self.boss.name} is already defeated. Redirecting to wins vs losses.")
+        if (boss and boss.health <= 0): 
+            print(f"Boss {boss.name} is already defeated. Redirecting to wins vs losses.")
             # return redirect('game:wins_vs_losses')
-        print(f"Boss ID {self.boss_id} stored in session.")
+        print(f"Boss ID {boss_pk} stored in session.")
         print(f"Current session data: {request.session.items()}")
-        print(f"Boss health: {self.boss}, {self.boss.health if self.boss else 'No boss found'}")
+        print(f"Boss health: {boss}, {boss.health if boss else 'No boss found'}")
         
         warrior_id = request.session.get('warrior_id')
         warrior = Warrior.objects.get(pk=warrior_id)
@@ -48,14 +55,16 @@ class EncounterView(View):          # inherits from Django's View
             return redirect('game:tavern')
         
         return render(request, 'game/encounter.html',
-                      {'warrior': warrior, 'boss': self.boss})
+                      {'warrior': warrior, 'boss': boss})
 
-    def post(self, request):        # handles POST
+    def post(self, request, pk, boss_pk):       # handles POST
         ''' post method for encounter view '''
-        print("****************************")
+        print("******************************")
         print(f"Processing EncounterView POST")
-        print("****************************")
-        
+        print("******************************")
+        warrior_id = pk
+        boss = Boss.objects.filter(pk=boss_pk).get()
+        warrior = Warrior.objects.filter(pk=warrior_id).get()
         print(request.POST, " - POST received in EncounterView")
         if request.POST.get('flee') == 'flee':
             request.session.pop('current_goblin_id', None)
@@ -82,13 +91,14 @@ class EncounterView(View):          # inherits from Django's View
         warrior = Warrior.objects.get(pk=warrior_id)
         
         print("WINLOSS warrior is:", warrior)
-        boss = Boss.objects.get(pk=self.boss_id)
+        boss = Boss.objects.filter(pk=boss_pk).get()
         print("BOSS IMAGE: " , boss.set_image)
         self.warrior_attack(boss, warrior)
         self.boss_attack(boss, warrior)
         
         contexto = {"warrior":warrior, "boss":boss}
         
+        #  Test if boss has been killed otherwise test if warrior is killed.
         if boss.health <= 0:
             contexto = build_winloss_context(request)
             contexto['warrior'] = warrior
@@ -146,6 +156,7 @@ class EncounterView(View):          # inherits from Django's View
         
     # Boss attacks warrior
     def boss_attack(self, boss, warrior):
+        
         print(f"Boss Attack Power: {boss.attack_power}, Boss Health: {boss.health}")
         warrior.health -= boss.attack_power
         warrior.save()

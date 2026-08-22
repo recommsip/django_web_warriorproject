@@ -2,6 +2,28 @@
 {% block content %}
 
   <h1>The Tavern</h1>
+  {% if user.is_authenticated %}
+  <div class="d-flex justify-content-left mb-12">
+    <p>Logged in as: <strong>{{ user.username }} - TEST OPTIONS <a href="{% url 'game:selenium_dashboard' %}">Selenium Tests</a> </strong>
+   
+    </p>
+   </div>
+  
+  <!-- Django Logout Form -->
+  <form method="post" action="{% url 'game:logout' %}" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit" class="logout-btn">Log Out</button>
+  </form>
+   
+  {% else %}
+    <a href="{% url 'game:login' %}">Log In</a>
+    <p>TEST OPTIONS PAGE</p>
+    <a href="{% url 'game:selenium_dashboard' %}">Selenium Tests</a>
+   
+  {% endif %}
+
+ 
+  
   <p>Choose your name and class, warrior.</p>
   <p> images: </p>
     <div class="d-flex justify-content-around mb-4">
@@ -25,7 +47,7 @@
       <form method='post'>
         {% csrf_token %}
         {{ form.as_p }}
-        <span class="d-flex justify-content-around"><button class="btn btn-primary" type='submit'>Begin Journey</button></span>
+        <span class="d-flex justify-content-around"><button class="btn btn-primary" type='submit' id="begin_journey">Begin Journey</button></span>
 
        
       </form>

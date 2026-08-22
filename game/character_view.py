@@ -4,7 +4,9 @@ from . import warrior_helper
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
 from game.warrior_calculate_level_helper import LevelCalculator
-class CharacterDetailView(View):
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class CharacterDetailView(LoginRequiredMixin, View):
     template_name = 'game/character_sheet.html'
     image = 'default.png'
     level = None
@@ -22,7 +24,6 @@ class CharacterDetailView(View):
         warrior_id = pk
         warrior = Warrior.objects.filter(pk=warrior_id).first()        
         char_class = Warrior.objects.filter(pk=warrior_id).values_list('char_class', flat=True).first()
-        
         
         if not warrior:
             return redirect('game:tavern')

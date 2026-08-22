@@ -123,6 +123,17 @@ STATICFILES_DIRS = [
     BASE_DIR / "game" / "static",   # if style.css lives in games/static/css/style.css
 ]
 
+# settings.py
+
+# Where to redirect users after logging in (uses your 'game:tavern' route)
+LOGIN_REDIRECT_URL = 'game:tavern'
+
+# Where to redirect users after logging out
+LOGOUT_REDIRECT_URL = 'game:login'
+
+# Where @login_required sends unauthenticated users
+LOGIN_URL = 'game:login'
+# Add CORS_ORIGIN_ALLOW_ALL configuration
 
 # Add INTERNAL_IPS configuration
 INTERNAL_IPS = [

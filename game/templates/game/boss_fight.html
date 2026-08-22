@@ -54,19 +54,21 @@
                     {% endif %}
                 </div>
             </div>
-   
-
         {% if warrior.health <= 0 %}
             <p>{{ warrior.name }} has been defeated by {{ boss.name }}.</p>
-            <a href="{% url 'game:wins_vs_losses' %}">View Wins vs Losses</a>
+             HP: {{ warrior.health }} / {{ warrior.max_health }}
+              <div class="progress mb-3 progress-bar-height">
+              <div
+                class="progress-bar bg-danger progress-fill"
+                style="width: {{ warrior.health_pct }}%">
+              </div>
+            </div>
+            <a href="{% url 'game:wins_vs_losses' warrior.pk boss.pk %}">View Wins vs Losses</a>
         {% else %}
-
             <!-- <p>{{ warrior.name }} is still alive and fighting {{ boss.name }}!</p>
             <p>{{ warrior.name }} Health: {{ warrior.health }} / {{ warrior.max_health }}</p>
             <p>{{ boss.name }} is still alive. You can choose to attack or flee.</p>
             <p>{{ boss.name }} Health: {{ boss.health }} / {{ boss.max_health }}</p> -->
-
-
             <p>
                 HP: {{ warrior.health }} / {{ warrior.max_health }}
             </p>

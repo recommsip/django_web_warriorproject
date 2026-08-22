@@ -12,7 +12,7 @@
        
     </div>
 
-    {% if not  warrior.isdead %}
+    {% if  warrior.isdead %}
     <p> TRUE/FALSE:{{warrior.isdead}} </p>
         <div class="row">
             {% if boss %}
@@ -27,7 +27,7 @@
     {% else %}
         <h1 class="text-center mb-5">
             
-            {% if warrior.isdead %}
+            {% if not warrior.isdead %}
             <p> TRUE/FALSE:{{warrior.isdead}} </p>
                 <img src="{{ warrior.set_image }}" alt="Warrior Image" class="card img-fluid rounded center-block" style="max-height: 450px;">
             {% endif %}
