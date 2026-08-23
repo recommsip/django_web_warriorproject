@@ -1,6 +1,6 @@
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect
-from ..warrior import Warrior
+from ..models.warrior import Warrior
 from ..forms import CreateWarriorForm
 # game/views.py (or game/views_game/tavern.py)
 from django.contrib.auth.decorators import login_required

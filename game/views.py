@@ -6,9 +6,9 @@ from django.http import HttpResponse  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
 from django.template.response import TemplateResponse  # type: ignore[import]
 from .forms import CreateWarriorForm
-from .models import Monster
-from .boss import Boss
-from .warrior import Warrior
+from  .models.monster import Monster
+from .models.boss import Boss
+from .models.warrior import Warrior
 from .encounter_view import EncounterView
 from .journey_view import JourneyView
 from .boss_view import BossListView

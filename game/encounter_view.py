@@ -1,8 +1,8 @@
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
-from .models import Monster
-from .boss import Boss
-from .warrior import Warrior
+from game.models.monster import Monster
+from game.models.boss import Boss
+from game.models.warrior import Warrior
 from . import warrior_helper
 from django import forms
 from django.contrib.sessions.models import Session

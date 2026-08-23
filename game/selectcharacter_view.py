@@ -1,6 +1,6 @@
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
-from .warrior import Warrior
+from .models.warrior import Warrior
 from django.core.paginator import Paginator
 
 """ Database

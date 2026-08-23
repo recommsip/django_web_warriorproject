@@ -1,8 +1,8 @@
 import random
 from urllib3 import request
-from .models import Monster
-from .warrior import Warrior
-from .boss import Boss
+from game.models.monster import Monster
+from .models.warrior import Warrior
+from .models.boss import Boss
 from django.core.paginator import Paginator
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect, get_object_or_404  # type: ignore[import]

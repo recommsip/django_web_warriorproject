@@ -1,4 +1,4 @@
-from game.warrior import Warrior
+from game.models.warrior import Warrior
 
 class LevelCalculator:
     """ required_xp = base_xp * level ** growth_rate """

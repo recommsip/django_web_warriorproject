@@ -1,5 +1,5 @@
 from django import forms
-from game.boss import Boss
+from game.models.boss import Boss
 
 class BossForm(forms.ModelForm):
     class Meta:

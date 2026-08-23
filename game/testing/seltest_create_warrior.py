@@ -3,12 +3,16 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from datetime import datetime
+from getpass import getpass
 import json
 
 driver = webdriver.Chrome()
 
 def run_test():
     date = datetime.now().date().strftime("%Y-%m-%d")
+    username = input("Username: ")
+    password = getpass("Password: ")
+    
     try:
         # -------------------------
         # LOGIN
@@ -17,11 +21,11 @@ def run_test():
         
         driver.find_element(
             By.NAME, "username"
-        ).send_keys("ron")
+        ).send_keys(username)
 
         driver.find_element(
             By.NAME, "password"
-        ).send_keys("ynot1230")
+        ).send_keys(password)
 
         driver.find_element(
             By.CSS_SELECTOR,

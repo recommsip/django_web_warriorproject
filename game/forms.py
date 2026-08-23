@@ -1,5 +1,5 @@
 from django import forms  # type: ignore[import]
-from .warrior import Warrior
+from game.models.warrior import Warrior
 
 class CreateWarriorForm(forms.ModelForm):
     class Meta:

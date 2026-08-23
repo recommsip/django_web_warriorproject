@@ -1,7 +1,7 @@
 import random
-from .models import Monster
-from .boss import Boss
-from .warrior import Warrior
+from game.models.monster import Monster
+from .models.boss import Boss
+from .models.warrior import Warrior
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
 from game.warrior_calculate_level_helper import LevelCalculator

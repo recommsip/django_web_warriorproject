@@ -2,7 +2,7 @@ from django.views import View
 from django.shortcuts import render, redirect
 from game.boss_form import BossForm
 from game.boss_view import BossListView
-from game.boss import Boss
+from game.models.boss import Boss
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 

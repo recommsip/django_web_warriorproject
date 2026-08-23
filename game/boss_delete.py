@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from .boss import Boss
+from .models.boss import Boss
 
 # Mixins MUST come before View in inheritance order
 class BossDeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):

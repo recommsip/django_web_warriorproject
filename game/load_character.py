@@ -1,6 +1,6 @@
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
-from .warrior import Warrior
+from game.models.warrior import Warrior
 
 
 class LoadCharacterView(View):

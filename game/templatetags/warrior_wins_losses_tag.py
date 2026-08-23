@@ -1,9 +1,7 @@
 from django import template
 from django.utils import timezone
-from datetime import date
-from game.warrior import Warrior
-from game.boss import Boss
-from game.wins_losses_view import WinsVsLossesView
+from game.models.warrior import Warrior
+
 register = template.Library()
 
 

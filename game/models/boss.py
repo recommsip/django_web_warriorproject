@@ -1,5 +1,5 @@
 from django.db import models
-from game.models import Character
+from game.models.models import Character
 
 class Boss(Character):
     

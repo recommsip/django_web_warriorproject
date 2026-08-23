@@ -1,4 +1,4 @@
-from game.models import Character
+from game.models.models import Character
 from django.db import models  # type: ignore[import]
 import random
 
@@ -44,6 +44,7 @@ class Warrior(Character):
             health = 110
             max_health = 110
             level = 1
+            
         def attack(self):
             roll = random.randint(1, 100)
 
@@ -54,7 +55,6 @@ class Warrior(Character):
 
             self.last_attack_missed = False
             self.save()
-
             
             base = {
                 'warrior': 15,

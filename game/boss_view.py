@@ -3,9 +3,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 
 from game.forms import CreateWarriorForm
-from game.models import Monster
-from game.boss import Boss
-from .warrior import Warrior
+from game.models.monster import Monster
+from game.models.boss import Boss
+from game.models.warrior import Warrior
 
 
 class BossListView(View):
@@ -59,6 +59,7 @@ class BossListView(View):
         if redirect_response:
             print("No warrior found in session. Redirecting to tavern.")
             return redirect_response
+        assert warrior is not None
 
         # 2. Fetch Boss (Handles both pk passed in URL or fallback to session/random)
         boss = None

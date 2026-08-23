@@ -1,5 +1,5 @@
 from django.db import models  # type: ignore[import]
-from game.warrior import Warrior
+from game.models.warrior import Warrior
 
 class Backpack(models.Model):
     warrior = models.OneToOneField(
