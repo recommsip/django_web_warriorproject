@@ -1,12 +1,17 @@
 from selenium import webdriver  # type: ignore
-from selenium.webdriver.common.by import By  # type: ignore
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
 import json
 
+options = Options()
+options.add_argument("--headless")
+
+
 def run_test():
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=options)
     
     try:
         driver.get("http://127.0.0.1:8000/login/")

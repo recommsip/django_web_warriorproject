@@ -1,31 +1,70 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.shortcuts import render
 import subprocess
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
+class SeleniumTesting(LoginRequiredMixin, PermissionRequiredMixin, View):
     
-def selenium_dashboard(request):
-    print("Running login test.")
-    result = None
-    if request.method == "POST":
-        test = request.POST.get("test")
-        
-        if test == "login":
-            # run login test
-            result = subprocess.run(["python", "game/testing/seltest_login.py"], capture_output=True, text=True)  
-            result = result.stdout.splitlines()
-            pass
-        
-        elif test == "create_warrior":
-            # run create warrior test
-            result = subprocess.run(["python", "game/testing/seltest_create_warrior.py"], capture_output=True, text=True)  
-            result = result.stdout.splitlines()
-            pass
-        
-        elif test == "seltest_03":
-            # run create warrior test
-            result = subprocess.run(["python", "game/testing/seltest_03.py"], capture_output=True, text=True)  
-            result = result.stdout.splitlines()
-            pass
+    permission_required = 'game.seleniumtests'
     
-    
-    return render(request,"selenium_testrunner/selenium_dashboard.html", {"result": result})
+    def selenium_dashboard(self,request):
+        
+        breakpoint()
+        print("USER:", self.request.user)
+        print("AUTHENTICATED:", self.request.user.is_authenticated)
+        print("PERMISSIONS:")
+        print(self.request.user.get_all_permissions())
+        
+        result = None
+
+        tests = {
+            "login": "game/testing/seltest_login.py",
+            "create_warrior": "game/testing/seltest_create_warrior.py",
+            "seltest_03": "game/testing/seltest_03.py",
+        }
+
+        if request.method == "POST":
+
+            test = request.POST.get("test")
+
+            if test == "all":
+                print(test)
+                result = []
+
+                for test_name, test_path in tests.items():
+
+                    result.append(f"===== RUNNING {test_name} =====")
+
+                    completed = subprocess.run(
+                        ["python", test_path],
+                        capture_output=True,
+                        text=True
+                    )
+
+                    result.extend(completed.stdout.splitlines())
+
+                    if completed.returncode != 0:
+                        result.append(
+                            f"===== {test_name} FAILED ====="
+                        )
+                        break
+
+                    result.append(
+                        f"===== {test_name} PASSED ====="
+                    )
+
+            elif test in tests:
+
+                completed = subprocess.run(
+                    ["python", tests[test]],
+                    capture_output=True,
+                    text=True
+                )
+
+                result = completed.stdout.splitlines()
+
+        return render(
+            request,
+            "selenium_testrunner/selenium_dashboard.html",
+            {"result": result}
+        )

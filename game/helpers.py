@@ -1,5 +1,5 @@
 from game.models.warrior import Warrior
-from .boss_view import Boss
+from .views_game.boss_view import Boss
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.core.paginator import Paginator

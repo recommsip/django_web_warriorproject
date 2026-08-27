@@ -1,6 +1,6 @@
 from game.models.monster import Monster
 from game.models.warrior import Warrior
-from . import warrior_helper
+from .. import warrior_helper
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
 from game.warrior_calculate_level_helper import LevelCalculator

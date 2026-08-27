@@ -5,19 +5,20 @@ from django.views.generic import ListView  # type: ignore[import]
 from django.http import HttpResponse  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
 from django.template.response import TemplateResponse  # type: ignore[import]
-from .forms import CreateWarriorForm
-from  .models.monster import Monster
-from .models.boss import Boss
-from .models.warrior import Warrior
+from ..forms import CreateWarriorForm
+from  ..models.monster import Monster
+from ..models.boss import Boss
+from ..models.warrior import Warrior
+from ..models.seleniumtest_models import SeleniumTests
 from .encounter_view import EncounterView
 from .journey_view import JourneyView
 from .boss_view import BossListView
 from .character_view import CharacterDetailView
-from .selectcharacter_view import SelectCharacterView
-from .wins_losses_view import WinsVsLossesView
+from ..selectcharacter_view import SelectCharacterView
+from ..wins_losses_view import WinsVsLossesView
 from .boss_create_view import BossCreateView
-from .boss_delete import BossDeleteView
-from .anotherviewtype import AnotherViewType
+from ..boss_delete import BossDeleteView
+from ..anotherviewtype import AnotherViewType
 from game.config import CONFIG_FILE  # type: ignore[import]
 import json
 from pathlib import Path
@@ -42,12 +43,10 @@ class VictoryView(ListView):
         # Override to sort by victories descending
         return Warrior.objects.order_by('-victories')
     
-CONFIG_FILE = Path(__file__).resolve().parent / "jsonconfigfiles/enemy.config.json"
-
+CONFIG_FILE = Path(__file__).resolve().parent.parent / "jsonconfigfiles/enemy.config.json"
 
 with open(CONFIG_FILE) as f:
     CONFIG = json.load(f)
-
 
 def get_config(key):
     return CONFIG.get(key)

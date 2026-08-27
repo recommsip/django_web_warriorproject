@@ -1,18 +1,23 @@
-from selenium import webdriver
+from selenium import webdriver  # type: ignore
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from datetime import datetime
 from getpass import getpass
 import json
 
-driver = webdriver.Chrome()
+options = Options()
+options.add_argument("--headless")
+
+driver = webdriver.Chrome(options=options)
 
 def run_test():
     date = datetime.now().date().strftime("%Y-%m-%d")
-    username = input("Username: ")
-    password = getpass("Password: ")
-    
+    # username = input("Username: ")
+    # password = getpass("Password: ")
+    username = "ron"
+    password = "ynot1230"
     try:
         # -------------------------
         # LOGIN

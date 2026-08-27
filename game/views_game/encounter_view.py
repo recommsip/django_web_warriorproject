@@ -3,13 +3,13 @@ from django.shortcuts import render, redirect  # type: ignore[import]
 from game.models.monster import Monster
 from game.models.boss import Boss
 from game.models.warrior import Warrior
-from . import warrior_helper
+from .. import warrior_helper
 from django import forms
 from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from .boss_view import BossListView
 from game.warrior_calculate_level_helper import LevelCalculator
-from .helpers import build_winloss_context
+from ..helpers import build_winloss_context
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import Http404
 import random
@@ -145,7 +145,7 @@ class EncounterView(View):          # inherits from Django's View
         else:
             print(f"{warrior.name} is already at full health.")
         
-        return render(request, 'game/boss_fight.html', {'warrior': warrior, 'boss': self.boss})
+        return render(request, 'game/boss_fight.html', {'warrior': warrior})
     
     # Warrior attacks boss
     def warrior_attack(self, boss, warrior):

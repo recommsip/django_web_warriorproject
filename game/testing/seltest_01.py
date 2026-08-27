@@ -1,8 +1,11 @@
 from selenium import webdriver  # type: ignore
-from selenium.webdriver.common.by import By  # type: ignore
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 
-# Start Chrome
-driver = webdriver.Chrome()
+options = Options()
+options.add_argument("--headless")
+
+driver = webdriver.Chrome(options=options)
 
 try:
     # Open your Django website
@@ -15,5 +18,6 @@ try:
     print("Page title:", driver.title)
 
 finally:
+    
     # Always close the browser
     driver.quit()

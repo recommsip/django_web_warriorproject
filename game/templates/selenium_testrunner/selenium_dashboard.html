@@ -6,6 +6,10 @@
     <form method="post">
     {% csrf_token %}
 
+    <button type="submit" name="test" value="all">
+        Run All Tests
+    </button>
+
     <button name="test" value="login">
         Run Login Test
     </button>
@@ -14,8 +18,15 @@
         Run Create Warrior Test
     </button>
 
+    <button name="test" value="seltest_01">
+        Run Seltest_01
+    </button>
+    <button name="test" value="seltest_02">
+        Run Seltest_02
+    </button>
     <button name="test" value="seltest_03">
         Run Seltest_03
+    </button>
     </button>
 </form>
 <p>

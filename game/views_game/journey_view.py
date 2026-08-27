@@ -1,12 +1,13 @@
 import random
 from game.models.monster import Monster
-from .models.boss import Boss
-from .models.warrior import Warrior
+from ..models.boss import Boss
+from ..models.warrior import Warrior
 from django.views import View  # type: ignore[import]
 from django.shortcuts import render, redirect  # type: ignore[import]
 from game.warrior_calculate_level_helper import LevelCalculator
 
 class JourneyView(View):
+    
     template_name = 'game/journey.html'
 
     def get(self, request, pk):

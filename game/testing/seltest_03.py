@@ -1,8 +1,13 @@
 from selenium import webdriver  # type: ignore
 from selenium.webdriver.common.by import By  # type: ignore
 import json
+from selenium.webdriver.chrome.options import Options
 
-driver = webdriver.Chrome()
+options = Options()
+options.add_argument("--headless")
+
+driver = webdriver.Chrome(options=options)
+
 
 def run_test():
     try:
