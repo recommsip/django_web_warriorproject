@@ -2,41 +2,462 @@
 {% block content %}
 
 <div class="container mt-5">
-    <h1> Selenium Test Runner</h1>
+
+    <h1>Selenium Test Runner</h1>
+
     <form method="post">
-    {% csrf_token %}
+        {% csrf_token %}
 
-    <button type="submit" name="test" value="all">
-        Run All Tests
-    </button>
+        <!-- <button
+            type="button"
+            name="test"
+            value="all">
+            Run All Tests
+        </button> -->
 
-    <button name="test" value="login">
-        Run Login Test
-    </button>
 
-    <button name="test" value="create_warrior">
-        Run Create Warrior Test
-    </button>
+        <button
+            type="submit"
+            data-test-name="all"
+            data-bs-toggle="modal"
+            data-bs-target="#seleniumModal"
+            onclick="startSeleniumTest(this)">
+            Run All Test
+        </button>
 
-    <button name="test" value="seltest_01">
-        Run Seltest_01
-    </button>
-    <button name="test" value="seltest_02">
-        Run Seltest_02
-    </button>
-    <button name="test" value="seltest_03">
-        Run Seltest_03
-    </button>
-    </button>
-</form>
-<p>
-<h2>Test Output</h2>
+        <button
+            type="button"
+            data-test-name="Login Test"
+            data-bs-toggle="modal"
+            data-bs-target="#seleniumModal"
+            onclick="startSeleniumTest(this)">
+            Run Login Test
+        </button>
 
-<div>
-    {% for line in result %}
-        <p>{{ line }}</p>
-    {% endfor %}
+        <button
+            type="button"
+            name="test"
+            value="create_warrior"
+            data-test-name="Create Warrior Test"
+            data-bs-toggle="modal"
+            data-bs-target="#seleniumModal"
+            onclick="startSeleniumTest(this)">
+            Run Create Warrior Test
+        </button>
+
+        <button
+            type="button"
+            name="test"
+            value="seltest_01"
+            data-test-name="Seltest 01"
+            data-bs-toggle="modal"
+            data-bs-target="#seleniumModal"
+            onclick="startSeleniumTest(this)">
+            Run Seltest_01
+        </button>
+
+        <button
+            type="button"
+            name="test"
+            value="seltest_02"
+            data-test-name="Seltest 02"
+            data-bs-toggle="modal"
+            data-bs-target="#seleniumModal"
+            onclick="startSeleniumTest(this)">
+            Run Seltest_02
+        </button>
+
+        <button
+            type="button"
+            name="test"
+            value="seltest_03"
+            data-test-name="Seltest 03"
+            data-bs-toggle="modal"
+            data-bs-target="#seleniumModal"
+            onclick="startSeleniumTest(this)">
+            Run Seltest_03
+        </button>
+
+    </form>
+
+
+    <h2>Test Output</h2>
+
+    <div>
+        {% for line in result %}
+            <p>{{ line }}</p>
+        {% endfor %}
+    </div>
+
 </div>
-</p>
+
+<div
+    class="modal fade"
+    id="seleniumModal"
+    tabindex="-1"
+    aria-labelledby="seleniumModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <!-- HEADER -->
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="seleniumModalLabel"
+                >
+                    Selenium Test
+                </h5>
+
+                <span
+                    id="seleniumStatus"
+                    class="badge bg-secondary ms-3"
+                >
+                    Starting
+                </span>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <!-- BODY -->
+
+            <div class="modal-body">
+
+                <div class="mb-2">
+                    <strong>Test Output</strong>
+                </div>
+
+                <pre
+                    id="seleniumOutput"
+                    style="
+                        background: #111;
+                        color: #08ff84;
+                        padding: 15px;
+                        height: 350px;
+                        overflow-y: auto;
+                        border-radius: 5px;
+                    "
+                >Waiting for test...</pre>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="modal-footer">
+
+                <button
+                    id="seleniumCloseButton"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    disabled
+                >
+                    Close
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
+
+<script>
+
+// function startSeleniumTest(button) {
+
+    const testName =
+        button.dataset.testName;
+
+    const testUrl =
+        button.dataset.testUrl;
+
+
+    // Modal title
+
+    document.getElementById(
+        "seleniumModalLabel"
+    ).textContent = testName;
+
+
+    // Status
+
+    const status =
+        document.getElementById("seleniumStatus");
+
+    status.textContent = "RUNNING";
+
+
+    // Output window
+
+    const output =
+        document.getElementById("seleniumOutput");
+
+    output.textContent =
+        "Starting Selenium test...\n";
+
+
+    // Close button
+
+    document.getElementById(
+        "seleniumCloseButton"
+    ).disabled = true;
+
+
+    /*
+     * TEMPORARY TEST OUTPUT
+     *
+     * This is where we will eventually
+     * connect to Django.
+     */
+
+    const messages = [
+
+        "Starting Selenium...",
+        "Starting browser...",
+        "Opening Django...",
+        "Loading login page...",
+        "Finding login form...",
+        "Logging in...",
+        "Login successful.",
+        "Opening warrior page...",
+        "Finding Create Warrior button...",
+        "Clicking Create Warrior...",
+        "Checking result...",
+        "TEST PASSED"
+
+    ];
+
+
+    let index = 0;
+
+
+    const interval = setInterval(function() {
+
+        if (index >= messages.length) {
+
+            clearInterval(interval);
+
+            status.textContent = "PASSED";
+            status.className =
+                "badge bg-success ms-3";
+
+            document.getElementById(
+                "seleniumCloseButton"
+            ).disabled = false;
+
+            return;
+        }
+
+
+        output.textContent +=
+            messages[index] + "\n";
+
+
+        // Automatically scroll to bottom
+
+        output.scrollTop =
+            output.scrollHeight;
+
+
+        index++;
+
+    }, 700);
+
+}
+
+
+function startSeleniumTest(button) {
+
+    const testName = button.dataset.testName;
+
+    const test = button.value;
+
+    // Set modal title
+
+    document.getElementById("seleniumModalLabel"
+    ).textContent = testName;
+
+
+    const status = document.getElementById("seleniumStatus");
+
+    status.textContent = "STARTING";
+    status.className = "badge bg-secondary ms-3";
+
+
+    const output = document.getElementById("seleniumOutput");
+
+    output.textContent =
+        "Starting test...\n";
+
+
+    document.getElementById(
+        "seleniumCloseButton"
+    ).disabled = true;
+
+
+    const csrfToken =
+        document.querySelector(
+            "[name=csrfmiddlewaretoken]"
+        ).value;
+
+
+    fetch("/selenium/", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type":
+                "application/x-www-form-urlencoded",
+
+            "X-CSRFToken":
+                csrfToken
+        },
+
+        body:
+            "test=" +
+            encodeURIComponent(test)
+
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        console.log(
+            "Started test:",
+            data.test_id
+        );
+
+        checkTestStatus(data.test_id);
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        status.textContent = "ERROR";
+        status.className =
+            "badge bg-danger ms-3";
+
+        output.textContent +=
+            "\nERROR: " + error;
+
+    });
+}
+
+function checkTestStatus(testId) {
+
+    fetch(
+        "/selenium_testrunner/status/" +
+        testId +
+        "/"
+    )
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        const output =
+            document.getElementById(
+                "seleniumOutput"
+            );
+
+        const status =
+            document.getElementById(
+                "seleniumStatus"
+            );
+
+
+        // Display output
+
+        output.textContent =
+            data.output.join("\n");
+
+
+        // Scroll to bottom
+
+        output.scrollTop =
+            output.scrollHeight;
+
+
+        // Still running?
+
+        if (data.status === "running") {
+
+            status.textContent = "RUNNING";
+
+            status.className =
+                "badge bg-primary ms-3";
+
+
+            // Ask again in 500ms
+
+            setTimeout(
+                () => checkTestStatus(testId),
+                500
+            );
+
+        }
+
+
+        // Passed
+
+        else if (data.status === "passed") {
+
+            status.textContent = "PASSED";
+
+            status.className =
+                "badge bg-success ms-3";
+
+            document.getElementById(
+                "seleniumCloseButton"
+            ).disabled = false;
+
+        }
+
+
+        // Failed
+
+        else if (data.status === "failed") {
+
+            status.textContent = "FAILED";
+
+            status.className =
+                "badge bg-danger ms-3";
+
+            document.getElementById(
+                "seleniumCloseButton"
+            ).disabled = false;
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Status request failed:",
+            error
+        );
+
+    });
+}
+
+</script>
 {% endblock %}

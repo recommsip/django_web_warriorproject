@@ -11,6 +11,6 @@ class SeleniumTests(models.Model):
     
     class Meta:
             permissions = [
-                ("seleniumtests", "Can run Selenium tests"),
+                ("game.view_seleniumtests", "Can run Selenium tests"),
             ]
         

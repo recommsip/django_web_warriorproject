@@ -17,3 +17,4 @@ def login(driver, username="ron", password="ynot1230"):
 
     assert "/login/" not in driver.current_url
     print("Login successful")
+

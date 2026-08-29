@@ -3,7 +3,7 @@
 from django.urls import path
 from .views_game import views
 from .views_game.tavern import tavern
-from .views_game.selenium_dashboard_view import SeleniumTesting
+from .views_game.selenium_dashboard_view import SeleniumTesting, SeleniumStatus
 from django.contrib.auth import views as auth_views
 
 app_name = 'game'
@@ -18,6 +18,8 @@ urlpatterns = [
     
     # Selenium Test Runner - Front UI
     path('selenium_testrunner',   SeleniumTesting.as_view(),    name="selenium_dashboard"),
+    path("selenium/status/<str:test_id>/",SeleniumStatus.as_view(),name="selenium_status",),
+    
     
     # Warrior Game project views
     path('', tavern, name='tavern'),
