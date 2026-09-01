@@ -20,7 +20,9 @@ class EncounterView(View):          # inherits from Django's View
     
     ''' this is some description '''
     template = "game/boss_fight.html"
-  
+    boss = None
+    
+    
     # boss_image = boss.image if boss and boss.image else None
     warrior = None
     

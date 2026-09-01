@@ -11,6 +11,8 @@ class JourneyView(View):
     template_name = 'game/journey.html'
 
     def get(self, request, pk):
+        # Check if the warrior_id is in the session
+        pk = request.session.get('warrior_id')
         if pk:
             warrior = Warrior.objects.get(pk=pk)
             request.session['warrior_id'] = warrior.pk
@@ -23,6 +25,7 @@ class JourneyView(View):
         goblin = self._get_or_choose_goblin(request)
         
         if goblin is None:
+            
             print("No goblins left! Redirecting to reset.")
             return redirect('game:reset')
 
@@ -35,6 +38,7 @@ class JourneyView(View):
     def post(self, request, pk):
         
         print(request.method)
+        
         warrior = self._get_warrior(request)
         if not warrior:
             return redirect('game:tavern')

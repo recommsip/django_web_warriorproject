@@ -18,24 +18,29 @@ HTML sent to browser
 """
 
 class SelectCharacterView(View):
-    template_name = "game/character_select.html"
-    
-    def get(self, request):
-
-        warriors = Warrior.objects.all()
-        paginator = Paginator(warriors, 5)
-        page_number = request.GET.get("page")
-        page_obj = paginator.get_page(page_number)
-        
-        context = {
+   template_name = "game/character_select.html"
+   
+   def get(self, request):
+         """ returns a list of all warriors."""
+   
+         warriors = Warrior.objects.all()
+         paginator = Paginator(warriors, 5)
+         page_number = request.GET.get("page")
+         page_obj = paginator.get_page(page_number)
+         
+         context = {
             'warriors': page_obj,
             'page_obj': page_obj,
-        }
-        
-        #warrior = warriors.get(pk=pk)
-        #request.session['warrior_id'] = warrior.pk
-        return render(
+         }
+         
+         #warrior = warriors.get(pk=pk)
+         #request.session['warrior_id'] = warrior.pk
+         return render(
             request,
             self.template_name,
             context
-        )
+         )
+    
+   
+      
+   

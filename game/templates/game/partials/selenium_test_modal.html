@@ -1,0 +1,267 @@
+
+<div
+    class="modal fade"
+    id="seleniumModal"
+    tabindex="-1"
+    aria-labelledby="seleniumModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <!-- HEADER -->
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="seleniumModalLabel"
+                >
+                    Selenium Test
+                </h5>
+
+                <span
+                    id="seleniumStatus"
+                    class="badge bg-secondary ms-3"
+                >
+                    Starting
+                </span>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <!-- BODY -->
+
+            <div class="modal-body">
+
+                <div class="mb-2">
+                    <strong>Test Output</strong>
+                </div>
+
+                <pre
+                    id="seleniumOutput"
+                    style="
+                        background: #111;
+                        color: #08ff84;
+                        padding: 15px;
+                        height: 350px;
+                        overflow-y: auto;
+                        border-radius: 5px;
+                    "
+                >Waiting for test...</pre>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="modal-footer">
+
+                <button
+                    id="seleniumCloseButton"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    disabled
+                >
+                    Close
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function startSeleniumTest(button) {
+
+    const testName = button.dataset.testName;
+
+    const test = button.value;
+
+    // Set modal title
+
+    document.getElementById("seleniumModalLabel"
+    ).textContent = testName;
+
+
+    const status = document.getElementById("seleniumStatus");
+
+    status.textContent = "STARTING";
+    status.className = "badge bg-secondary ms-3";
+
+
+    const output = document.getElementById("seleniumOutput");
+
+    output.textContent =
+        "Starting test...\n";
+
+
+    document.getElementById(
+        "seleniumCloseButton"
+    ).disabled = true;
+
+
+    const csrfToken =
+        document.querySelector(
+            "[name=csrfmiddlewaretoken]"
+        ).value;
+
+
+    fetch("/selenium/", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type":
+                "application/x-www-form-urlencoded",
+
+            "X-CSRFToken":
+                csrfToken
+        },
+
+        body:
+            "test=" +
+            encodeURIComponent(test)
+
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        console.log(
+            "Started test:",
+            data.test_id
+        );
+
+        checkTestStatus(data.test_id);
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        status.textContent = "ERROR";
+        status.className =
+            "badge bg-danger ms-3";
+
+        output.textContent +=
+            "\nERROR: " + error;
+
+    });
+}
+
+function checkTestStatus(testId) {
+
+    fetch(
+        "/selenium_testrunner/status/" +
+        testId +
+        "/"
+    )
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        const output =
+            document.getElementById(
+                "seleniumOutput"
+            );
+
+        const status =
+            document.getElementById(
+                "seleniumStatus"
+            );
+
+
+        // Display output
+
+        output.textContent =
+            data.output.join("\n");
+
+
+        // Scroll to bottom
+
+        output.scrollTop =
+            output.scrollHeight;
+
+
+        // Still running?
+
+        if (data.status === "running") {
+
+            status.textContent = "RUNNING";
+
+            status.className =
+                "badge bg-primary ms-3";
+
+
+            // Ask again in 500ms
+
+            setTimeout(
+                () => checkTestStatus(testId),
+                500
+            );
+
+        }
+
+
+        // Passed
+
+        else if (data.status === "passed") {
+
+            status.textContent = "PASSED";
+
+            status.className =
+                "badge bg-success ms-3";
+
+            document.getElementById(
+                "seleniumCloseButton"
+            ).disabled = false;
+
+        }
+
+
+        // Failed
+
+        else if (data.status === "failed") {
+
+            status.textContent = "FAILED";
+
+            status.className =
+                "badge bg-danger ms-3";
+
+            document.getElementById(
+                "seleniumCloseButton"
+            ).disabled = false;
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Status request failed:",
+            error
+        );
+
+    });
+}
+
+</script>
