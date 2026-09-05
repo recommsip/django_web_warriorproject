@@ -29,7 +29,7 @@ def run_test():
             "button[type='submit']"
         ).click()
         
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 2).until(
                 lambda d: "/login/" not in d.current_url
             )
         

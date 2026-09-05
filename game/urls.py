@@ -17,8 +17,8 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     
     # Selenium Test Runner - Front UI
-    path('selenium_testrunner',   SeleniumTesting.as_view(),    name="selenium_dashboard"),
-    path("selenium/status/<str:test_id>/",SeleniumStatus.as_view(),name="selenium_status",),
+    path('selenium_testrunner/',   SeleniumTesting.as_view(),    name="selenium_dashboard"),
+    path("selenium_testrunner/status/<str:test_id>/",SeleniumStatus.as_view(),name="selenium_status",),
     
     
     # Warrior Game project views

@@ -14,15 +14,13 @@
             value="all">
             Run All Tests
         </button> -->
-            
-
-
 
         <button
             type="button"
             data-test-name="all"
-            data-bs-toggle="modal"
-            data-bs-target="#seleniumModal"
+            /* data-bs-toggle="modal"
+            data-bs-target="#seleniumModal" */
+            value = "all"
             onclick="startSeleniumTest(this)">
             Run All Test
         </button>
@@ -32,6 +30,7 @@
             data-test-name="Login Test"
             data-bs-toggle="modal"
             data-bs-target="#seleniumModal"
+            value = "login"
             onclick="startSeleniumTest(this)">
             Run Login Test
         </button>
@@ -92,6 +91,7 @@
     </div>
 
 </div>
+{% load static %}
 {% include "game/partials/selenium_test_modal.html" %}
-
+<script src="{% static 'js/selenium_test.js' %}"></script>
 {% endblock %}

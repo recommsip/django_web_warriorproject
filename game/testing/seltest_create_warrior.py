@@ -37,7 +37,7 @@ def run_test():
             "button[type='submit']"
         ).click()
         
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 2).until(
                     lambda d: "/login/" not in d.current_url
                 )
             
@@ -58,7 +58,7 @@ def run_test():
 
         driver.find_element(By.ID, "begin_journey")
         
-        element = WebDriverWait(driver, 10).until(
+        element = WebDriverWait(driver, 2).until(
                 EC.visibility_of_element_located((By.XPATH, "//*[contains(text(), 'The Tavern')]"))
             )
         if(element):
